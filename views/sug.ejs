@@ -1,0 +1,57 @@
+<% include partials/_header %>
+
+<style>
+  .container {
+    margin-top: 50px;
+  }
+
+  .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .form-label {
+    font-weight: bold;
+    color: #555;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card mt-5">
+        <div class="card-body">
+          <h3 class="card-title text-center">Formulario de Sugerencia</h3>
+          <form action="/crear-sugerencia" method="post">
+            <div class="mb-3">
+              <label for="titulo" class="form-label">Título de la sugerencia</label>
+              <input type="text" class="form-control" id="titulo" name="titulo" required>
+            </div>
+            <div class="mb-3">
+              <label for="cuerpo" class="form-label">Cuerpo de la sugerencia</label>
+              <textarea class="form-control" id="cuerpo" name="cuerpo" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Enviar sugerencia</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include partials/_footer %>

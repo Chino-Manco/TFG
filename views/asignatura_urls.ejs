@@ -1,0 +1,75 @@
+
+<% include partials/_header %>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card my-4">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Contenidos de la asignatura <%= asignatura.nombre %></h2>
+                    <hr> <!-- Línea divisoria -->
+
+                    <div>
+                        <h4>Profesores:</h4>
+                        <ul class="list-group">
+                            <% asignatura.usuarios.forEach(usuario => { %>
+                                <% if (usuario.rol === 'Profesor') { %>
+                                    <li class="list-group-item"><%= usuario.nombre %> (<%= usuario.email %>)</li>
+                                <% } %>
+                            <% }); %>
+                        </ul>
+                    </div>
+
+                    <hr> <!-- Línea divisoria -->
+
+                    <div>
+                        <h4>Alumnos:</h4>
+                        <ul class="list-group">
+                            <% asignatura.usuarios.forEach(usuario => { %>
+                                <% if (usuario.rol === 'Alumno') { %>
+                                    <li class="list-group-item"><%= usuario.nombre %> (<%= usuario.email %>)</li>
+                                <% } %>
+                            <% }); %>
+                        </ul>
+                    </div>
+
+                    <hr> <!-- Línea divisoria -->
+
+                    <div>
+                        <h4>Archivos:</h4>
+                        <ul class="list-group">
+                            <% asignatura.archivos.forEach((archivo, index) => { %>
+                                <li class="list-group-item">
+                                    <strong>Archivo <%= index + 1 %>:</strong> <a href="/images/<%= archivo.nombre %>" class="text-dark"><%= archivo.nombre %></a>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+
+                    <hr> <!-- Línea divisoria -->
+
+                    <div>
+                        <h4>URLs:</h4>
+                        <ul class="list-group">
+                            <% asignatura.urls.forEach((url, index) => { %>
+                                <li class="list-group-item">
+                                    <strong>URL <%= index + 1 %>:</strong> <a href="<%= url %>" class="text-dark"><%= url %></a>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <a href="/mis_asignaturas" class="btn btn-info">Retroceder</a> <!-- Botón de retroceso -->
+        </div>
+    </div>
+</div>
+
+<% include partials/_footer %>

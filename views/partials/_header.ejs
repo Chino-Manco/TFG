@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trabajo AD</title>
+    <!-- BOOTSTRAP CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
+    <!-- ESTILOS CUSTOM -->
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        .navbar-custom {
+            background-color: #004a99; /* Sujeto a cambios, color de fondo*/
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+        .navbar-custom .navbar-nav .nav-link:hover,
+        .navbar-custom .navbar-nav .nav-link:focus {
+            color: #cccccc;
+        }
+        .navbar-custom .navbar-toggler {
+            border-color: #cccccc;
+        }
+        .navbar-custom .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <% if (!user) { %>
+            <a class="navbar-brand" href="/">Trabajo AD</a>
+        <% } else { %>
+            <a class="navbar-brand" href="/profile">Trabajo AD</a>
+        <% } %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <% if (!user) { %>
+                    <!-- Opciones de navegación para usuarios no registrados -->
+                <% } else if (user.rol === "Profesor") { %>
+                    <!-- Opciones de navegación para Profesores -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/prof_asignaturas">Asignaturas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log out</a>
+                    </li>
+                <% } else if (user.rol === "Administrador"){ %>
+                    <!-- Opciones de navegación para Administradores -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/buzon">Buzón de Sugerencias</a> <!-- Agregado para Administradores -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/asig">Asignaturas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/administrar">Administrar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log out</a>
+                    </li>
+                <% } else if ((user.rol === "Alumno")) { %>
+                    <!-- Opciones de navegación para Alumnos -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mis_asignaturas">Mis asignaturas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log out</a>
+                    </li>
+                <% } else {%>
+                    <!-- Otras opciones de navegación -->
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/tasks">Tareas <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Perfil <%=user.email%></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log out</a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- BOOTSTRAP JS CDN -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</body>
+</html>

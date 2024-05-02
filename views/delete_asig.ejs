@@ -1,0 +1,21 @@
+<% include partials/_header %>
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="card mt-5">
+          <div class="card-body">
+            <h3 class="card-title text-center">Eliminar Asignatura</h3>
+            <form action="/delete_asig/<%= asignatura._id %>" method="POST">
+              <p>¿Estás seguro de que deseas eliminar la asignatura "<%= asignatura.nombre %>"?</p>
+              <button type="submit" class="btn btn-danger">Eliminar</button>
+              <a href="/asig" class="btn btn-secondary">Cancelar</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+<% include partials/_footer %>

@@ -1,0 +1,47 @@
+<% include partials/_header %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+      <h2 class="text-center mt-4 mb-4">Usuarios Registrados</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>Email</th>
+              <th>Rol</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(user => { %>
+              <% if(user.rol==="Administrador") { %>
+                <tr>
+                  <td><%= user.email %></td>
+                  <td><%= user.rol %></td>
+                </tr>
+              <% } %>
+            <% }); %>
+            <% users.forEach(user => { %>
+              <% if(user.rol==="Profesor") { %>
+                <tr>
+                  <td><%= user.email %></td>
+                  <td><%= user.rol %></td>
+                </tr>
+              <% } %>
+            <% }); %>
+            <% users.forEach(user => { %>
+              <% if(user.rol==="Alumno") { %>
+                <tr>
+                  <td><%= user.email %></td>
+                  <td><%= user.rol %></td>
+                </tr>
+              <% } %>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include partials/_footer %>

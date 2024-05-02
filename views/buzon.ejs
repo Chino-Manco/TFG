@@ -1,0 +1,72 @@
+<% include partials/_header %>
+
+<style>
+  .container {
+    margin-top: 50px;
+  }
+
+  .suggestion-list {
+    margin-top: 30px;
+  }
+
+  .suggestion-item {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+  }
+
+  .suggestion-item h5 {
+    margin-bottom: 10px;
+  }
+
+  .delete-btn {
+    margin-top: 10px;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <h2 class="mt-5 mb-3 text-center">Buzón de Sugerencias</h2>
+      <% if (sugerencias.length > 0) { %>
+        <ul class="suggestion-list">
+          <% sugerencias.forEach(sugerencia => { %>
+            <li class="suggestion-item">
+              <h5><%= sugerencia.titulo %></h5>
+              <hr> <!-- Línea separadora entre el título y el cuerpo -->
+              <p><%= sugerencia.cuerpo %></p>
+              <button type="button" class="btn btn-danger delete-btn" onclick="borrarSugerencia('<%= sugerencia._id %>')">Borrar</button>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-center mt-3">No hay sugerencias disponibles.</p>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<% include partials/_footer %>
+
+<script>
+  
+  function borrarSugerencia(id) {
+    // Realizar una petición DELETE para eliminar la sugerencia
+    fetch(`/sugerencia/${id}`, {
+      method: 'DELETE'
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error al borrar la sugerencia');
+      }
+      // Recargar la página después de borrar la sugerencia
+      location.reload();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Mostrar un mensaje de error si ocurre un problema al borrar la sugerencia
+      alert('Error al borrar la sugerencia. Por favor, inténtalo de nuevo más tarde.');
+    });
+  }
+</script>

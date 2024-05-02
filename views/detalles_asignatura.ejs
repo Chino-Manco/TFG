@@ -1,0 +1,78 @@
+<% include partials/_header %>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mt-3">Detalles de la asignatura <%= asignatura.nombre %></h2>
+
+            <div class="mt-3">
+                <h4>Alumnos:</h4>
+                <ul class="list-group">
+                    <% asignatura.usuarios.forEach(usuario => { %>
+                        <% if (usuario.rol === 'Alumno') { %>
+                            <li class="list-group-item"><%= usuario.nombre %> (<%= usuario.email %>)</li>
+                        <% } %>
+                    <% }); %>
+                </ul>
+            </div>
+
+            <div class="mt-3">
+                <h4>Grado:</h4>
+                <ul class="list-group">
+                    <li class="list-group-item"><%= asignatura.grado %></li>
+
+                </ul>
+            </div>
+
+            <div class="mt-3">
+                <h4>URLs:</h4>
+                <ul class="list-group">
+                    <% asignatura.urls.forEach(url => { %>
+                        <li class="list-group-item">
+                            <form action="/asignatura/<%= asignatura._id %>/borrar_url" method="POST" onsubmit="return confirmDeletion('<%= url %>');">
+                                <input type="hidden" name="url" value="<%= url %>">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                <a href="<%= url %>"><%= url %></a>
+                            </form>
+                        </li>
+                    <% }); %>
+                </ul>
+            </div>
+            <div class="mt-3">
+                <h4>Archivos:</h4>
+                <ul class="list-group">
+                    <% asignatura.archivos.forEach(archivo => { %>
+                        <li class="list-group-item">
+                            
+                            <%= archivo.nombre %> 
+                        </li>
+                    <% }); %>
+                </ul>
+            </div>
+            <div class="mt-3">
+                <h4>Modificar Descripción:</h4>
+                <form action="/asignatura/<%= asignatura._id %>/modificar_descripcion" method="POST">
+                    <div class="form-group">
+                        <label for="descripcion">Descripción:</label>
+                        <input type="text" class="form-control" id="descripcion" name="descripcion" value="<%= asignatura.descripcion %>">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Nueva Descripción</button>
+                </form>
+            </div>
+
+            <div class="mt-3">
+                <a href="/prof_asignaturas" class="btn btn-info">Retroceder</a> <!-- Botón de retroceso -->
+                <a href="/asignatura/<%= asignatura._id %>/subir_url" class="btn btn-primary">Subir Archivos</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDeletion(url) {
+      var message = "Estás a punto de eliminar la Url \"" + url + "\" y la descripción que no se haya guardado se deshará. Esta acción no se puede deshacer. ¿Deseas continuar?";
+      return confirm(message);
+    }
+</script>
+
+<% include partials/_footer %>

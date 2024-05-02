@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <style>
+        /* Estilos para el footer */
+        footer {
+            background-color: #004a99;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        footer p {
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            font-size: 0.9em;
+        }
+        .right-link {
+            float: right;
+            color: white; /* Cambia el color del enlace */
+            text-decoration: none; /* Quita el subrayado */
+            margin-right: 10px; /* Añade un margen a la derecha para separar del texto */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Trabajo AD. </p>
+        <% if (user && (user.rol === 'Profesor' || user.rol === 'Alumno')) { %>
+            <a href="/sug" class="right-link">Sugerencias</a>
+        <% } %>
+    </footer>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<% include partials/_header %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="card shadow">
+        <div class="card-body">
+          <h4 class="card-title text-center mb-4">Importar Datos desde CSV</h4>
+          <form id="csv-upload-form" enctype="multipart/form-data">
+            <div class="custom-file mb-3">
+              <input type="file" class="custom-file-input" id="file" name="file" required>
+              <label class="custom-file-label" for="file">Elegir archivo...</label>
+              <div class="invalid-feedback">Por favor, selecciona un archivo CSV</div>
+            </div>
+            <button type="submit" class="btn btn-success btn-block">Subir</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+    var fileName = document.getElementById("file").files[0].name;
+    var nextSibling = e.target.nextElementSibling
+    nextSibling.innerText = fileName;
+  });
+
+  document.getElementById('csv-upload-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    fetch('/upload-csv', {
+      method: 'POST',
+      body: formData,
+    }).then(response => response.json()).then(data => {
+      if (data.success) {
+        Swal.fire({
+          title: 'Éxito',
+          text: data.message,
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: data.message + "\n" + JSON.stringify(data.errores, null, 2),
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    }).catch(error => {
+      Swal.fire({
+        title: 'Error',
+        text: 'Ocurrió un error al subir el archivo.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+      console.error('Error:', error);
+    });
+  });
+</script>
+
+<% include partials/_footer %>
