@@ -26,12 +26,12 @@ router.post('/crear_usuario', passport.authenticate('local-signup', {
 })); 
 
 router.get('/signin', (req, res, next) => {
-  res.render('index');
+  res.render('login');
 });
 
 
 router.post('/signin', passport.authenticate('local-signin', {
-  successRedirect: '/profile',
+  successRedirect: '/subirProducto',
   failureRedirect: '/signin',
   failureFlash: true
 }));

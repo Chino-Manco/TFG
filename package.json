@@ -18,12 +18,16 @@
     "express-fileupload": "^1.4.3",
     "express-session": "^1.17.1",
     "http-errors": "~1.6.3",
+    "jimp": "^0.22.12",
     "mongoose": "^5.13.22",
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.10",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "qrcode": "^1.5.3",
+    "qrcode-reader": "^1.0.4",
+    "quagga": "^0.12.1"
   },
   "main": "app.js",
   "author": "",

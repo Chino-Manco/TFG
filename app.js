@@ -21,6 +21,7 @@ require('./database');
 require('./passport/local-auth');
 
 var importRoutes = require('./routes/import_routes');
+var productoRouter = require('./routes/productos');
 var sugerenciasRouter = require('./routes/sugerencias');
 var asignaturasRouter = require('./routes/asignaturas');
 var usersRouter = require('./routes/users');
@@ -59,6 +60,7 @@ app.use((req, res, next) => {
 //routes
 app.use('/', usersRouter);
 app.use('/', asignaturasRouter);
+app.use('/', productoRouter);
 app.use('/', sugerenciasRouter);
 app.use('/', importRoutes);
 

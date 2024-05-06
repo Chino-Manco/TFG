@@ -1,0 +1,180 @@
+<% include partials/_header %>
+
+<html>
+    <div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+            <h3 class="text-center">Registrar Producto</h3>
+            </div>
+            <div class="card-body">
+            <form action="/subirProducto" method="POST">
+
+                <div class="mb-3">
+                    <label for="codigoBarra" class="form-label">Codigo de Barra:</label>
+                    <div class="mb-3" style="display: flex; align-items: center;">
+                        <input id="codigoBarra" name="codigoBarra">
+                        <button type="button" id="scanQRButton" class="btn btn-primary" style="margin-left: 10px;">Escanear QR</button>
+                        <button type="button" id="stopQRButton" class="btn btn-danger" style="margin-left: 10px;" disabled="true">Cancelar</button>
+                    </div>
+                    <!-- Agregar campo oculto para almacenar el código de barras escaneado -->
+                                        
+                </div>
+
+                <div id="videoContainer" style="display: none;">
+                    <video id="videoElement" width="300" height="200" autoplay></video>
+                </div>
+
+
+                <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="name" class="form-control" id="name" name="name" placeholder="Nombre" required>
+                </div>
+
+
+                
+                <div class="form-group">
+                    <label for="categoria">Categoria</label>
+                    <select class="form-control" id="categoria" name="categoria" required onchange="toggleInput()">
+                        <option value="" disabled selected>Seleccionar Categoria</option>
+                        <% categorias.forEach(categoria => { %>
+                            <option value="<%= categoria %>"><%= categoria %></option>
+                        <% }); %>
+                        <option value="Input">--Nueva Categoría--</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="inputContainer" style="display: none;">
+                    <label for="nuevaCategoria">Nueva Categoría</label>
+                    <input type="text" class="form-control" id="nuevaCategoria" name="nuevaCategoria" required>
+                </div>
+                
+
+                <div class="mb-3">
+                <label for="peso" class="form-label">Peso Neto (gramos)</label>
+                <input type="peso" class="form-control" id="peso" name="peso" placeholder="Peso Neto" required pattern="[0-9]+" title="Por favor, introduce solo números enteros (por ejemplo, 10 o 2000)">
+                </div>
+
+                <div class="mb-3">
+                    <label for="precio" class="form-label">Precio (euros)</label>
+                    <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Por favor, introduce solo números enteros o con 2 decimales (por ejemplo, 10 o 10.50)">
+                </div>                
+
+                <div class="mb-3">
+                    <label for="ingredientes" class="form-label">Ingredientes</label>
+                    <input type="ingredientes" class="form-control" id="ingredientes" name="ingredientes" placeholder="Ingredientes" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="valorNutricional" class="form-label">Valor Nutricional</label>
+                    <input type="valorNutricional" class="form-control" id="valorNutricional" name="valorNutricional" placeholder="Valor Nutricional" required>
+                </div>
+
+                            
+                <button type="submit" class="btn btn-primary btn-block">Registrar Producto</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</html>
+
+<%if (productMessage) {%>
+    <p style="color:#FF0000; text-align: center;"><%= productMessage %></p>
+  <% } %>
+
+<% include partials/_footer %>
+
+<script>
+    function toggleInput() {
+        var select = document.getElementById("categoria");
+        var inputContainer = document.getElementById("inputContainer");
+        var nuevaCategoriaInput = document.getElementById("nuevaCategoria");
+        
+        if (select.value === "Input") {
+            inputContainer.style.display = "block";
+            nuevaCategoriaInput.setAttribute("required", "true"); // Hacer que el input sea requerido
+        } else {
+            inputContainer.style.display = "none";
+            nuevaCategoriaInput.removeAttribute("required"); // Eliminar la propiedad requerida del input
+        }
+    }
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+<script>
+    const codigoBarraInput = document.getElementById("codigoBarra");
+    const scanQRButton = document.getElementById("scanQRButton");
+    const stopQRButton = document.getElementById("stopQRButton");
+    const videoContainer = document.getElementById("videoContainer");
+    const videoElement = document.getElementById("videoElement");
+
+    // Función para iniciar la cámara y escanear el código de barras
+    async function iniciarCamaraYEscaneo() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            videoElement.srcObject = stream;
+            videoContainer.style.display = "block";
+            scanQRButton.disabled = true;
+            stopQRButton.disabled = false;
+
+            // Iniciar Quagga para escanear códigos de barras
+            Quagga.init({
+                inputStream: {
+                    name: "Live",
+                    type: "LiveStream",
+                    target: videoElement
+                },
+                decoder: {
+                    readers: ["ean_reader", "ean_8_reader", "code_39_reader", "code_39_vin_reader", "codabar_reader", "upc_reader", "upc_e_reader", "i2of5_reader"]
+                }
+            }, function(err) {
+                if (err) {
+                    console.error('Error al iniciar Quagga:', err);
+                    return;
+                }
+                Quagga.start();
+            });
+
+            Quagga.onDetected(detectedHandler);
+        } catch (error) {
+            console.error('Error al acceder a la cámara:', error);
+        }
+    }
+
+    // Manejar la detección de códigos de barras
+    function detectedHandler(result) {
+        if (result.codeResult) {
+            codigoBarraInput.value = result.codeResult.code;
+            detenerCamara();
+        }
+    }
+
+// Función para detener la cámara y liberar recursos
+function detenerCamara() {
+    stopQRButton.disabled = true;
+    const stream = videoElement.srcObject;
+    if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+        videoElement.srcObject = null;
+    }
+    videoContainer.style.display = "none";
+    scanQRButton.disabled = false;
+
+    // Liberar recursos eliminando el objeto de flujo de medios
+    if (window.stream) {
+        window.stream.getTracks().forEach(track => track.stop());
+        delete window.stream;
+    }
+}
+
+
+
+    // Evento click para iniciar el escaneo del código de barras
+    scanQRButton.addEventListener("click", iniciarCamaraYEscaneo);
+    stopQRButton.addEventListener("click", detenerCamara);
+</script>
