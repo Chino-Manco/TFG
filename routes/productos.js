@@ -1,6 +1,36 @@
 const router = require('express').Router();
-const producto = require('../models/producto');
 const Producto = require('../models/producto');
+const fs = require('fs');
+const express = require('express');
+const multer = require('multer');
+const app = express();
+const path = require('path');
+
+
+// Configuración de Multer para almacenar archivos en la carpeta "uploads"
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'public/uploads'); // Ruta donde se almacenarán los archivos
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname); // Nombre de archivo original
+    }
+});
+const upload = multer({ storage: storage });
+
+
+
+router.get('/', async (req, res, next) => {
+    const productos= await Producto.find();
+    res.render('catalogo', {productos});
+});
+
+
+router.get('/informacion/:codigoBarra', async (req, res, next) => {
+    const codigoBarra= req.params.codigoBarra;
+    const producto= await Producto.findOne({ codigoBarra: codigoBarra });
+    res.render('informacion', {producto});
+});
 
 // Ruta para mostrar el formulario de producto
 router.get('/subirProducto', async (req, res) => {
@@ -12,9 +42,12 @@ router.get('/subirProducto', async (req, res) => {
     res.render('subirProducto', { categorias, productMessage}); 
 });
 
+
 // Ruta para procesar el formulario de producto
-router.post('/subirProducto', async (req, res) => {
+router.post('/subirProducto', upload.single('imagen'), async (req, res) => {
     try {
+
+
 
         var encontrado= false;
         var categoria=req.body.categoria;
@@ -26,7 +59,6 @@ router.post('/subirProducto', async (req, res) => {
         for (const producto of productos){
             if (producto.codigoBarra===codigoBarra || producto.nombre===nombre)
                 encontrado=true;
-            console.log(encontrado);
         }
 
 
@@ -44,11 +76,12 @@ router.post('/subirProducto', async (req, res) => {
                 peso: req.body.peso,
                 precio: req.body.precio,
                 ingredientes: req.body.ingredientes,
-                valorNutricional: req.body.valorNutricional
+                valorNutricional: req.body.valorNutricional,
+                imagen: '/uploads/'+ req.file.filename
             });
 
 
-            // Guardar la producto en la base de datos
+            // Guardar el producto en la base de datos
             await nuevoProducto.save();
 
             // Redirigir de vuelta a la página sug.ejs

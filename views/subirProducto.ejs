@@ -1,20 +1,51 @@
 <% include partials/_header %>
 
 <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                margin-bottom: 100px;
+            }
+            #dropArea {
+                border: 2px dashed #ccc;
+                padding: 20px;
+                margin-top: 20px;
+            }
+            #imageContainer {
+                margin-top: 20px;
+                width: 200px; 
+                height: 200px;
+                display: flex;
+                justify-content: center;
+                overflow: hidden;
+                position: relative;
+            }
+            #imageContainer img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            
+        }
+        </style>
+    </head>
+
+<body>
     <div class="container">
-    <div class="row justify-content-center mt-5">
+    <div class="row justify-content-center mt-10">
         <div class="col-md-6">
         <div class="card">
             <div class="card-header bg-primary text-white">
             <h3 class="text-center">Registrar Producto</h3>
             </div>
             <div class="card-body">
-            <form action="/subirProducto" method="POST">
+            <form action="/subirProducto" method="POST" enctype="multipart/form-data">
 
                 <div class="mb-3">
                     <label for="codigoBarra" class="form-label">Codigo de Barra:</label>
                     <div class="mb-3" style="display: flex; align-items: center;">
-                        <input id="codigoBarra" name="codigoBarra">
+                        <input id="codigoBarra" name="codigoBarra" required>
                         <button type="button" id="scanQRButton" class="btn btn-primary" style="margin-left: 10px;">Escanear QR</button>
                         <button type="button" id="stopQRButton" class="btn btn-danger" style="margin-left: 10px;" disabled="true">Cancelar</button>
                     </div>
@@ -22,7 +53,7 @@
                                         
                 </div>
 
-                <div id="videoContainer" style="display: none;">
+                <div id="videoContainer" style="display: none;" class="mb-3">
                     <video id="videoElement" width="300" height="200" autoplay></video>
                 </div>
 
@@ -34,7 +65,7 @@
 
 
                 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="categoria">Categoria</label>
                     <select class="form-control" id="categoria" name="categoria" required onchange="toggleInput()">
                         <option value="" disabled selected>Seleccionar Categoria</option>
@@ -45,7 +76,7 @@
                     </select>
                 </div>
                 
-                <div class="form-group" id="inputContainer" style="display: none;">
+                <div class="mb-3" id="inputContainer" style="display: none;">
                     <label for="nuevaCategoria">Nueva Categoría</label>
                     <input type="text" class="form-control" id="nuevaCategoria" name="nuevaCategoria" required>
                 </div>
@@ -71,6 +102,14 @@
                     <input type="valorNutricional" class="form-control" id="valorNutricional" name="valorNutricional" placeholder="Valor Nutricional" required>
                 </div>
 
+                <div class="mb-3">
+                    <input name="imagen" type="file" id="fileInput" accept="image/*" onchange="uploadAndDisplay(event)" required>
+                    <div id="dropArea" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+                        Suelta la imagen aquí
+                    </div>
+                    <div id="imageContainer" ></div>
+                </div>
+
                             
                 <button type="submit" class="btn btn-primary btn-block">Registrar Producto</button>
             </form>
@@ -79,13 +118,16 @@
         </div>
     </div>
     </div>
+</body>
 </html>
 
 <%if (productMessage) {%>
-    <p style="color:#FF0000; text-align: center;"><%= productMessage %></p>
+    <p style="color:#FF0000; text-align: center;" id="productMessage"><%= productMessage %></p>
   <% } %>
 
 <% include partials/_footer %>
+
+
 
 <script>
     function toggleInput() {
@@ -111,10 +153,13 @@
     const stopQRButton = document.getElementById("stopQRButton");
     const videoContainer = document.getElementById("videoContainer");
     const videoElement = document.getElementById("videoElement");
+    let cameraStopped = false;
 
     // Función para iniciar la cámara y escanear el código de barras
     async function iniciarCamaraYEscaneo() {
         try {
+
+            cameraStopped = false;
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
             videoElement.srcObject = stream;
             videoContainer.style.display = "block";
@@ -145,13 +190,16 @@
         }
     }
 
-    // Manejar la detección de códigos de barras
-    function detectedHandler(result) {
-        if (result.codeResult) {
-            codigoBarraInput.value = result.codeResult.code;
-            detenerCamara();
-        }
+
+
+
+function detectedHandler(result) {
+    if (result.codeResult && !cameraStopped) {
+        codigoBarraInput.value = result.codeResult.code;
+        detenerCamara();
+        cameraStopped = true;
     }
+}
 
 // Función para detener la cámara y liberar recursos
 function detenerCamara() {
@@ -177,4 +225,44 @@ function detenerCamara() {
     // Evento click para iniciar el escaneo del código de barras
     scanQRButton.addEventListener("click", iniciarCamaraYEscaneo);
     stopQRButton.addEventListener("click", detenerCamara);
+</script>
+
+<script>
+    function chooseFile() {
+        document.getElementById('fileInput').click();
+    }
+
+    function uploadAndDisplay(event) {
+        const fileInput = event.target;
+        const imageContainer = document.getElementById('imageContainer');
+
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function() {
+                const imageUrl = reader.result;
+                imageContainer.innerHTML = `<img src="${imageUrl}" alt="Foto cargada">`;;
+            }
+        }
+    }
+
+    function handleDragOver(event) {
+        event.preventDefault();
+        const dropArea = document.getElementById('dropArea');
+        dropArea.style.border = '2px dashed #aaa';
+    }
+
+    function handleDrop(event) {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (file.type.startsWith('image/')) {
+        const fileInput = document.getElementById('fileInput');
+        fileInput.files = event.dataTransfer.files;
+        uploadAndDisplay({ target: fileInput });
+    } else {
+        alert('Por favor, arrastre y suelte solo archivos de imagen.');
+    }
+}
+
 </script>

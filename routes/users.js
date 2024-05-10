@@ -3,9 +3,7 @@ const passport = require('passport');
 const user = require('../models/user');
 const Asignatura = require('../models/asignatura');
 
-router.get('/', (req, res, next) => {
-  res.render('login');
-});
+
 
 router.get('/crear_user', (req, res, next) => {
   if (req.user!=null){

@@ -15,7 +15,6 @@
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
-    "express-fileupload": "^1.4.3",
     "express-session": "^1.17.1",
     "http-errors": "~1.6.3",
     "jimp": "^0.22.12",
@@ -25,6 +24,7 @@
     "nodemailer": "^6.9.10",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "path": "^0.12.7",
     "qrcode": "^1.5.3",
     "qrcode-reader": "^1.0.4",
     "quagga": "^0.12.1"

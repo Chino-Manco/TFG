@@ -6,15 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const logger = require('morgan');
-const fileUpload = require('express-fileupload');
 
-
-
-
-
-
-
- 
 
 var app = express();
 require('./database');
@@ -47,9 +39,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('public'));
 
+
 // middlewares
-
-
 app.use((req, res, next) => {
   app.locals.signinMessage = req.flash('signinMessage');
   app.locals.signupMessage = req.flash('signupMessage');

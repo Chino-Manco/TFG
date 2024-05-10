@@ -11,7 +11,7 @@ const productoSchema = new Schema({
   ingredientes: { type: String, required: true },
   valorNutricional: { type: String, required: true },
   stock: { type: Number, required: false, min:0, decimal: false, default:0 },
-  imagen: { type: Buffer, contentType: String, default:null },
+  imagen: { type: String, required: true}
 });
 
 module.exports = mongoose.model('Producto', productoSchema);

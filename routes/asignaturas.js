@@ -14,9 +14,6 @@ var transporter = nodemailer.createTransport({
    }
  });
 
- const fileUpload = require('express-fileupload'); // Importa el middleware express-fileupload
-
- router.use(fileUpload());
 
  router.get('/prof_asignaturas', async (req, res, next) => {
   if (req.user!=null){
