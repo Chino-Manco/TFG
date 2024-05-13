@@ -32,6 +32,10 @@
         .producto img {
             display: block;
             margin: 0 auto;
+            max-width: 200px; /* Limitar el ancho de la imagen */
+            max-height: 200px; /* Limitar la altura de la imagen */
+            width: auto; /* Ajustar el ancho según la altura */
+            height: auto; /* Ajustar la altura según el ancho */
         }
 
         .producto:nth-child(4n) {
@@ -46,12 +50,23 @@
         }
     </style>
 </head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Tus metadatos y estilos aquí -->
+</head>
 <body>
     <div class="container">
+        <% let categoriaActual = null; %>
         <% productos.forEach(producto => { %>
+            <% if (producto.categoria !== categoriaActual) { %>
+                <!-- Mostrar el nombre de la categoría si es diferente a la categoría actual -->
+                <h2 style="clear: both;"><%= producto.categoria %></h2>
+                <% categoriaActual = producto.categoria; %>
+            <% } %>
             <a href="/informacion/<%= producto.codigoBarra %>">
                 <div class="producto">
-                    <h2><%= producto.nombre %></h2>
+                    <h3><%= producto.nombre %></h3>
                     <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" height="200px" width="200px">
                     <p>Precio: <%= producto.precio.toFixed(2) %> €</p>
                 </div>
@@ -59,6 +74,9 @@
         <% }); %>
     </div>
 </body>
+</html>
+
+
 </html>
 
 

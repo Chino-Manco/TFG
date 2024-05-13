@@ -2,6 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 const user = require('../models/user');
 const Asignatura = require('../models/asignatura');
+const QRCode = require('qrcode');
 
 
 
@@ -17,9 +18,9 @@ router.get('/crear_user', (req, res, next) => {
   }
 });
 
-router.post('/crear_usuario', passport.authenticate('local-signup', {
-  successRedirect: '/profile',
-  failureRedirect: '/crear_user',
+router.post('/signup', passport.authenticate('local-signup', {
+  successRedirect: '/catalogo',
+  failureRedirect: '/signin',
   failureFlash: true
 })); 
 
@@ -29,7 +30,7 @@ router.get('/signin', (req, res, next) => {
 
 
 router.post('/signin', passport.authenticate('local-signin', {
-  successRedirect: '/subirProducto',
+  successRedirect: '/catalogo',
   failureRedirect: '/signin',
   failureFlash: true
 }));
@@ -55,10 +56,22 @@ router.get('/users',isAuthenticated, async (req, res, next) => {
 
 router.get('/profile',isAuthenticated, async (req, res, next) => {
   if (req.user!=null){
-    if (req.user.rol==="Administrador")
-      res.redirect('/users')
-    else
-      res.render('profile');
+
+    const email= req.user.email; 
+    const nombre= req.user.nombre;
+    
+    QRCode.toFile('./public/qr/qrcode'+ nombre +'.png', email, {
+      color: {
+        dark: '#000',  // Puntos negros
+        light: '#0000' // Fondo transparente
+      }
+    }, function (err) {
+      if (err) throw err
+      console.log('¡Código QR generado exitosamente!');
+    });
+
+    res.render('profile',{qr: "/qr/qrcode"+ nombre +".png", user: req.user});
+
   } else {
     res.redirect('/');
   }

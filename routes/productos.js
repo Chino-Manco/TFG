@@ -18,12 +18,24 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+router.get('/', (req, res, next) => {
+    res.redirect('/catalogo');
+
+});
 
 
-router.get('/', async (req, res, next) => {
-    const productos= await Producto.find();
+
+router.get('/catalogo', async (req, res, next) => {
+    const productos = await Producto.find().sort({ categoria: 1, nombre: 1 });
     res.render('catalogo', {productos});
 });
+
+router.get('/catalogo/:nombre', async (req, res, next) => {
+    const nombre= req.params.nombre;
+    const productos = await Producto.find({nombre: new RegExp(nombre, 'i')}).sort({ categoria: 1, nombre: 1 });
+    res.render('catalogo', {productos});
+});
+
 
 
 router.get('/informacion/:codigoBarra', async (req, res, next) => {

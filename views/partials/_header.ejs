@@ -33,20 +33,55 @@
     </style>
 </head>
 <body>
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-custom">
-            <a class="navbar-brand" href="/">Tienda de Alimentación</a>
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="/">Tienda de Alimentación</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item" style="margin-left: 10px;">
+                    <a class="nav-link" href="/catalogo">Inicio</a>
+                </li>      
+            </ul>
+
+
+            <% if (typeof productos !== 'undefined') { %>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                    <form id="busquedaForm" action="/catalogo" method="GET" class="form-inline my-2 my-lg-0" style="margin-right: 50px;">
+                        <input id="busquedaInput" class="form-control mr-sm-2" type="text" name="terminoBusqueda" placeholder="Buscar..." style="flex-grow: 1;">
+                        <button type="submit" class="btn btn-primary my-2 my-sm-0">
+                            <i class="bi bi-search"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+                
+                
+                
+                <script>
+                document.getElementById('busquedaForm').addEventListener('submit', function(event) {
+                    event.preventDefault(); // Prevenir el comportamiento predeterminado del formulario
+                    var terminoBusqueda = document.getElementById('busquedaInput').value;
+                    window.location.href = '/catalogo/' + terminoBusqueda; // Redirigir al usuario
+                });
+                </script>
+                
+            <% } %>
+
+
+
+            <!-- Utiliza mr-auto en el contenedor del botón -->
+            <ul class="navbar-nav">
                 <% if (!user) { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/informacion">informacion</a>
-                    </li>
+                    <li class="nav-item mr-auto">
+                        <a class="nav-link btn btn-primary" href="/signin">Acceder</a>
+                    </li>                                
                     <!-- Opciones de navegación para usuarios no registrados -->
                 <% } else if (user.rol === "Profesor") { %>
                     <!-- Opciones de navegación para Profesores -->
@@ -93,7 +128,7 @@
                         <a class="nav-link" href="/tasks">Tareas <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">Perfil <%=user.email%></a>
+                        <a class="nav-link" href="/profile">Perfil</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
