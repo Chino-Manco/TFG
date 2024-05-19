@@ -83,13 +83,10 @@
                         <a class="nav-link btn btn-primary" href="/signin">Acceder</a>
                     </li>                                
                     <!-- Opciones de navegación para usuarios no registrados -->
-                <% } else if (user.rol === "Profesor") { %>
+                <% } else if (user.rol === "Empleado") { %>
                     <!-- Opciones de navegación para Profesores -->
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/prof_asignaturas">Asignaturas</a>
+                        <a class="nav-link" href="/profile">Perfil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Log out</a>
@@ -97,7 +94,7 @@
                 <% } else if (user.rol === "Administrador"){ %>
                     <!-- Opciones de navegación para Administradores -->
                     <li class="nav-item">
-                        <a class="nav-link" href="/buzon">Buzón de Sugerencias</a> <!-- Agregado para Administradores -->
+                        <a class="nav-link" href="/profile">Perfil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/validar">Validar</a>
@@ -106,47 +103,12 @@
                         <a class="nav-link" href="/subirProducto">Crear nuevos Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">Perfil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/asig">Asignaturas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/administrar">Administrar</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/logout">Log out</a>
                     </li>
-                <% } else if ((user.rol === "Alumno")) { %>
+                <% } else if ((user.rol === "Cliente")) { %>
                     <!-- Opciones de navegación para Alumnos -->
                     <li class="nav-item">
                         <a class="nav-link" href="/profile">Perfil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/mis_asignaturas">Mis asignaturas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Log out</a>
-                    </li>
-                <% } else {%>
-                    <!-- Otras opciones de navegación -->
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/tasks">Tareas <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/profile">Perfil</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Log out</a>

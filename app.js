@@ -12,10 +12,7 @@ var app = express();
 require('./database');
 require('./passport/local-auth');
 
-var importRoutes = require('./routes/import_routes');
 var productoRouter = require('./routes/productos');
-var sugerenciasRouter = require('./routes/sugerencias');
-var asignaturasRouter = require('./routes/asignaturas');
 var usersRouter = require('./routes/users');
 // view engine setup
 app.set('port', process.env.PORT || 3000);
@@ -50,10 +47,7 @@ app.use((req, res, next) => {
 
 //routes
 app.use('/', usersRouter);
-app.use('/', asignaturasRouter);
 app.use('/', productoRouter);
-app.use('/', sugerenciasRouter);
-app.use('/', importRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

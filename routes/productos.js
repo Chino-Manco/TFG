@@ -29,9 +29,6 @@ router.get('/', (req, res, next) => {
 
 
 
-
-
-
 router.get('/catalogo', async (req, res, next) => {
     const productos = await Producto.find().sort({ categoria: 1, nombre: 1 });
     res.render('catalogo', {productos});
@@ -158,18 +155,6 @@ router.post('/subirProducto', upload.single('imagen'), async (req, res) => {
         console.error('Error al crear el producto:', error);
         // Manejar el error
         res.redirect('/error'); // Redirigir a una página de error si ocurre un error
-    }
-});
-
-// Ruta para mostrar el buzon de productos
-router.get('/buzon', async (req, res) => {
-    try {
-        const productos = await Producto.find();
-        res.render('buzon', { productos: productos });
-    } catch (error) {
-        console.error('Error al obtener las productos:', error);
-        req.flash('error', 'Ha ocurrido un error al obtener las productos');
-        res.redirect('/');
     }
 });
 

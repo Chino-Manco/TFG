@@ -23,9 +23,11 @@ passport.use('local-signup', new LocalStrategy({
   const edad = req.body.edad;
   const dni = req.body.dni;
   var user = new User();
+  var userDni = new User();
   user = await user.findEmail(email);
-  if(user) {
-    return done(null, false, req.flash('signupMessage', 'Email ya registrado anteriormente.'));
+  userDni = await User.findOne({dni: dni});
+  if(user || userDni) {
+    return done(null, false, req.flash('signupMessage', 'Email o DNI ya registrado anteriormente.'));
   } else {
     const newUser = new User();
     newUser.email = email;

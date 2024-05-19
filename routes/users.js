@@ -2,7 +2,6 @@ let express= require('express');
 const router = express.Router();
 const passport = require('passport');
 const user = require('../models/user');
-const Asignatura = require('../models/asignatura');
 const QRCode = require('qrcode');
 const bodyParser = require('body-parser');
 
@@ -11,19 +10,6 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
-
-router.get('/crear_user', (req, res, next) => {
-  if (req.user!=null){
-    if (req.user.rol==="Administrador"){
-    res.render('crear_user');
-    } else {
-      res.redirect('/profile');
-    }
-  } else {
-    res.redirect('/');
-  }
-});
 
 router.post('/signup', passport.authenticate('local-signup', {
   successRedirect: '/catalogo',
@@ -68,25 +54,6 @@ router.post('/signin', passport.authenticate('local-signin', {
   failureFlash: true
 }));
 
-router.get('/users',isAuthenticated, async (req, res, next) => {
-  if (req.user!=null){
-    if (req.user.rol==="Administrador")
-      try {
-        // Obtener todos los usuarios de la base de datos
-        const users = await user.find();
-
-        // Renderizar la vista con la lista de usuarios
-        res.render('admin_profile', { users: users });
-      } catch (error) {
-        next(error);
-      }
-    else
-      res.render('profile');
-  } else {
-    res.redirect('/');
-  }
-});
-
 router.get('/profile',isAuthenticated, async (req, res, next) => {
   if (req.user!=null){
 
@@ -115,16 +82,6 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/');
 });
 
-router.get('/administrar', (req, res) => {
-  if (req.user!=null){
-    if (req.user.rol==="Administrador")
-      res.render('administrar');
-      else
-      res.render('profile');
-  } else {
-    res.redirect('/');
-  }
-});
 
 
 router.get('/modificar_usuario', async (req, res) => {
