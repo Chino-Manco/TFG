@@ -18,10 +18,17 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+
+
+
+
 router.get('/', (req, res, next) => {
     res.redirect('/catalogo');
 
 });
+
+
+
 
 
 
@@ -42,6 +49,50 @@ router.get('/informacion/:codigoBarra', async (req, res, next) => {
     const codigoBarra= req.params.codigoBarra;
     const producto= await Producto.findOne({ codigoBarra: codigoBarra });
     res.render('informacion', {producto});
+});
+
+
+router.post('/informacionEditada', upload.single('imagen'),  async (req, res, next) => {
+
+    const codigo = req.body.codigo;
+    const stock = req.body.stock;
+    const modifyProduct= await Producto.findOne({codigoBarra: codigo});
+    modifyProduct.stock=stock;
+
+    if (req.user.rol==="Administrador"){
+
+        const nombre = req.body.nombre;
+        const precio = req.body.precio;
+        const categoria = req.body.categoria;
+        const peso = req.body.peso;
+        const ingredientes = req.body.ingredientes;
+        const nutricional = req.body.nutricional;
+
+        modifyProduct.nombre=nombre;
+        modifyProduct.precio=precio;
+        modifyProduct.categoria=categoria;
+        modifyProduct.peso=peso;
+        modifyProduct.precio=precio;
+        modifyProduct.ingredientes=ingredientes;
+        modifyProduct.valorNutricional=nutricional;
+
+        if (req.file) {
+            fs.unlink("public" +modifyProduct.imagen, async (err) => {
+                if (err) {
+                    console.error('Error al eliminar la foto:', err);
+                }
+                console.log('Foto eliminada:', modifyProduct.imagen);
+                modifyProduct.imagen='/uploads/'+ req.file.filename;
+                await modifyProduct.save();
+            });
+        } else  {
+            await modifyProduct.save();
+        }
+    } else {
+        await modifyProduct.save();
+    }
+
+    res.redirect('/catalogo');
 });
 
 // Ruta para mostrar el formulario de producto
@@ -89,7 +140,8 @@ router.post('/subirProducto', upload.single('imagen'), async (req, res) => {
                 precio: req.body.precio,
                 ingredientes: req.body.ingredientes,
                 valorNutricional: req.body.valorNutricional,
-                imagen: '/uploads/'+ req.file.filename
+                imagen: '/uploads/'+ req.file.filename,
+                stock:req.body.stock
             });
 
 
@@ -97,7 +149,7 @@ router.post('/subirProducto', upload.single('imagen'), async (req, res) => {
             await nuevoProducto.save();
 
             // Redirigir de vuelta a la página sug.ejs
-            res.redirect('/subirProducto');
+            res.redirect('/catalogo');
         } else {
             res.redirect('/subirProducto?productMessage=Codigo de barra o nombre ya registrado');
         }
@@ -122,16 +174,20 @@ router.get('/buzon', async (req, res) => {
 });
 
 
-
-
-
 // Ruta para eliminar una producto por su ID
-router.delete('/producto/:id', async (req, res) => {
-    const productoId = req.params.id;
+router.post('/eliminarProducto', async (req, res) => {
+    const productoId = req.body.id;
+    const producto= await Producto.findById(productoId);
+
+    fs.unlink("public" +producto.imagen, async (err) => {
+        if (err) {
+            console.error('Error al eliminar la foto:', err);
+        }
+    });
     try {
         // Eliminar la producto de la base de datos por su ID
         await Producto.findByIdAndDelete(productoId);
-        res.sendStatus(200); // Enviar estado OK si la eliminación fue exitosa
+        res.redirect("/catalogo");
     } catch (error) {
         console.error('Error al borrar la producto:', error);
         res.sendStatus(500); // Enviar estado de error si ocurre algún problema

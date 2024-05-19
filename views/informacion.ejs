@@ -15,45 +15,61 @@
         }
         .container {
             max-width: 800px;
-            margin: 20px auto;
+            margin: 50px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .producto {
-            margin-bottom: 20px;
+            display: grid; /* Usar grid para el layout */
+            grid-template-rows: auto auto; /* Dos filas: una para la imagen y otra para el texto */
+            gap: 20px; /* Espacio entre las filas */
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             overflow: hidden; /* Evitar que los elementos floten fuera del contenedor */
-            clear: both; /* Limpiar el float */
         }
         .imagen-container {
-            float: left; /* Mover el contenedor de la imagen a la izquierda */
-            margin-right: 20px; /* Espacio entre la imagen y la información */
+            display: flex; /* Usar flexbox para centrar la imagen */
+            justify-content: center;
+            align-items: center;
         }
         .imagen-container img {
-            max-width: 500px; /* Limitar el ancho de la imagen */
+            max-width: 100%; /* Asegurar que la imagen no se desborde del contenedor */
             max-height: 500px; /* Limitar la altura de la imagen */
-            width: auto; /* Ajustar el ancho según la altura */
             height: auto; /* Ajustar la altura según el ancho */
         }
         .info-container {
-            overflow: hidden; /* Limpiar el float */
+            display: flex;
+            flex-direction: column;
         }
-        .info-container h2 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 28px;
-            color: #333;
-            font-weight: bold;
-        }
+        .info-container h2,
         .info-container p {
-            margin: 5px 0;
-            font-size: 16px;
-            color: #666;
+            margin: 10px 0; /* Añadir espacio entre los elementos */
+        }
+        .button-container {
+            text-align: left;
+        }
+        .button-container button {
+            margin-right: 10px;
+        }
+        .hidden {
+            display: none; /* Ocultar elementos */
+        }
+        #dropArea {
+            width: 100%;
+            height: 100px;
+            border: 2px dashed #aaa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+        #imageContainer img {
+            max-width: 100%;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -63,22 +79,160 @@
             <div class="imagen-container">
                 <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>">
             </div>
-            <div class="info-container">
-                <h2><%= producto.nombre %></h2>
-                <p>Precio: <%= producto.precio.toFixed(2) %> €</p>
-                <p>Categoría: <%= producto.categoria %></p>
-                <p>Peso: <%= producto.peso %> g</p>
-                <p>Ingredientes: <%= producto.ingredientes %></p>
-                <p>Valor Nutricional: <%= producto.valorNutricional %></p>
-                <p>Stock: <%= producto.stock %> unidades</p>
-            </div>
+
+            <form action="/informacionEditada" method="post" enctype="multipart/form-data">
+
+                <div class="mb-3 hidden" id="file-upload-section">
+                    <input name="imagen" type="file" id="fileInput" accept="image/*" onchange="uploadAndDisplay(event)">
+                    <div id="dropArea" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+                        Suelta la imagen aquí
+                    </div>
+                    <div id="imageContainer"></div>
+                </div>
+                <div class="info-container" id="info-container">
+                    <h2 id="producto-nombre"><%= producto.nombre %></h2>
+                    <p>- Precio: <span id="producto-precio"><%= producto.precio.toFixed(2) %></span> €</p>
+                    <p>- Categoría: <span id="producto-categoria"><%= producto.categoria %></span></p>
+                    <p>- Cod: <span id="producto-codigo"><%= producto.codigoBarra %></span></p>
+                    <p>- Peso: <span id="producto-peso"><%= producto.peso %></span> g</p>
+                    <p>- Ingredientes: <span id="producto-ingredientes"><%= producto.ingredientes %></span></p>
+                    <p>- Valor Nutricional: <span id="producto-nutricional"><%= producto.valorNutricional %></span></p>
+                    <p>- Stock: <span id="producto-stock"><%= producto.stock %></span> unidades</p>
+
+                    <!-- Campo de entrada oculto para enviar el valor al servidor -->
+                    <input type="hidden"name="codigo" value="<%= producto.codigoBarra %>">
+
+                    <% if (user) {%>
+                        <div class="button-container">
+                            <% if (user.rol==="Administrador") {%>
+                                <button type="button" class="btn btn-primary " id="editar-btn" onclick="habilitarEdicion()">Editar</button>
+                                <button type="submit" class="btn btn-success hidden" id="guardar-btn">Guardar</button>
+                                <button type="button" class="btn btn-warning hidden" id="cancelar-btn" onclick="cancelarEdicion()">Cancelar</button>
+                            <% } %>
+                            <% if (user.rol==="Empleado") {%>
+                                <button type="button" class="btn btn-primary " id="editar-btn" onclick="modificarStock()">Modificar Stock</button>
+                                <button type="submit" class="btn btn-success hidden" id="guardar-btn">Guardar</button>
+                                <button type="button" class="btn btn-danger hidden" id="cancelar-btn" onclick="cancelarEdicion()">Cancelar</button>
+                            <% } %>
+                        </div>
+                    <% } %>
+                </div>
+            </form>
+
+
+            <% if (user && user.rol==="Administrador") {%>
+                <form action="/eliminarProducto" method="post" >
+                    <input type="hidden" name="id" value="<%= producto._id %>">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            <% } %>
         </div>
     </div>
+
+
+    <!-- Funciones de los botones-->
+    <script>
+        function modificarStock(){
+            document.getElementById("editar-btn").classList.add("hidden");
+            document.getElementById("guardar-btn").classList.remove("hidden");
+            document.getElementById("cancelar-btn").classList.remove("hidden");
+
+            var stockElemento = document.getElementById("producto-stock");
+            stockElemento.innerHTML = '<input type="number" id="stock-input" min="0" name="stock" value="' + stockElemento.innerText + '" >';
+
+        }
+
+        function habilitarEdicion() {
+            // Ocultar botón de edición y mostrar botones de guardar y cancelar
+            document.getElementById("editar-btn").classList.add("hidden");
+            document.getElementById("guardar-btn").classList.remove("hidden");
+            document.getElementById("cancelar-btn").classList.remove("hidden");
+
+            // Mostrar sección de carga de archivo
+            document.getElementById("file-upload-section").classList.remove("hidden");
+
+            // Obtener elementos
+            var nombreElemento = document.getElementById("producto-nombre");
+            var precioElemento = document.getElementById("producto-precio");
+            var categoriaElemento = document.getElementById("producto-categoria");
+            var codigoElemto = document.getElementById("producto-codigo");
+            var pesoElemento = document.getElementById("producto-peso");
+            var ingredientesElemento = document.getElementById("producto-ingredientes");
+            var nutricionalElemento = document.getElementById("producto-nutricional");
+            var stockElemento = document.getElementById("producto-stock");
+
+            // Convertir h2 y p en input
+            nombreElemento.innerHTML = '<input type="text" id="nombre-input" name="nombre" value="' + nombreElemento.innerText + '">';
+            precioElemento.innerHTML = '<input type="text" id="precio-input" name="precio" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Por favor, introduce solo números enteros o con 2 decimales (por ejemplo, 10 o 10.50)" value="' + precioElemento.innerText + '">';
+            codigoElemto.innerHTML = '<input type="text" id="codigo-input" value="' + codigoElemto.innerText + '" disabled>'
+            categoriaElemento.innerHTML = '<input type="text" id="categoria-input" name="categoria" value="' + categoriaElemento.innerText + '">';
+            pesoElemento.innerHTML = '<input type="number" id="peso-input" name="peso" value="' + pesoElemento.innerText + '">';
+            ingredientesElemento.innerHTML = '<textarea id="ingredientes-input" name="ingredientes" rows="5" style="width: 100%;">' + ingredientesElemento.innerText +'</textarea>';
+            nutricionalElemento.innerHTML = '<textarea id="nutricional-input" name="nutricional" rows="5" style="width: 100%;">'+ nutricionalElemento.innerText +'</textarea>';
+            stockElemento.innerHTML = '<input type="number" id="stock-input" min="0" name="stock" value="' + stockElemento.innerText + '" >';
+        
+        }
+
+
+        function cancelarEdicion() {
+            document.getElementById("guardar-btn").classList.add("hidden");
+            document.getElementById("cancelar-btn").classList.add("hidden");
+            document.getElementById("editar-btn").classList.remove("hidden");
+
+            // Ocultar sección de carga de archivo
+            document.getElementById("file-upload-section").classList.add("hidden");
+
+
+            // Recargar la página para cancelar la edición
+            location.reload();
+        }
+
+
+    </script>
+
+    <!-- Funciones de subir imagen-->
+    <script>
+        function chooseFile() {
+            document.getElementById('fileInput').click();
+        }
+
+        function uploadAndDisplay(event) {
+            const fileInput = event.target;
+            const imageContainer = document.getElementById('imageContainer');
+
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function() {
+                    const imageUrl = reader.result;
+                    imageContainer.innerHTML = `<img src="${imageUrl}" alt="Foto cargada">`;;
+                }
+            }
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            const dropArea = document.getElementById('dropArea');
+            dropArea.style.border = '2px dashed #aaa';
+        }
+
+        function handleDrop(event) {
+        event.preventDefault();
+        const file = event.dataTransfer.files[0];
+        if (file.type.startsWith('image/')) {
+            const fileInput = document.getElementById('fileInput');
+            fileInput.files = event.dataTransfer.files;
+            uploadAndDisplay({ target: fileInput });
+        } else {
+            alert('Por favor, arrastre y suelte solo archivos de imagen.');
+        }
+    }
+
+    </script>
+
+
 </body>
 </html>
-
-
-
-
 
 <% include partials/_footer %>

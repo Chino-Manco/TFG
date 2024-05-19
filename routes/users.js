@@ -1,8 +1,15 @@
-const router = require('express').Router();
+let express= require('express');
+const router = express.Router();
 const passport = require('passport');
 const user = require('../models/user');
 const Asignatura = require('../models/asignatura');
 const QRCode = require('qrcode');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 
@@ -28,6 +35,32 @@ router.get('/signin', (req, res, next) => {
   res.render('login');
 });
 
+router.get('/validar', async (req, res, next) => {
+  const users= await user.find().sort({ email: 1});
+  res.render('validar', {users});
+});
+
+router.post('/validar', async (req, res, next) => {
+  const { clientes, empleados } = req.body;
+  const clientesEmails = JSON.parse(clientes);
+  const empleadosEmails = JSON.parse(empleados);
+
+  const users= await user.find();
+
+
+  for (const user of users){
+      if(empleadosEmails.includes(user.email)){
+          user.rol='Empleado';
+          await user.save();
+      }
+      else if(clientesEmails.includes(user.email)){
+          user.rol='Cliente';
+          await user.save();
+      }
+  }
+
+  res.redirect('/catalogo');
+});
 
 router.post('/signin', passport.authenticate('local-signin', {
   successRedirect: '/catalogo',

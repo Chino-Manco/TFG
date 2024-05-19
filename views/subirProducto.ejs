@@ -40,8 +40,12 @@
             <h3 class="text-center">Registrar Producto</h3>
             </div>
             <div class="card-body">
-            <form action="/subirProducto" method="POST" enctype="multipart/form-data">
 
+                <%if (productMessage) {%>
+                    <p style="color:#FF0000; text-align: center;" id="productMessage"><%= productMessage %></p>
+                  <% } %>
+
+            <form action="/subirProducto" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="codigoBarra" class="form-label">Codigo de Barra:</label>
                     <div class="mb-3" style="display: flex; align-items: center;">
@@ -60,7 +64,7 @@
 
                 <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="name" class="form-control" id="name" name="name" placeholder="Nombre" required>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
                 </div>
 
 
@@ -84,7 +88,7 @@
 
                 <div class="mb-3">
                 <label for="peso" class="form-label">Peso Neto (gramos)</label>
-                <input type="peso" class="form-control" id="peso" name="peso" placeholder="Peso Neto" required pattern="[0-9]+" title="Por favor, introduce solo números enteros (por ejemplo, 10 o 2000)">
+                <input type="text" class="form-control" id="peso" name="peso" placeholder="Peso Neto" required pattern="[0-9]+" title="Por favor, introduce solo números enteros (por ejemplo, 10 o 2000)">
                 </div>
 
                 <div class="mb-3">
@@ -94,12 +98,17 @@
 
                 <div class="mb-3">
                     <label for="ingredientes" class="form-label">Ingredientes</label>
-                    <input type="ingredientes" class="form-control" id="ingredientes" name="ingredientes" placeholder="Ingredientes" required>
+                    <input type="text" class="form-control" id="ingredientes" name="ingredientes" placeholder="Ingredientes" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="valorNutricional" class="form-label">Valor Nutricional</label>
-                    <input type="valorNutricional" class="form-control" id="valorNutricional" name="valorNutricional" placeholder="Valor Nutricional" required>
+                    <input type="text" class="form-control" id="valorNutricional" name="valorNutricional" placeholder="Valor Nutricional" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="stock" class="form-label">Unidades</label>
+                    <input type="number" class="form-control" id="stock" min="0" name="stock" placeholder="stock" required>
                 </div>
 
                 <div class="mb-3">
@@ -121,9 +130,7 @@
 </body>
 </html>
 
-<%if (productMessage) {%>
-    <p style="color:#FF0000; text-align: center;" id="productMessage"><%= productMessage %></p>
-  <% } %>
+
 
 <% include partials/_footer %>
 
