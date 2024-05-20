@@ -6,58 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles del Usuario</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .usuario {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            overflow: hidden; /* Evitar que los elementos floten fuera del contenedor */
-            display: flex;
-        }
-        .imagen-container {
-            margin-left: 20px; /* Espacio entre la imagen y la información */
-            display: flex;
-            justify-content: flex-end; /* Alinear la imagen a la derecha */
-            flex-grow: 1; /* Hacer que la información ocupe todo el espacio restante */
-        }
-        .imagen-container img {
-            max-width: 300px; /* Establecer el ancho máximo de la imagen */
-            height: auto; /* Mantener la proporción de la imagen */
-        }
-        .info-container {
-            display: flex;
-            flex-direction: column; /* Apilar los elementos verticalmente */
-            flex-grow: 1; /* Hacer que la información ocupe todo el espacio restante */
-        }
-        .info-container h2 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 24px;
-            color: #333;
-            font-weight: bold;
-        }
-        .info-container p {
-            margin: 5px 0;
-            font-size: 16px;
-            color: #666;
-        }
-    </style>
+    <link rel="stylesheet" href="/stylesheets/profile.css">
 </head>
 <body>
     <div class="container">
@@ -71,7 +20,6 @@
                 <p>Edad: <%= user.edad %></p>
             </div>
             <div class="imagen-container">
-                <!-- Puedes incluir una imagen del usuario aquí si tienes una -->
                 <img src="<%= qr %>">
             </div>
         </div>

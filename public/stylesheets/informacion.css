@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.producto {
+    display: grid; /* Usar grid para el layout */
+    grid-template-rows: auto auto; /* Dos filas: una para la imagen y otra para el texto */
+    gap: 20px; /* Espacio entre las filas */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Evitar que los elementos floten fuera del contenedor */
+}
+.imagen-container {
+    display: flex; /* Usar flexbox para centrar la imagen */
+    justify-content: center;
+    align-items: center;
+}
+.imagen-container img {
+    max-width: 100%; /* Asegurar que la imagen no se desborde del contenedor */
+    max-height: 500px; /* Limitar la altura de la imagen */
+    height: auto; /* Ajustar la altura según el ancho */
+}
+.info-container {
+    display: flex;
+    flex-direction: column;
+}
+.info-container h2,
+.info-container p {
+    margin: 10px 0; /* Añadir espacio entre los elementos */
+}
+.button-container {
+    text-align: left;
+}
+.button-container button {
+    margin-right: 10px;
+}
+.hidden {
+    display: none; /* Ocultar elementos */
+}
+#dropArea {
+    width: 100%;
+    height: 100px;
+    border: 2px dashed #aaa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+#imageContainer img {
+    max-width: 100%;
+    margin-top: 10px;
+}

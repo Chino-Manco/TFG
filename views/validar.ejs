@@ -6,88 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Correos de Usuarios</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .container {
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-            flex: 1;
-            padding: 20px;
-            padding-top: 40px;
-        }
-        .list-container {
-            flex: 1;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-height: 400px;
-            overflow-y: auto;
-            margin: 0 20px;
-            position: relative;
-        }
-        h2 {
-            position: sticky;
-            top: -20px;
-            background-color: #fff;
-            margin: 0;
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd;
-            z-index: 10;
-        }
-        .list-container ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        .list-container li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer;
-        }
-        .list-container li:last-child {
-            border-bottom: none;
-        }
-        .icon-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-top: 40px;
-        }
-        .icon-container i {
-            font-size: 24px;
-            color: #333;
-            margin: 10px 0;
-            cursor: pointer;
-        }
-        .icon-container button {
-            margin-top: 100px;
-            padding: 2px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .selected {
-            background-color: #f0f0f0;
-        }
-        .form-container {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-        }
-    </style>
-    <!-- Asegúrate de incluir el CDN de Font Awesome para los íconos -->
+    <link rel="stylesheet" href="/stylesheets/validar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="/js/validar.js"></script>
 </head>
 <body>
 
@@ -126,61 +47,6 @@
             <button type="button" style="padding: 10px 20px;" onclick="enviarFormulario()">Guardar Roles</button>
         </form>
     </div>
-
-    <script>
-        // Función para ordenar alfabéticamente una lista
-        function ordenarLista(listaId) {
-            const lista = document.getElementById(listaId);
-            const correos = Array.from(lista.querySelectorAll('li'));
-            const correosOrdenados = correos.sort((a, b) => a.textContent.localeCompare(b.textContent));
-
-            // Eliminar los elementos actuales de la lista
-            correos.forEach(correo => lista.querySelector('ul').removeChild(correo));
-
-            // Agregar los correos ordenados a la lista
-            correosOrdenados.forEach(correo => lista.querySelector('ul').appendChild(correo));
-        }
-
-        // Función para mover correos
-        function moverCorreos(origenId, destinoId) {
-            const origen = document.getElementById(origenId);
-            const destino = document.getElementById(destinoId);
-            const correosSeleccionados = Array.from(origen.querySelectorAll('li.selected'));
-
-            // Mover correos seleccionados al destino
-            correosSeleccionados.forEach(correo => {
-                destino.querySelector('ul').appendChild(correo);
-                correo.classList.remove('selected');
-            });
-
-            // Ordenar ambas listas alfabéticamente
-            ordenarLista('clientes');
-            ordenarLista('empleados');
-        }
-
-        function deseleccionarTodos() {
-            const todosLosCorreos = document.querySelectorAll('li');
-            todosLosCorreos.forEach(correo => {
-                correo.classList.remove('selected');
-            });
-        }
-
-        document.addEventListener('click', function(event) {
-            if (event.target.tagName.toLowerCase() === 'li') {
-                event.target.classList.toggle('selected');
-            }
-        });
-
-        function enviarFormulario() {
-            const clientes = Array.from(document.getElementById('clientes').querySelectorAll('li')).map(li => li.dataset.email);
-            const empleados = Array.from(document.getElementById('empleados').querySelectorAll('li')).map(li => li.dataset.email);
-
-            document.getElementById('clientesInput').value = JSON.stringify(clientes);
-            document.getElementById('empleadosInput').value = JSON.stringify(empleados);
-
-            document.getElementById('userForm').submit();
-        }
-    </script>
 
 </body>
 </html>

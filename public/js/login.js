@@ -27,3 +27,16 @@ $(document).ready(function() {
     }, 200);
   });
 });
+
+  function validatePasswords() {
+    const mensaje= document.getElementById('signupMessage');
+    var password = document.getElementById('password').value;
+    var cpassword = document.getElementById('cpassword').value;
+    if (password !== cpassword) {
+      mensaje.textContent="Las contraseñas no coinciden";
+      return false;
+    } else {
+      mensaje.textContent="";
+      return true;
+    }
+  }

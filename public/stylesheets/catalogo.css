@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    overflow: hidden; /* Para contener elementos flotantes */
+}
+
+.producto {
+    border: 1px solid #ccc; /* Establecer el borde con color */
+    padding: 10px;
+    margin-bottom: 30px; /* Aumentar el margen inferior */
+    width: calc(25% - 20px); /* Establecer el ancho del contenedor */
+    margin-right: 20px;
+    float: left;
+    text-align: center;
+}
+
+.producto .img-container {
+    width: 200px; /* Establecer el ancho fijo */
+    height: 200px; /* Establecer la altura fija */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.producto img {
+    max-width: 100%; /* Limitar el ancho máximo al 100% del contenedor */
+    max-height: 100%; /* Limitar la altura máxima al 100% del contenedor */
+}
+
+.producto:nth-child(4n) {
+    margin-right: 0; /* Eliminar el margen derecho del cuarto elemento en cada fila */
+}
+
+@media (max-width: 768px) {
+    .producto {
+        width: 100%;
+        margin-right: 0;
+    }
+}

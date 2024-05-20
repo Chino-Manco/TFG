@@ -6,54 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda de alimentación</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-            overflow: hidden; /* Para contener elementos flotantes */
-        }
-
-        .producto {
-            border: 1px solid #ccc; /* Establecer el borde con color */
-            padding: 10px;
-            margin-bottom: 30px; /* Aumentar el margen inferior */
-            width: calc(25% - 20px); /* Establecer el ancho del contenedor */
-            margin-right: 20px;
-            float: left;
-            text-align: center;
-        }
-
-        .producto img {
-            display: block;
-            margin: 0 auto;
-            max-width: 200px; /* Limitar el ancho de la imagen */
-            max-height: 200px; /* Limitar la altura de la imagen */
-            width: auto; /* Ajustar el ancho según la altura */
-            height: auto; /* Ajustar la altura según el ancho */
-        }
-
-        .producto:nth-child(4n) {
-            margin-right: 0; /* Eliminar el margen derecho del cuarto elemento en cada fila */
-        }
-
-        @media (max-width: 768px) {
-            .producto {
-                width: 100%;
-                margin-right: 0;
-            }
-        }
-    </style>
-</head>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <!-- Tus metadatos y estilos aquí -->
+    <link rel="stylesheet" href="/stylesheets/catalogo.css">
 </head>
 <body>
     <div class="container">
@@ -67,7 +20,9 @@
             <a href="/informacion/<%= producto.codigoBarra %>">
                 <div class="producto">
                     <h3><%= producto.nombre %></h3>
-                    <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" height="200px" width="200px">
+                    <div class="img-container">
+                        <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>">
+                    </div>
                     <p>Precio: <%= producto.precio.toFixed(2) %> €</p>
                 </div>
             </a>
@@ -75,12 +30,5 @@
     </div>
 </body>
 </html>
-
-
-</html>
-
-
-
-
 
 <% include partials/_footer %>

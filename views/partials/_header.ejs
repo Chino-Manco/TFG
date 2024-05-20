@@ -9,28 +9,10 @@
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
     <!-- ESTILOS CUSTOM -->
-    <style>
-        body {
-            font-family: 'Open Sans', sans-serif;
-        }
-        .navbar-custom {
-            background-color: #004a99; /* Sujeto a cambios, color de fondo*/
-        }
-        .navbar-custom .navbar-brand,
-        .navbar-custom .navbar-nav .nav-link {
-            color: #ffffff;
-        }
-        .navbar-custom .navbar-nav .nav-link:hover,
-        .navbar-custom .navbar-nav .nav-link:focus {
-            color: #cccccc;
-        }
-        .navbar-custom .navbar-toggler {
-            border-color: #cccccc;
-        }
-        .navbar-custom .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-        }
-    </style>
+    <link rel="stylesheet" href="/stylesheets/header.css">           
+    
+    
+
 </head>
 <body>
 <!--Navbar-->
@@ -61,17 +43,9 @@
                         </button>
                     </form>
                 </div>
-                
-                
-                
-                <script>
-                document.getElementById('busquedaForm').addEventListener('submit', function(event) {
-                    event.preventDefault(); // Prevenir el comportamiento predeterminado del formulario
-                    var terminoBusqueda = document.getElementById('busquedaInput').value;
-                    window.location.href = '/catalogo/' + terminoBusqueda; // Redirigir al usuario
-                });
-                </script>
-                
+
+                <script src="/js/header.js"></script>
+
             <% } %>
 
 
@@ -84,7 +58,7 @@
                     </li>                                
                     <!-- Opciones de navegación para usuarios no registrados -->
                 <% } else if (user.rol === "Empleado") { %>
-                    <!-- Opciones de navegación para Profesores -->
+                    <!-- Opciones de navegación para Empleados -->
                     <li class="nav-item">
                         <a class="nav-link" href="/profile">Perfil</a>
                     </li>
@@ -106,7 +80,7 @@
                         <a class="nav-link" href="/logout">Log out</a>
                     </li>
                 <% } else if ((user.rol === "Cliente")) { %>
-                    <!-- Opciones de navegación para Alumnos -->
+                    <!-- Opciones de navegación para Clientes -->
                     <li class="nav-item">
                         <a class="nav-link" href="/profile">Perfil</a>
                     </li>
