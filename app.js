@@ -12,7 +12,8 @@ var app = express();
 require('./database');
 require('./passport/local-auth');
 
-var productoRouter = require('./routes/productos');
+var productosRouter = require('./routes/productos');
+var reservasRouter = require('./routes/reservas');
 var usersRouter = require('./routes/users');
 // view engine setup
 app.set('port', process.env.PORT || 3000);
@@ -23,7 +24,7 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
@@ -47,7 +48,8 @@ app.use((req, res, next) => {
 
 //routes
 app.use('/', usersRouter);
-app.use('/', productoRouter);
+app.use('/', reservasRouter);
+app.use('/', productosRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

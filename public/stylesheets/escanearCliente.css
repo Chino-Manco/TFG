@@ -1,0 +1,53 @@
+/* Agrega este código a tu archivo CSS (escanearCliente.css) */
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center; /* Centra los elementos verticalmente */
+    height: 90vh; /* Ocupa toda la altura de la ventana */
+}
+
+.button-wrapper {
+    width: 250px;
+    height: 250px;
+    margin: 0px 100px;
+}
+
+.mb-3 {
+    margin-top: 50px;
+}
+
+.giant-button {
+    width: 100%;
+    height: 100%;
+    padding: 10px; /* Ajusta el padding según tu preferencia */
+    background-color: #3498db; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+}
+
+.giant-button:hover {
+    background-color: #2980b9; /* Cambia el color de fondo al pasar el ratón por encima */
+}
+
+.button-text {
+    display: block;
+    text-align: center;
+}
+
+.giant-button img {
+    max-width: 200px; /* Establece el ancho máximo de los iconos */
+    max-height: 200px; /* Establece la altura máxima de los iconos */
+    display: block; /* Para asegurar que la imagen no afecte al layout de la página */
+    margin: auto; /* Centra la imagen dentro del botón */
+}
+
+div.mb-3 img{
+    max-width: 30px; /* Establece el ancho máximo de los iconos */
+    max-height: 30px; /* Establece la altura máxima de los iconos */
+    display: block; /* Para asegurar que la imagen no afecte al layout de la página */
+    margin: auto; /* Centra la imagen dentro del botón */
+}

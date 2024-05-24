@@ -1,11 +1,13 @@
 const router = require('express').Router();
 const Producto = require('../models/producto');
+const User = require('../models/user');
 const fs = require('fs');
 const express = require('express');
 const multer = require('multer');
 const app = express();
 const path = require('path');
 
+router.use(express.urlencoded({ extended: true }));
 
 // Configuración de Multer para almacenar archivos en la carpeta "uploads"
 const storage = multer.diskStorage({
@@ -24,9 +26,51 @@ const upload = multer({ storage: storage });
 
 router.get('/', (req, res, next) => {
     res.redirect('/catalogo');
+});
+
+router.get('/escanearCliente', (req, res, next) => {
+    res.render('escanearCliente');
+});
+
+router.post('/escanearCliente', async (req, res, next) => {
+    const dni = req.body.dni;
+    if (dni){
+        const productosV= await Producto.find();
+        const cliente= await User.findOne({dni: dni});
+        
+        if (cliente)
+            res.render('vender', {cliente, productosV});
+        else 
+            res.redirect('/vender')
+
+    } else {
+        res.redirect('/vender')
+    }
 
 });
 
+router.get('/vender', async (req, res, next) => {
+    const productosV = await Producto.find();
+    res.render('vender', {productosV});
+});
+
+router.post('/vender', async (req, res, next) => {
+    const codigos= req.body.codigo;
+    const cantidades= req.body.cantidad;
+    let n=0;
+
+    codigos.forEach(async codigo => {
+        const p= await Producto.findOne({codigoBarra: codigo});
+        p.stock-=cantidades[n];
+        if (p.stock<0)
+            p.stock=0;
+        n++;
+        await p.save();
+    });
+
+    res.redirect('/catalogo');
+
+});
 
 
 router.get('/catalogo', async (req, res, next) => {

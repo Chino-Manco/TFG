@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@zxing/library": "^0.21.0",
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
     "compass": "^0.1.1",
@@ -16,6 +17,7 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-session": "^1.17.1",
+    "html5-qrcode": "^2.3.8",
     "http-errors": "~1.6.3",
     "jimp": "^0.22.12",
     "mongoose": "^5.13.22",

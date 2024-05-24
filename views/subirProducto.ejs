@@ -1,111 +1,112 @@
 <% include partials/_header %>
 
-<html>
+<!DOCTYPE html>
+<html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/stylesheets/subirProducto.css">
-        <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
         <script src="/js/subirProducto.js"></script>
     </head>
 
-<body>
-    <div class="container">
-    <div class="row justify-content-center mt-10">
-        <div class="col-md-6">
-        <div class="card">
-            <div class="card-header bg-primary text-white">
-            <h3 class="text-center">Registrar Producto</h3>
+    <body>
+        <div class="container">
+        <div class="row justify-content-center mt-10">
+            <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                <h3 class="text-center">Registrar Producto</h3>
+                </div>
+                <div class="card-body">
+
+                    <%if (productMessage) {%>
+                        <p style="color:#FF0000; text-align: center;" id="productMessage"><%= productMessage %></p>
+                    <% } %>
+
+                <form action="/subirProducto" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="codigoBarra" class="form-label">Codigo de Barra:</label>
+                        <div class="mb-3" style="display: flex; align-items: center;">
+                            <input id="codigoBarra" name="codigoBarra" required>
+                            <button type="button" id="scanQRButton" class="btn btn-primary" style="margin-left: 10px;">Escanear QR</button>
+                            <button type="button" id="stopQRButton" class="btn btn-danger" style="margin-left: 10px;" disabled="true">Cancelar</button>
+                        </div>                    
+                    </div>
+                    <div id="videoContainer" style="display: none;" class="mb-3">
+                        <video id="videoElement" width="300" height="200" autoplay></video>
+                    </div>
+
+
+                    <div class="mb-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
+                    </div>
+
+
+                    
+                    <div class="mb-3">
+                        <label for="categoria">Categoria</label>
+                        <select class="form-control" id="categoria" name="categoria" required onchange="toggleInput()">
+                            <option value="" disabled selected>Seleccionar Categoria</option>
+                            <% categorias.forEach(categoria => { %>
+                                <option value="<%= categoria %>"><%= categoria %></option>
+                            <% }); %>
+                            <option value="Input">--Nueva Categoría--</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3" id="inputContainer" style="display: none;">
+                        <label for="nuevaCategoria">Nueva Categoría</label>
+                        <input type="text" class="form-control" id="nuevaCategoria" name="nuevaCategoria" required>
+                    </div>
+                    
+
+                    <div class="mb-3">
+                    <label for="peso" class="form-label">Peso Neto (gramos)</label>
+                    <input type="text" class="form-control" id="peso" name="peso" placeholder="Peso Neto" required pattern="[0-9]+" title="Por favor, introduce solo números enteros (por ejemplo, 10 o 2000)">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="precio" class="form-label">Precio (euros)</label>
+                        <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Por favor, introduce solo números enteros o con 2 decimales (por ejemplo, 10 o 10.50)">
+                    </div>                
+
+                    <div class="mb-3">
+                        <label for="ingredientes" class="form-label">Ingredientes</label>
+                        <input type="text" class="form-control" id="ingredientes" name="ingredientes" placeholder="Ingredientes" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="valorNutricional" class="form-label">Valor Nutricional</label>
+                        <input type="text" class="form-control" id="valorNutricional" name="valorNutricional" placeholder="Valor Nutricional" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="stock" class="form-label">Unidades</label>
+                        <input type="number" class="form-control" id="stock" min="0" name="stock" placeholder="stock" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <input name="imagen" type="file" id="fileInput" accept="image/*" onchange="uploadAndDisplay(event)" required>
+                        <div id="dropArea" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+                            Suelta la imagen aquí
+                        </div>
+                        <div id="imageContainer" ></div>
+                    </div>
+
+                                
+                    <button type="submit" class="btn btn-primary btn-block">Registrar Producto</button>
+                </form>
+                </div>
             </div>
-            <div class="card-body">
-
-                <%if (productMessage) {%>
-                    <p style="color:#FF0000; text-align: center;" id="productMessage"><%= productMessage %></p>
-                  <% } %>
-
-            <form action="/subirProducto" method="POST" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="codigoBarra" class="form-label">Codigo de Barra:</label>
-                    <div class="mb-3" style="display: flex; align-items: center;">
-                        <input id="codigoBarra" name="codigoBarra" required>
-                        <button type="button" id="scanQRButton" class="btn btn-primary" style="margin-left: 10px;">Escanear QR</button>
-                        <button type="button" id="stopQRButton" class="btn btn-danger" style="margin-left: 10px;" disabled="true">Cancelar</button>
-                    </div>
-                                        
-                </div>
-
-                <div id="videoContainer" style="display: none;" class="mb-3">
-                    <video id="videoElement" width="300" height="200" autoplay></video>
-                </div>
-
-
-                <div class="mb-3">
-                <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
-                </div>
-
-
-                
-                <div class="mb-3">
-                    <label for="categoria">Categoria</label>
-                    <select class="form-control" id="categoria" name="categoria" required onchange="toggleInput()">
-                        <option value="" disabled selected>Seleccionar Categoria</option>
-                        <% categorias.forEach(categoria => { %>
-                            <option value="<%= categoria %>"><%= categoria %></option>
-                        <% }); %>
-                        <option value="Input">--Nueva Categoría--</option>
-                    </select>
-                </div>
-                
-                <div class="mb-3" id="inputContainer" style="display: none;">
-                    <label for="nuevaCategoria">Nueva Categoría</label>
-                    <input type="text" class="form-control" id="nuevaCategoria" name="nuevaCategoria" required>
-                </div>
-                
-
-                <div class="mb-3">
-                <label for="peso" class="form-label">Peso Neto (gramos)</label>
-                <input type="text" class="form-control" id="peso" name="peso" placeholder="Peso Neto" required pattern="[0-9]+" title="Por favor, introduce solo números enteros (por ejemplo, 10 o 2000)">
-                </div>
-
-                <div class="mb-3">
-                    <label for="precio" class="form-label">Precio (euros)</label>
-                    <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Por favor, introduce solo números enteros o con 2 decimales (por ejemplo, 10 o 10.50)">
-                </div>                
-
-                <div class="mb-3">
-                    <label for="ingredientes" class="form-label">Ingredientes</label>
-                    <input type="text" class="form-control" id="ingredientes" name="ingredientes" placeholder="Ingredientes" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="valorNutricional" class="form-label">Valor Nutricional</label>
-                    <input type="text" class="form-control" id="valorNutricional" name="valorNutricional" placeholder="Valor Nutricional" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="stock" class="form-label">Unidades</label>
-                    <input type="number" class="form-control" id="stock" min="0" name="stock" placeholder="stock" required>
-                </div>
-
-                <div class="mb-3">
-                    <input name="imagen" type="file" id="fileInput" accept="image/*" onchange="uploadAndDisplay(event)" required>
-                    <div id="dropArea" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
-                        Suelta la imagen aquí
-                    </div>
-                    <div id="imageContainer" ></div>
-                </div>
-
-                            
-                <button type="submit" class="btn btn-primary btn-block">Registrar Producto</button>
-            </form>
             </div>
         </div>
         </div>
-    </div>
-    </div>
-</body>
+    </body>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script src="/js/escanearBarra.js"></script>
 </html>
 
 

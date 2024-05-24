@@ -7,29 +7,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles del Usuario</title>
     <link rel="stylesheet" href="/stylesheets/profile.css">
+    <script src="/js/profile.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="usuario">
-            <div class="info-container">
-                <h2>Detalles del Usuario</h2>
-                <p>Email: <%= user.email %></p>
-                <p>Nombre: <%= user.nombre %></p>
-                <p>Apellidos: <%= user.apellidos %></p>
-                <p>DNI: <%= user.dni %></p>
-                <p>Edad: <%= user.edad %></p>
+        <form action="editarUser" method="post">
+            <div class="usuario">
+                <div class="info-container">
+                    <h2>Detalles del Usuario</h2>
+                    <p>- Email: <span id="email"><%= user.email %></span></p>
+                    <p>- Nombre: <span id="nombre"><%= user.nombre %></span></p>
+                    <p>- Apellidos: <span id="apellidos"><%= user.apellidos %></span></p>
+                    <p>- DNI: <span id="dni"><%= user.dni %></span></p>
+                    <p>- Edad: <span id="edad"><%= user.edad %></span></p>
+                </div>
+                <div class="imagen-container">
+                    <img src="<%= qr %>">
+                </div>
             </div>
-            <div class="imagen-container">
-                <img src="<%= qr %>">
+            <div class="button-container">
+                <button type="button" class="btn btn-primary " id="editar-btn" onclick="habilitarEdicion()">Editar</button>
+                <button type="submit" class="btn btn-success hidden" id="guardar-btn">Guardar</button>
+                <button type="button" class="btn btn-warning hidden" id="cancelar-btn" onclick="cancelarEdicion()">Cancelar</button>
             </div>
-        </div>
-    </div>
+        </form>
 
+        <form action="/eliminarUser" method="post" onsubmit="return confirmarEnvio()">
+            <input type="hidden" name="userId" value="<%= user._id %>">
+            <button type="submit" id="eliminar-btn" class="btn btn-danger">Eliminar Ususario</button>
+        </form>
+
+        <% if (user.rol==="Cliente") {%>
+            <div class="reservas">
+                <h2>Reservas</h2>
+                <div class="reserva-header">
+                    <span>Hora</span>
+                    <span style="margin-left: -50px;">Cantidad</span>
+                    <span></span>
+                </div>
+                <% reservas.forEach(reserva => { %>
+                    <div class="reserva-item">
+                        <span><%= reserva.hora %></span>
+                        <span><%= reserva.cantidad %></span>
+                        <form action="/eliminarReserva" method="POST">
+                            <input type="hidden" name="_id" value="<%= reserva._id %>">
+                            <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+                        </form>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
 </body>
 </html>
 
 
 
 <% include partials/_footer %>
-
-

@@ -14,7 +14,7 @@
     
 
 </head>
-<body>
+<body class="header">
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="/">Tienda de Alimentación</a>
@@ -52,15 +52,23 @@
 
             <!-- Utiliza mr-auto en el contenedor del botón -->
             <ul class="navbar-nav">
+                <% if (user) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reservar">Reservar Pan</a>
+                    </li>
+                <% } %>
                 <% if (!user) { %>
                     <li class="nav-item mr-auto">
                         <a class="nav-link btn btn-primary" href="/signin">Acceder</a>
-                    </li>                                
+                    </li>
                     <!-- Opciones de navegación para usuarios no registrados -->
                 <% } else if (user.rol === "Empleado") { %>
                     <!-- Opciones de navegación para Empleados -->
                     <li class="nav-item">
                         <a class="nav-link" href="/profile">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/escanearCliente">Vender</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Log out</a>
@@ -70,6 +78,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/profile">Perfil</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/escanearCliente">Vender</a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="/validar">Validar</a>
                     </li>

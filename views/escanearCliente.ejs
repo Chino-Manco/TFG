@@ -1,0 +1,44 @@
+<% include partials/_header %>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botones Gigantes</title>
+    <link rel="stylesheet" href="/stylesheets/escanearCliente.css">
+
+</head>
+<body class="escanearCliente">
+    <form action="/escanearCliente" method="post">
+        <div class="button-container">
+            <div class="button-wrapper">
+                <span class="button-text">Si se deja el campo DNI vacio se cobrara sin los datos del cliente</span>
+                <button type="submit" class="giant-button" onclick="handleButtonClick('Button 1')">
+                    <img src="/icons/cajero.png" alt="Icon 1">
+                    <span class="button-text">Vender</span>
+                </button>
+            </div>
+            <div class="button-wrapper">
+                <div class="mb-3">
+                    <label for="dni" class="form-label">Codigo QR o DNI:</label>
+                    <div class="mb-3" style="display: flex; align-items: center;">
+                        <input id="codigoBarra" name="dni">
+                        <button type="button" id="scanQRButton" class="btn btn-primary" style="margin-left: 10px;">
+                            <img src="/icons/QR.png" alt="Icon 2">
+                        </button>
+                        <button type="button" id="stopQRButton" class="btn btn-danger" style="margin-left: 10px;" disabled>Cancelar</button>
+                    </div>
+                </div>
+                <div id="videoContainer" style="display: none;" class="mb-3">
+                    <video id="videoElement" width="300" height="200" autoplay></video>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.18.6/umd/index.min.js"></script>
+    <script src="/js/escanearQR.js"></script>
+</body>
+</html>
+<% include partials/_footer %>

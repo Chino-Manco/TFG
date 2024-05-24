@@ -1,0 +1,55 @@
+<% include partials/_header %>
+
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <link rel="stylesheet" href="/stylesheets/reservar.css">
+  </head>
+  <body>
+    <div class="time-container">
+      <% 
+        let startHour = 10;
+        let endHour = 24;
+        for (let hour = startHour; hour < endHour; hour++) {
+          for (let minute = 0; minute < 60; minute += 30) {
+
+            let barras=16;
+
+            let displayHour = hour < 10 ? '0' + hour : hour;
+            let displayMinute = minute < 10 ? '0' + minute : minute;
+            let timeString = displayHour + ':' + displayMinute;
+
+            reservas.forEach(reserva => {
+              if (reserva.hora === timeString)
+                barras -= reserva.cantidad;
+            })
+      %>
+      <% if (barras>0) { %>
+        <div class="time-div">
+      <% } else { %>
+        <div class="time-div vacio">
+      <% } %>
+          <p><%= timeString %> - Quedan <%= barras %> barras libres</p>
+          <form action="/reservar" method="POST">
+            <input type="hidden" name="hora" value="<%= timeString %>">
+
+            <% if (user.rol==="Cliente") {
+              if (barras>0) { %>
+                <input type="number" name="cantidad" min="0" max="<%= barras %>" required>
+                <button type="submit">Reservar</button>
+              <% } else { %>
+                <input type="number" name="cantidad" min="0" max="<%= barras %>" disabled>
+                <button type="submit" disabled>Reservar</button>
+            <% }} %>
+          </form>
+        </div>
+      <% 
+          }
+        }
+      %>
+    </div>
+  </body>
+</html>
+
+<% include partials/_footer %>

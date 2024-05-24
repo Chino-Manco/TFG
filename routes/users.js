@@ -2,8 +2,10 @@ let express= require('express');
 const router = express.Router();
 const passport = require('passport');
 const user = require('../models/user');
+const Reserva = require('../models/reserva');
 const QRCode = require('qrcode');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 const app = express();
 
@@ -56,11 +58,25 @@ router.post('/signin', passport.authenticate('local-signin', {
 
 router.get('/profile',isAuthenticated, async (req, res, next) => {
   if (req.user!=null){
+    let reservas = [];
+    if (req.user.rol==="Cliente"){
 
-    const email= req.user.email; 
-    const nombre= req.user.nombre;
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+      const formattedDate = `${yyyy}-${mm}-${dd}`; // Fecha en formato 'yyyy-mm-dd'
+  
+      reservas = await Reserva.find({ 
+        fecha: new Date(formattedDate), 
+        cliente: req.user._id 
+      }).sort({ hora: 1 });
+    }
+
+
+    const dni= req.user.dni;
     
-    QRCode.toFile('./public/qr/qrcode'+ nombre +'.png', email, {
+    QRCode.toFile('./public/qr/qrcode'+ dni +'.png', dni, {
       color: {
         dark: '#000',  // Puntos negros
         light: '#0000' // Fondo transparente
@@ -70,7 +86,7 @@ router.get('/profile',isAuthenticated, async (req, res, next) => {
       console.log('¡Código QR generado exitosamente!');
     });
 
-    res.render('profile',{qr: "/qr/qrcode"+ nombre +".png", user: req.user});
+    res.render('profile',{qr: "/qr/qrcode"+ dni +".png", user: req.user, reservas});
 
   } else {
     res.redirect('/');
@@ -82,121 +98,43 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/');
 });
 
+router.post('/editarUser', async (req, res) => {
+  const email = req.body.email;
 
-
-router.get('/modificar_usuario', async (req, res) => {
-  if (req.user!=null){
-    if (req.user.rol==="Administrador"){
-      try {
-        const users = await user.find();
-        res.render('modificar_user', { users: users });
-      } catch (error) {
-        console.error('Error al cargar usuarios:', error);
-        req.flash('error', 'Ha ocurrido un error al cargar los usuarios');
-        res.redirect('/');
-      }
-    }else {
-      res.redirect('/profile');
-    }
-  } else {
-    res.redirect('/');
-  }
-});
-
-router.post('/modificar_usuario', async (req, res) => {
-  const { user: userId, password, rol } = req.body;
-  const newUser = new user();
   try {
-    // Buscar el usuario por su ID
-    const existingUser = await user.findById(userId);
+    const editUser= await user.findOne({email : email});
 
-    if (!existingUser) {
+    if (!editUser) {
       req.flash('error', 'El usuario no existe');
-      return res.redirect('/modificar_usuario');
+      return res.redirect('/catalogo');
+    }else {
+      editUser.nombre=req.body.nombre;
+      editUser.apellidos=req.body.apellidos;
+      editUser.edad=req.body.edad;
+
+      await editUser.save();
     }
 
-    // Modificar los datos del usuario
-    if (password) {
-      existingUser.password = newUser.encryptPassword(password);
-    }
-    if (rol) {
-      existingUser.rol = rol;
-      //Si se cambia a Administrador se elimina el usuario de las asignaturas
-      if (existingUser.rol==="Administrador"){
-        const asignaturas =await Asignatura.find();
-
-        try {
-  
-          for (const asignatura of asignaturas) {
-            asignatura.usuarios = asignatura.usuarios.filter(Id => Id.toString() !== userId.toString())
-            await asignatura.save();
-          }
-    
-        } catch (error) {
-          console.error('Error al eliminar usuario de asignatura:', error);
-          // Manejar el error
-          res.redirect('/error');
-        }
-      }
-    }
-
-    
-
-
-    await existingUser.save();
-
-    req.flash('success', 'Usuario modificado correctamente');
-    const users = await user.find();
-    res.render('admin_profile', { users: users });
+    res.redirect('/profile');
   } catch (error) {
     console.error('Error al modificar usuario:', error);
     req.flash('error', 'Ha ocurrido un error al modificar el usuario');
-    res.redirect('/modificar_usuario');
+    res.redirect('/catalogo');
   }
 });
 
-router.get('/delete_user', async (req, res) => {
-  if (req.user!=null){
-    if (req.user.rol==="Administrador"){
-      try {
-        const users = await user.find();
-        res.render('delete_user', { users });
-      } catch (error) {
-        console.error('Error al cargar usuarios:', error);
-        req.flash('error', 'Ha ocurrido un error al cargar los usuarios');
-        res.redirect('/');
-      }
-    } else {
-      res.redirect('/prfile');
-    }
-  } else {
-    res.redirect('/');
-  }
-});
+router.post('/eliminarUser', isAuthenticated, async (req, res) => {
 
-router.post('/delete_user', isAuthenticated, async (req, res) => {
   try {
-    const asignaturas =await Asignatura.find();
     const userId = req.body.userId;
-
-    try {
-
-      for (const asignatura of asignaturas) {
-        asignatura.usuarios = asignatura.usuarios.filter(Id => Id.toString() !== userId.toString())
-        await asignatura.save();
-      }
-
-    } catch (error) {
-      console.error('Error al eliminar usuario de asignatura:', error);
-      // Manejar el error
-      res.redirect('/error');
-    }
+    const dni= req.user.dni;
 
 
+    //borrar QR
+    fs.unlink("public/qr/qrcode"+ dni +".png", async (err) => {});
     await user.findByIdAndDelete(userId);
-    req.flash('success', 'Usuario eliminado correctamente');
-    // Redirigir al administrador a la página admin_profile.ejs
-    res.redirect('/profile');
+    res.redirect('/logout');
+
   } catch (error) {
     console.error('Error al eliminar usuario:', error);
     req.flash('error', 'Ha ocurrido un error al eliminar el usuario');

@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+.content-container {
+    width: 90%;
+    max-width: 1200px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+.table-container {
+    margin-top: 30px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+th, td {
+    padding: 15px 20px;
+    border: 1px solid #ddd;
+}
+th {
+    background-color: #f2f2f2;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+tr:hover {
+    background-color: #f1f1f1;
+}
+.cliente-info {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+#videoContainer {
+    margin-top: 20px;
+}
+.total-global {
+    font-weight: bold;
+    text-align: right; /* Alinear elementos a la derecha */
+    padding-top: 20px;
+}
+
+.total-global input {
+    width: 10%; /* Establecer un ancho específico */
+    margin-left: 10px; /* Agregar un margen entre los elementos */
+    margin-bottom: 10px; /* Agregar margen inferior */
+}
+.codigo{
+    width: 20%;
+}
+.nombre{
+    width: 50%;
+}
+.precio .totalProducto .cantidad{
+    width:10%;
+}
+img{
+    width: 20px;
+    height: auto;
+}
+.botones {
+    width: 100%; 
+    display: flex;
+    justify-content: space-between; 
+}
+
+.botones button {
+    margin: 0 10px;
+}

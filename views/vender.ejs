@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/vender.css" rel="stylesheet">
+</head>
+<body>
+
+
+    <div class="content-container">
+        <form action="/vender" method="post">
+            <% if (typeof cliente !== 'undefined') { %>
+            <div class="cliente-info">
+                <strong>Nombre y Apellidos:</strong> <%= cliente.nombre %> <%= cliente.apellidos %><br>
+                <strong>DNI:</strong> <%= cliente.dni %>
+            </div>
+            <% } %>
+
+            <div class="form-group">
+                <label for="codigoBarra" class="form-label">Código de Barra:</label>
+                <div style="display: flex; align-items: center;">
+                    <input id="codigoBarra" name="codigoBarra">
+                    <button type="button" id="confirmarProductoButton" class="btn btn-primary" style="margin-left: 10px;" onclick="anadirProducto()">Confirmar Producto</button>
+                    <button type="button" id="scanQRButton" class="btn btn-primary" style="margin-left: 10px;">Escanear código</button>
+                    <button type="button" id="stopQRButton" class="btn btn-danger" style="margin-left: 10px;" disabled="true">Cancelar</button>
+                </div>
+            </div>
+
+            <div id="videoContainer" style="display: none;" class="form-group">
+                <video id="videoElement" width="300" height="200" autoplay></video>
+            </div>
+
+            <div class="table-container">
+                <table id="productosTable">
+                    <thead>
+                        <tr>
+                            <th class="codigo">Código de Barra</th>
+                            <th class="cantidad">Cantidad</th>
+                            <th class="nombre">Nombre</th>
+                            <th class="precio">Precio</th>
+                            <th class="totalProducto">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Añadir filas según sea necesario -->
+                    </tbody>
+                </table>
+                <div class="total-global">
+                    <div>
+                        Total a pagar: <span id="totalGlobal">0.00</span>€
+                    </div>
+                    <div>
+                        Entregar<input type="number" id="precioPagar" name="precio" min="0" placeholder="0.00" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Por favor, introduce solo números enteros o con 2 decimales (por ejemplo, 10 o 10.50)" required>€
+                    </div>
+                    <div>
+                        Cambio: <span id="cambio">0.00</span>€
+                    </div>
+                </div>
+                <div class="botones">
+                    <button type="button" class="btn btn-warning" onclick="window.location.href='/escanearCliente'">Cancelar compra</button>
+                    <button type="submit" class="btn btn-success" onclick="return validar()">Pagar</button>
+                </div>
+            </div>
+        </form>
+
+        <input type="hidden" id="codigos" value="<%= productosV.map(producto => producto.codigoBarra).join(',') %>">
+        <input type="hidden" id="nombres" value="<%= productosV.map(producto => producto.nombre).join(',') %>">
+        <input type="hidden" id="precios" value="<%= productosV.map(producto => producto.precio).join(',') %>">
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script src="/js/escanearBarra.js"></script>
+    <script src="/js/vender.js"></script>
+
+
+</body>
+</html>

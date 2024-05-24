@@ -36,7 +36,7 @@ body {
     flex-direction: column; /* Apilar los elementos verticalmente */
     flex-grow: 1; /* Hacer que la información ocupe todo el espacio restante */
 }
-.info-container h2 {
+h2 {
     margin-top: 0;
     margin-bottom: 10px;
     font-size: 24px;
@@ -45,6 +45,47 @@ body {
 }
 .info-container p {
     margin: 5px 0;
+    font-size: 16px;
+    color: #666;
+}
+.hidden {
+    display: none; /* Ocultar elementos */
+}
+.button-container {
+    margin-bottom: 20px;
+}
+/* Estilos para la sección de reservas */
+/* Estilos para la sección de reservas */
+/* Estilos para la sección de reservas */
+/* Estilos para la sección de reservas */
+/* Estilos para la sección de reservas */
+.reservas {
+    margin-top: 20px;
+    text-align: center; /* Centrar el contenido */
+}
+
+.reserva-header {
+    display: flex;
+    justify-content: space-between; /* Distribuir los elementos horizontalmente */
+    border-bottom: 1px solid #ccc; /* Agregar borde inferior */
+    padding-bottom: 5px; /* Añadir un poco de espacio entre el encabezado y los elementos */
+}
+
+.reserva-header span {
+    font-weight: bold; /* Hacer el texto del encabezado en negrita */
+    font-size: 18px; /* Tamaño de fuente ligeramente más grande */
+}
+
+.reserva-item {
+    display: flex; /* Usar flexbox para colocar la hora y la cantidad en una sola línea */
+    align-items: center; /* Centrar verticalmente los elementos */
+    justify-content: space-between; /* Distribuir los elementos horizontalmente */
+    border: 1px solid #ccc; /* Agregar bordes */
+    margin-bottom: 5px;
+    padding: 10px; /* Agregar relleno */
+}
+
+.reserva-item span {
     font-size: 16px;
     color: #666;
 }
