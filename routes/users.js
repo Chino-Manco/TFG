@@ -59,6 +59,7 @@ router.post('/signin', passport.authenticate('local-signin', {
 router.get('/profile',isAuthenticated, async (req, res, next) => {
   if (req.user!=null){
     let reservas = [];
+    let hora="";
     if (req.user.rol==="Cliente"){
 
       const today = new Date();
@@ -67,6 +68,10 @@ router.get('/profile',isAuthenticated, async (req, res, next) => {
       const dd = String(today.getDate()).padStart(2, '0');
       const formattedDate = `${yyyy}-${mm}-${dd}`; // Fecha en formato 'yyyy-mm-dd'
   
+      const hours = String(today.getHours()).padStart(2, '0');
+      const minutes = String(today.getMinutes()).padStart(2, '0');
+      hora = `${hours}:${minutes}`; // Hora en formato 'HH:MM'
+      
       reservas = await Reserva.find({ 
         fecha: new Date(formattedDate), 
         cliente: req.user._id 
@@ -86,7 +91,7 @@ router.get('/profile',isAuthenticated, async (req, res, next) => {
       console.log('¡Código QR generado exitosamente!');
     });
 
-    res.render('profile',{qr: "/qr/qrcode"+ dni +".png", user: req.user, reservas});
+    res.render('profile',{qr: "/qr/qrcode"+ dni +".png", user: req.user, reservas, hora});
 
   } else {
     res.redirect('/');
@@ -132,6 +137,13 @@ router.post('/eliminarUser', isAuthenticated, async (req, res) => {
 
     //borrar QR
     fs.unlink("public/qr/qrcode"+ dni +".png", async (err) => {});
+
+
+    const reservas= await Reserva.find({cliente: userId});
+    for (const reserva of reservas){
+      await Reserva.findByIdAndDelete(reserva._id);
+    }
+
     await user.findByIdAndDelete(userId);
     res.redirect('/logout');
 

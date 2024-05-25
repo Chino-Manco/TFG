@@ -11,8 +11,26 @@ router.get('/reservar', async (req, res, next) => {
     const dd = String(today.getDate()).padStart(2, '0');
     const formattedDate = `${yyyy}-${mm}-${dd}`; // Fecha en formato 'yyyy-mm-dd'
 
-    const reservas= await Reserva.find({fecha: new Date (formattedDate)});
-    res.render('reservar', {reservas});
+    const hours = String(today.getHours()).padStart(2, '0');
+    const minutes = String(today.getMinutes()).padStart(2, '0');
+    const hora = `${hours}:${minutes}`; // Hora en formato 'HH:MM'
+
+    const reservasParaEliminar = await Reserva.find({ fecha: { $ne: new Date(formattedDate) } });
+
+    const reservas= await Reserva.find({fecha: new Date (formattedDate)}).sort({ hora: 1 });
+    for (const borrar of reservasParaEliminar){
+        await Reserva.findByIdAndDelete(borrar._id);
+    }
+    const clientes = [];
+    const ids= [];
+    for (const reserva of reservas) {
+        const cliente = await User.findById(reserva.cliente);
+        if (!ids.includes(cliente._id.toString())){
+            ids.push(cliente._id.toString());
+            clientes.push(cliente);
+        }
+    }
+    res.render('reservar', {reservas, hora, clientes});
 });
 
 router.post('/reservar', async (req, res, next) => {

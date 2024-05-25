@@ -88,6 +88,14 @@ document.getElementById('precioPagar').addEventListener('input', () => {
 });
 
 function validar(){
+
+    const total= document.getElementById('totalGlobal');
+    if (Number(total.textContent)===0){
+        alert("No hay ningún producto en la lista");
+        return false;
+    }
+
+
     const cambio = document.getElementById('cambio');
     if (Number(cambio.textContent)<0){
         alert("El dinero entregado es inferior al total a pagar");
@@ -116,3 +124,14 @@ document.querySelectorAll('tbody tr').forEach(row => {
     updateTotal(row);
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Seleccionar todos los formularios de reserva
+    const forms = document.querySelectorAll('.pagar-form');
+    forms.forEach(form => {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Evitar el envío del formulario
+        alert('Compra realizada con éxito'); // Mostrar alerta
+        form.submit(); // Enviar el formulario después de la alerta
+      });
+    });
+  });
