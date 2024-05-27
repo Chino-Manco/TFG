@@ -29,48 +29,56 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/escanearCliente', (req, res, next) => {
-    res.render('escanearCliente');
+    if (!req.user)
+        res.redirect('/');
+    else{
+        if (req.user.rol==="Cliente")
+            res.redirect('/');
+        else {
+            res.render('escanearCliente');
+        }
+    }
 });
 
 router.post('/escanearCliente', async (req, res, next) => {
-    const dni = req.body.dni;
-    if (dni){
-        const productosV= await Producto.find();
-        const cliente= await User.findOne({dni: dni});
+
+    if (!req.user)
+        res.redirect('/');
+    else{
+        if (req.user.rol==="Cliente")
+            res.redirect('/');
+        else {
+            const dni = req.body.dni;
+            if (dni){
+                const productosV= await Producto.find();
+                const cliente= await User.findOne({dni: dni});
+                
+                if (cliente)
+                    res.render('vender', {cliente, productosV});
+                else 
+                    res.redirect('/vender')
         
-        if (cliente)
-            res.render('vender', {cliente, productosV});
-        else 
-            res.redirect('/vender')
-
-    } else {
-        res.redirect('/vender')
+            } else {
+                res.redirect('/vender')
+            }
+        }
     }
-
 });
 
 router.get('/vender', async (req, res, next) => {
-    const productosV = await Producto.find();
-    res.render('vender', {productosV});
+
+    if (!req.user)
+        res.redirect('/');
+    else{
+        if (req.user.rol==="Cliente")
+            res.redirect('/');
+        else {
+            const productosV = await Producto.find();
+            res.render('vender', {productosV});
+        }
+    }
 });
 
-router.post('/vender', async (req, res, next) => {
-    const codigos= req.body.codigo;
-    const cantidades= req.body.cantidad;
-    let n=0;
-
-    codigos.forEach(async codigo => {
-        const p= await Producto.findOne({codigoBarra: codigo});
-        p.stock-=cantidades[n];
-        if (p.stock<0)
-            p.stock=0;
-        n++;
-        await p.save();
-    });
-
-    res.redirect('/catalogo');
-
-});
 
 
 router.get('/catalogo', async (req, res, next) => {
@@ -95,131 +103,166 @@ router.get('/informacion/:codigoBarra', async (req, res, next) => {
 
 router.post('/informacionEditada', upload.single('imagen'),  async (req, res, next) => {
 
-    const codigo = req.body.codigo;
-    const stock = req.body.stock;
-    const modifyProduct= await Producto.findOne({codigoBarra: codigo});
-    modifyProduct.stock=stock;
+    if (!req.user)
+        res.redirect('/');
+    else{
+        if (req.user.rol==="Cliente")
+            res.redirect('/');
+        else {
 
-    if (req.user.rol==="Administrador"){
-
-        const nombre = req.body.nombre;
-        const precio = req.body.precio;
-        const categoria = req.body.categoria;
-        const peso = req.body.peso;
-        const ingredientes = req.body.ingredientes;
-        const nutricional = req.body.nutricional;
-
-        modifyProduct.nombre=nombre;
-        modifyProduct.precio=precio;
-        modifyProduct.categoria=categoria;
-        modifyProduct.peso=peso;
-        modifyProduct.precio=precio;
-        modifyProduct.ingredientes=ingredientes;
-        modifyProduct.valorNutricional=nutricional;
-
-        if (req.file) {
-            fs.unlink("public" +modifyProduct.imagen, async (err) => {
-                if (err) {
-                    console.error('Error al eliminar la foto:', err);
+            const codigo = req.body.codigo;
+            const stock = req.body.stock;
+            const modifyProduct= await Producto.findOne({codigoBarra: codigo});
+            modifyProduct.stock=stock;
+        
+            if (req.user.rol==="Administrador"){
+        
+                const nombre = req.body.nombre;
+                const precio = req.body.precio;
+                const categoria = req.body.categoria;
+                const peso = req.body.peso;
+                const ingredientes = req.body.ingredientes;
+                const nutricional = req.body.nutricional;
+        
+                modifyProduct.nombre=nombre;
+                modifyProduct.precio=precio;
+                modifyProduct.categoria=categoria;
+                modifyProduct.peso=peso;
+                modifyProduct.precio=precio;
+                modifyProduct.ingredientes=ingredientes;
+                modifyProduct.valorNutricional=nutricional;
+        
+                if (req.file) {
+                    fs.unlink("public" +modifyProduct.imagen, async (err) => {
+                        if (err) {
+                            console.error('Error al eliminar la foto:', err);
+                        }
+                        console.log('Foto eliminada:', modifyProduct.imagen);
+                        modifyProduct.imagen='/uploads/'+ req.file.filename;
+                        await modifyProduct.save();
+                    });
+                } else  {
+                    await modifyProduct.save();
                 }
-                console.log('Foto eliminada:', modifyProduct.imagen);
-                modifyProduct.imagen='/uploads/'+ req.file.filename;
+            } else {
                 await modifyProduct.save();
-            });
-        } else  {
-            await modifyProduct.save();
+            }
+        
+            res.redirect('/informacion/'+modifyProduct.codigoBarra);
         }
-    } else {
-        await modifyProduct.save();
     }
-
-    res.redirect('/catalogo');
 });
 
 // Ruta para mostrar el formulario de producto
 router.get('/subirProducto', async (req, res) => {
-
-    const categorias = await Producto.distinct('categoria').sort();
-    const productMessage = req.query.productMessage || "";
-
-
-    res.render('subirProducto', { categorias, productMessage}); 
+    if (!req.user)
+        res.redirect('/');
+    else{
+        if (req.user.rol==="Administrador"){    
+            const categorias = await Producto.distinct('categoria').sort();
+            const productMessage = req.query.productMessage || "";
+            res.render('subirProducto', { categorias, productMessage});
+        }
+        else {
+            res.redirect('/');
+        }
+    }
 });
 
 
 // Ruta para procesar el formulario de producto
 router.post('/subirProducto', upload.single('imagen'), async (req, res) => {
-    try {
+
+    if (!req.user)
+        res.redirect('/');
+    else{
+        if (req.user.rol==="Administrador"){
+            try {
 
 
 
-        var encontrado= false;
-        var categoria=req.body.categoria;
-        const codigoBarra=req.body.codigoBarra;
-        const nombre=req.body.name;
-
-        const productos= await Producto.find();
-
-        for (const producto of productos){
-            if (producto.codigoBarra===codigoBarra || producto.nombre===nombre)
-                encontrado=true;
-        }
-
-
-        if (encontrado===false){
-
-            if (categoria==="Input"){
-                categoria=req.body.nuevaCategoria;
+                var encontrado= false;
+                var categoria=req.body.categoria;
+                const codigoBarra=req.body.codigoBarra;
+                const nombre=req.body.name;
+        
+                const productos= await Producto.find();
+        
+                for (const producto of productos){
+                    if (producto.codigoBarra===codigoBarra || producto.nombre===nombre)
+                        encontrado=true;
+                }
+        
+        
+                if (encontrado===false){
+        
+                    if (categoria==="Input"){
+                        categoria=req.body.nuevaCategoria;
+                    }
+                    
+                    // Crear una nueva producto con los datos del formulario
+                    const nuevoProducto = new Producto({
+                        codigoBarra: codigoBarra,
+                        nombre: nombre,
+                        categoria: categoria.toUpperCase(),
+                        peso: req.body.peso,
+                        precio: req.body.precio,
+                        ingredientes: req.body.ingredientes,
+                        valorNutricional: req.body.valorNutricional,
+                        imagen: '/uploads/'+ req.file.filename,
+                        stock:req.body.stock
+                    });
+        
+        
+                    // Guardar el producto en la base de datos
+                    await nuevoProducto.save();
+        
+                    // Redirigir de vuelta a la página sug.ejs
+                    res.redirect('/catalogo');
+                } else {
+                    res.redirect('/subirProducto?productMessage=Codigo de barra o nombre ya registrado');
+                }
+        
+            } catch (error) {
+                console.error('Error al crear el producto:', error);
+                // Manejar el error
+                res.redirect('/error'); // Redirigir a una página de error si ocurre un error
             }
-            
-            // Crear una nueva producto con los datos del formulario
-            const nuevoProducto = new Producto({
-                codigoBarra: codigoBarra,
-                nombre: nombre,
-                categoria: categoria.toUpperCase(),
-                peso: req.body.peso,
-                precio: req.body.precio,
-                ingredientes: req.body.ingredientes,
-                valorNutricional: req.body.valorNutricional,
-                imagen: '/uploads/'+ req.file.filename,
-                stock:req.body.stock
-            });
-
-
-            // Guardar el producto en la base de datos
-            await nuevoProducto.save();
-
-            // Redirigir de vuelta a la página sug.ejs
-            res.redirect('/catalogo');
-        } else {
-            res.redirect('/subirProducto?productMessage=Codigo de barra o nombre ya registrado');
         }
-
-    } catch (error) {
-        console.error('Error al crear el producto:', error);
-        // Manejar el error
-        res.redirect('/error'); // Redirigir a una página de error si ocurre un error
+        else {
+            res.redirect('/');
+        }
     }
 });
 
 
 // Ruta para eliminar una producto por su ID
 router.post('/eliminarProducto', async (req, res) => {
-    const productoId = req.body.id;
-    const producto= await Producto.findById(productoId);
 
-    fs.unlink("public" +producto.imagen, async (err) => {
-        if (err) {
-            console.error('Error al eliminar la foto:', err);
+    if (!req.user)
+        res.redirect('/');
+    else{
+        if (req.user.rol==="Administrador"){
+            const productoId = req.body.id;
+            const producto= await Producto.findById(productoId);
+        
+            fs.unlink("public" +producto.imagen, async (err) => {
+                if (err) {
+                    console.error('Error al eliminar la foto:', err);
+                }
+            });
+            try {
+                // Eliminar la producto de la base de datos por su ID
+                await Producto.findByIdAndDelete(productoId);
+                res.redirect("/catalogo");
+            } catch (error) {
+                console.error('Error al borrar la producto:', error);
+                res.sendStatus(500); // Enviar estado de error si ocurre algún problema
+            }
         }
-    });
-    try {
-        // Eliminar la producto de la base de datos por su ID
-        await Producto.findByIdAndDelete(productoId);
-        res.redirect("/catalogo");
-    } catch (error) {
-        console.error('Error al borrar la producto:', error);
-        res.sendStatus(500); // Enviar estado de error si ocurre algún problema
+        else {
+            res.redirect('/');
+        }
     }
 });
 

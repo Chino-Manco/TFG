@@ -1,0 +1,36 @@
+<% include partials/_header %>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Usuario</title>
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+    <script src="/js/profile.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="reservas">
+            <h2>Ventas</h2>
+            <div class="reserva-header">
+                <span>Fecha y Hora</span>
+                <span style="margin-left: -50px;">Precio Total de Compra</span>
+            </div>
+
+            <% ventas.forEach( venta => { %>
+                <a href="/ticket/<%= venta._id %>">
+                    <div class="reserva-item">
+                        <span><%= new Date(venta.fechaHora).toLocaleString() %></span>
+                        <span><%= Number(venta.total).toFixed(2) %>€</span>
+                    </div>
+                </a>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+<% include partials/_footer %>

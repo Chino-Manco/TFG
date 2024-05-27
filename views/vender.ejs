@@ -17,6 +17,7 @@
             <div class="cliente-info">
                 <strong>Nombre y Apellidos:</strong> <%= cliente.nombre %> <%= cliente.apellidos %><br>
                 <strong>DNI:</strong> <%= cliente.dni %>
+                <input type="hidden" name="dni" value="<%= cliente.dni %>">
             </div>
             <% } %>
 
@@ -52,6 +53,7 @@
                 <div class="total-global">
                     <div>
                         Total a pagar: <span id="totalGlobal">0.00</span>€
+                        <input type="hidden" id="totalHidden" name="total">
                     </div>
                     <div>
                         Entregar<input type="number" id="precioPagar" name="precio" min="0" placeholder="0.00" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Por favor, introduce solo números enteros o con 2 decimales (por ejemplo, 10 o 10.50)" required>€
@@ -67,9 +69,9 @@
             </div>
         </form>
 
-        <input type="hidden" id="codigos" value="<%= productosV.map(producto => producto.codigoBarra).join(',') %>">
-        <input type="hidden" id="nombres" value="<%= productosV.map(producto => producto.nombre).join(',') %>">
-        <input type="hidden" id="precios" value="<%= productosV.map(producto => producto.precio).join(',') %>">
+        <input type="hidden" id="codigos" value="<%= productosV.map(producto => producto.codigoBarra).join(',-,') %>">
+        <input type="hidden" id="nombres" value="<%= productosV.map(producto => producto.nombre).join(',-,') %>">
+        <input type="hidden" id="precios" value="<%= productosV.map(producto => producto.precio).join(',-,') %>">
     </div>
 
 

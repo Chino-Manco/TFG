@@ -1,0 +1,52 @@
+.container {
+    max-width: 800px; /* Ancho máximo del contenedor */
+    margin: 20px auto; /* Centrar el contenedor en la página */
+    padding: 20px; /* Espacio alrededor del contenido */
+    font-family: Arial, sans-serif; /* Fuente */
+    background-color: #f9f9f9; /* Fondo del contenedor */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+/* Estilos para el título principal */
+h2{
+    color: #333; /* Color del texto */
+    font-size: 24px; /* Tamaño de la fuente */
+    margin-bottom: 20px; /* Espacio inferior */
+    font-weight: bold;
+}
+
+/* Estilos para los párrafos */
+p {
+    margin-bottom: 10px; /* Espacio inferior */
+    font-size: 16px; /* Tamaño de la fuente */
+    color: #555; /* Color del texto */
+}
+
+/* Estilos para la tabla de productos */
+table {
+    width: 100%; /* Ancho completo de la tabla */
+    border-collapse: collapse; /* Unir bordes */
+    margin-bottom: 20px; /* Espacio inferior */
+}
+
+table, th, td {
+    border: 1px solid #ddd; /* Bordes de la tabla */
+}
+
+th, td {
+    padding: 10px; /* Espacio interno */
+    text-align: left; /* Alinear texto a la izquierda */
+}
+
+th {
+    background-color: #f2f2f2; /* Fondo del encabezado */
+}
+
+/* Estilos para el precio total de compra */
+.precio-total {
+    font-size: 18px; /* Tamaño de la fuente */
+    font-weight: bold; /* Negrita */
+    color: #ff4500; /* Color del texto */
+    text-align: right; /* Alinear a la derecha */
+    margin-top: 20px; /* Espacio superior */
+}

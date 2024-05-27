@@ -13,6 +13,7 @@ require('./database');
 require('./passport/local-auth');
 
 var productosRouter = require('./routes/productos');
+var ventasRouter = require('./routes/ventas');
 var reservasRouter = require('./routes/reservas');
 var usersRouter = require('./routes/users');
 // view engine setup
@@ -48,6 +49,7 @@ app.use((req, res, next) => {
 
 //routes
 app.use('/', usersRouter);
+app.use('/', ventasRouter);
 app.use('/', reservasRouter);
 app.use('/', productosRouter);
 

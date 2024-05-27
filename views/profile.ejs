@@ -20,6 +20,9 @@
                     <p>- Apellidos: <span id="apellidos"><%= user.apellidos %></span></p>
                     <p>- DNI: <span id="dni"><%= user.dni %></span></p>
                     <p>- Edad: <span id="edad"><%= user.edad %></span></p>
+                    <% if (user.rol!=="Cliente") {%>
+                        <p>- Rol: <span id="edad"><%= user.rol %></span></p>
+                    <% } %>
                 </div>
                 <div class="imagen-container">
                     <img src="<%= qr %>">
@@ -37,7 +40,34 @@
             <button type="submit" id="eliminar-btn" class="btn btn-danger">Eliminar Ususario</button>
         </form>
 
+
+
+        <div class="reservas">
+            <% if (user.rol==="Cliente") {%>
+                <h2>Compras</h2>
+            <% } else { %>
+                <h2>Ventas</h2>
+            <% } %>
+
+            <div class="reserva-header">
+                <span>Fecha y Hora</span>
+                <span style="margin-left: -50px;">Precio Total de Compra</span>
+            </div>
+
+            <% ventas.forEach( venta => { %>
+                <a href="/ticket/<%= venta._id %>">
+                    <div class="reserva-item">
+                        <span><%= new Date(venta.fechaHora).toLocaleString() %></span>
+                        <span><%= Number(venta.total).toFixed(2) %>€</span>
+                    </div>
+                </a>
+            <% }) %>
+        </div>
+
+
+
         <% if (user.rol==="Cliente") {%>
+
             <div class="reservas">
                 <h2>Reservas</h2>
                 <div class="reserva-header">

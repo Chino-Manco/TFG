@@ -54,14 +54,12 @@ h2 {
 .button-container {
     margin-bottom: 20px;
 }
-/* Estilos para la sección de reservas */
-/* Estilos para la sección de reservas */
-/* Estilos para la sección de reservas */
-/* Estilos para la sección de reservas */
-/* Estilos para la sección de reservas */
+
 .reservas {
     margin-top: 20px;
     text-align: center; /* Centrar el contenido */
+    border: 1px solid black;
+    padding: 10px ;
 }
 
 .reserva-header {
@@ -84,7 +82,6 @@ h2 {
     margin-bottom: 5px;
     padding: 10px; /* Agregar relleno */
 }
-
 .reserva-item span {
     font-size: 16px;
     color: #666;

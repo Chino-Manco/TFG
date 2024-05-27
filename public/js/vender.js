@@ -14,12 +14,13 @@ function updateTotalGlobal() {
         totalGlobal += parseFloat(totalCell.textContent);
     });
     document.getElementById('totalGlobal').textContent = totalGlobal.toFixed(2);
+    document.getElementById('totalHidden').value=totalGlobal.toFixed(2);
     actualizarCambio();
 }
 
-const codigos= document.getElementById('codigos').value.split(",");
-const nombres= document.getElementById('nombres').value.split(",");
-const precios= document.getElementById('precios').value.split(",").map(Number);
+const codigos= document.getElementById('codigos').value.split(",-,");
+const nombres= document.getElementById('nombres').value.split(",-,");
+const precios= document.getElementById('precios').value.split(",-,").map(Number);
 
 
 
@@ -108,7 +109,7 @@ function actualizarCambio(){
     const cambio= document.getElementById('cambio');
     const totalGlobal= document.getElementById('totalGlobal');
     let precio= document.getElementById('precioPagar');
-    cambio.textContent = Number(precio.value) - Number(totalGlobal.textContent);
+    cambio.textContent = (Number(precio.value) - Number(totalGlobal.textContent)).toFixed(2);
 }
 
         // Añadir eventos a los inputs para calcular automáticamente

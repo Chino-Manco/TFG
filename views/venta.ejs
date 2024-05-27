@@ -1,0 +1,44 @@
+<% include partials/_header %>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="/stylesheets/venta.css">
+</head>
+<body>
+    <div class="container">
+        <% if (typeof cliente !== 'undefined') { %>
+            <h2>Datos del cliente</h2>
+            <p>Nombre: <%= cliente.nombre %> <%= cliente.apellidos %></p>
+            <p>DNI: <%= cliente.dni %></p>
+        <% } %>
+        <h2>Productos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Precio Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% let n=0;
+                productos.forEach(producto => { %>
+                <tr>
+                    <td><%= producto.codigoBarra %></td>
+                    <td><%= producto.nombre %></td>
+                    <td><%= venta.cantidades[n++] %></td>
+                    <td><%= producto.precio %>€</td>
+                    <td><%= (producto.precio * venta.cantidades[n-1]).toFixed(2) %>€</td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <p class="precio-total">Precio Total de Compra: <%= Number(venta.total).toFixed(2) %>€</p>
+    </div>
+</body>
+</html>
+
+<% include partials/_footer %>
