@@ -5,6 +5,22 @@ const Producto = require('../models/producto');
 const express = require('express');
 const app = express();
 
+//Renderiza la pagina de vender con todos los productos que hay en la base de datos con la intencion de guardarlo en un hidden input
+router.get('/vender', async (req, res, next) => {
+
+    if (!req.user)
+        res.redirect('/');
+    else{
+        if (req.user.rol==="Cliente")
+            res.redirect('/');
+        else {
+            const productosV = await Producto.find();
+            res.render('vender', {productosV});
+        }
+    }
+});
+
+//Guarda todos los datos de compra ademas de reducir el stock correspondiente
 router.post('/vender', async (req, res, next) => {
     
     if (!req.user)
@@ -24,7 +40,7 @@ router.post('/vender', async (req, res, next) => {
             let n=0;
 
             
-
+            //Reduce el Stock
             for (const codigo of codigos){
                 const p= await Producto.findOne({codigoBarra: codigo});
                 productos.push(p);
@@ -51,6 +67,7 @@ router.post('/vender', async (req, res, next) => {
     }
 });
 
+//Renderiza los datos de su respectiva compra
 router.get('/ticket/:id', async (req, res, next) => {
     if (!req.user)
         res.redirect('/');
@@ -58,17 +75,22 @@ router.get('/ticket/:id', async (req, res, next) => {
         const id= req.params.id;
         const venta= await Venta.findById(id);
 
-        const productos = [];
-        for (const ids of venta.productos){
-            const producto= await Producto.findById(ids);
-            productos.push(producto);
+        if (req.user._id.toString()===venta.cliente.toString() ||
+        req.user._id.toString()===venta.empleado.toString()){
+            const productos = [];
+            for (const ids of venta.productos){
+                const producto= await Producto.findById(ids);
+                productos.push(producto);
+            }
+            
+            if (venta.cliente!==null){
+                const cliente= await User.findById(venta.cliente);
+                res.render('venta', {venta, cliente, productos});
+            } else 
+                res.render('venta', {venta, productos});
+        } else {
+            res.redirect('/');
         }
-        
-        if (venta.cliente!==null){
-            const cliente= await User.findById(venta.cliente);
-            res.render('venta', {venta, cliente, productos});
-        } else 
-            res.render('venta', {venta, productos});
     }
 });
 

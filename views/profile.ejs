@@ -35,10 +35,12 @@
             </div>
         </form>
 
-        <form action="/eliminarUser" method="post" onsubmit="return confirmarEnvio()">
-            <input type="hidden" name="userId" value="<%= user._id %>">
-            <button type="submit" id="eliminar-btn" class="btn btn-danger">Eliminar Ususario</button>
-        </form>
+        <% if (user.rol!=="Administrador"){ %>
+            <form action="/eliminarUser" method="post" onsubmit="return confirmarEnvio()">
+                <input type="hidden" name="userId" value="<%= user._id %>">
+                <button type="submit" id="eliminar-btn" class="btn btn-danger">Eliminar Ususario</button>
+            </form>
+        <% } %>
 
 
 

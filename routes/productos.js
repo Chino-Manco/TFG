@@ -28,6 +28,7 @@ router.get('/', (req, res, next) => {
     res.redirect('/catalogo');
 });
 
+//Muestra la pantalla en la que se debe escanear al cliente justo antes de la compra
 router.get('/escanearCliente', (req, res, next) => {
     if (!req.user)
         res.redirect('/');
@@ -40,6 +41,7 @@ router.get('/escanearCliente', (req, res, next) => {
     }
 });
 
+//Comprueba si existe dni registrado y envia el objeto del cliente a la pantalla de vender
 router.post('/escanearCliente', async (req, res, next) => {
 
     if (!req.user)
@@ -65,27 +67,14 @@ router.post('/escanearCliente', async (req, res, next) => {
     }
 });
 
-router.get('/vender', async (req, res, next) => {
 
-    if (!req.user)
-        res.redirect('/');
-    else{
-        if (req.user.rol==="Cliente")
-            res.redirect('/');
-        else {
-            const productosV = await Producto.find();
-            res.render('vender', {productosV});
-        }
-    }
-});
-
-
-
+//Renderiza el catalogo con todos los productos
 router.get('/catalogo', async (req, res, next) => {
     const productos = await Producto.find().sort({ categoria: 1, nombre: 1 });
     res.render('catalogo', {productos});
 });
 
+//Renderiza el catalogo pero solo con los productos que coinciden con la busqueda
 router.get('/catalogo/:nombre', async (req, res, next) => {
     const nombre= req.params.nombre;
     const productos = await Producto.find({nombre: new RegExp(nombre, 'i')}).sort({ categoria: 1, nombre: 1 });
@@ -93,14 +82,14 @@ router.get('/catalogo/:nombre', async (req, res, next) => {
 });
 
 
-
+//Renderiza la pagina de informacion con los detalles del producto seleccionado
 router.get('/informacion/:codigoBarra', async (req, res, next) => {
     const codigoBarra= req.params.codigoBarra;
     const producto= await Producto.findOne({ codigoBarra: codigoBarra });
     res.render('informacion', {producto});
 });
 
-
+//Actualiza la nueva informacion proporcionada del producto
 router.post('/informacionEditada', upload.single('imagen'),  async (req, res, next) => {
 
     if (!req.user)
@@ -109,12 +98,13 @@ router.post('/informacionEditada', upload.single('imagen'),  async (req, res, ne
         if (req.user.rol==="Cliente")
             res.redirect('/');
         else {
-
+            //Solo se puede modificar el Stock siendo empleado
             const codigo = req.body.codigo;
             const stock = req.body.stock;
             const modifyProduct= await Producto.findOne({codigoBarra: codigo});
             modifyProduct.stock=stock;
         
+            //El administrador puede actualizar todos los datos menos el codigo de barra
             if (req.user.rol==="Administrador"){
         
                 const nombre = req.body.nombre;
@@ -126,12 +116,13 @@ router.post('/informacionEditada', upload.single('imagen'),  async (req, res, ne
         
                 modifyProduct.nombre=nombre;
                 modifyProduct.precio=precio;
-                modifyProduct.categoria=categoria;
+                modifyProduct.categoria=categoria.toUpperCase();
                 modifyProduct.peso=peso;
                 modifyProduct.precio=precio;
                 modifyProduct.ingredientes=ingredientes;
                 modifyProduct.valorNutricional=nutricional;
         
+                //Elimina la antigua imagen del producto en caso de que se actualice tambien
                 if (req.file) {
                     fs.unlink("public" +modifyProduct.imagen, async (err) => {
                         if (err) {
@@ -153,7 +144,7 @@ router.post('/informacionEditada', upload.single('imagen'),  async (req, res, ne
     }
 });
 
-// Ruta para mostrar el formulario de producto
+// Ruta para mostrar el formulario de creacion de nuevo producto
 router.get('/subirProducto', async (req, res) => {
     if (!req.user)
         res.redirect('/');
@@ -170,7 +161,7 @@ router.get('/subirProducto', async (req, res) => {
 });
 
 
-// Ruta para procesar el formulario de producto
+// Guarda el nuevo producto
 router.post('/subirProducto', upload.single('imagen'), async (req, res) => {
 
     if (!req.user)
@@ -187,13 +178,14 @@ router.post('/subirProducto', upload.single('imagen'), async (req, res) => {
                 const nombre=req.body.name;
         
                 const productos= await Producto.find();
-        
+
+                //Busca si hay alguna coincidencia en el codigo de barras con un producto ya registrado
                 for (const producto of productos){
                     if (producto.codigoBarra===codigoBarra || producto.nombre===nombre)
                         encontrado=true;
                 }
         
-        
+                //Si no hay coincidencia procede a guardar el nuevo producto, en caso contrario lo reenvia de vuelta a la pagina con un mensaje de error
                 if (encontrado===false){
         
                     if (categoria==="Input"){

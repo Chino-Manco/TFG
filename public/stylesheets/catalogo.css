@@ -20,6 +20,15 @@ body {
     text-align: center;
 }
 
+h3 {
+    white-space: nowrap;        /* No permite saltos de línea */
+    overflow: hidden;           /* Oculta el contenido que sobrepasa el ancho del contenedor */
+    text-overflow: ellipsis;    /* Añade puntos suspensivos (...) al final del texto que se trunca */
+}
+h2{
+    font-weight: bold;
+}
+
 .producto .img-container {
     width: 200px; /* Establecer el ancho fijo */
     height: 200px; /* Establecer la altura fija */

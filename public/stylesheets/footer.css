@@ -17,5 +17,5 @@ footer p {
     float: right;
     color: white; /* Cambia el color del enlace */
     text-decoration: none; /* Quita el subrayado */
-    margin-right: 10px; /* Añade un margen a la derecha para separar del texto */
+    margin-right: 10px;
 }

@@ -1,3 +1,4 @@
+//Función de habilitación de edición de stock
 function modificarStock(){
     document.getElementById("editar-btn").classList.add("hidden");
     document.getElementById("guardar-btn").classList.remove("hidden");
@@ -8,6 +9,7 @@ function modificarStock(){
 
 }
 
+//Función de habilitación de edición de la informacion del producto
 function habilitarEdicion() {
     // Ocultar botón de edición y mostrar botones de guardar y cancelar
     document.getElementById("editar-btn").classList.add("hidden");
@@ -27,7 +29,7 @@ function habilitarEdicion() {
     var nutricionalElemento = document.getElementById("producto-nutricional");
     var stockElemento = document.getElementById("producto-stock");
 
-    // Convertir h2 y p en input
+    // Convertir h2 y p en input y textarea
     nombreElemento.innerHTML = '<input type="text" id="nombre-input" name="nombre" value="' + nombreElemento.innerText + '">';
     precioElemento.innerHTML = '<input type="text" id="precio-input" name="precio" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Por favor, introduce solo números enteros o con 2 decimales (por ejemplo, 10 o 10.50)" value="' + precioElemento.innerText + '">';
     codigoElemto.innerHTML = '<input type="text" id="codigo-input" value="' + codigoElemto.innerText + '" disabled>'
@@ -39,7 +41,7 @@ function habilitarEdicion() {
 
 }
 
-
+//Cancelación del modo de edición
 function cancelarEdicion() {
     document.getElementById("guardar-btn").classList.add("hidden");
     document.getElementById("cancelar-btn").classList.add("hidden");
@@ -51,42 +53,4 @@ function cancelarEdicion() {
 
     // Recargar la página para cancelar la edición
     location.reload();
-}
-
-
-function chooseFile() {
-    document.getElementById('fileInput').click();
-}
-
-function uploadAndDisplay(event) {
-    const fileInput = event.target;
-    const imageContainer = document.getElementById('imageContainer');
-
-    const file = fileInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function() {
-            const imageUrl = reader.result;
-            imageContainer.innerHTML = `<img src="${imageUrl}" alt="Foto cargada">`;;
-        }
-    }
-}
-
-function handleDragOver(event) {
-    event.preventDefault();
-    const dropArea = document.getElementById('dropArea');
-    dropArea.style.border = '2px dashed #aaa';
-}
-
-function handleDrop(event) {
-event.preventDefault();
-const file = event.dataTransfer.files[0];
-if (file.type.startsWith('image/')) {
-    const fileInput = document.getElementById('fileInput');
-    fileInput.files = event.dataTransfer.files;
-    uploadAndDisplay({ target: fileInput });
-} else {
-    alert('Por favor, arrastre y suelte solo archivos de imagen.');
-}
 }

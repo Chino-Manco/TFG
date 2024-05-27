@@ -1,4 +1,4 @@
-
+//Actualiza el subtotal de cada fila
 function updateTotal(row) {
     const cantidad = row.querySelector('.cantidad').value;
     const precio = row.querySelector('.precio').textContent;
@@ -18,19 +18,18 @@ function updateTotalGlobal() {
     actualizarCambio();
 }
 
+//Obtiene la lista de codigos, nombres y precios que previamente se pusieron en un input hidden separados por ,-,
 const codigos= document.getElementById('codigos').value.split(",-,");
 const nombres= document.getElementById('nombres').value.split(",-,");
 const precios= document.getElementById('precios').value.split(",-,").map(Number);
 
 
-
-
-
+//Comprueba si el codigo de barra coincide con alguno de los productos registrados y en caso afirmativo llama a la funcion de añadir fila
 function anadirProducto(){
     const cod= document.getElementById('codigoBarra');
     if (codigos.includes(cod.value)){
         let n=codigos.indexOf(cod.value);
-        addRow(codigos[n], 1, nombres[n], precios[n], true);
+        addRow(codigos[n], 1, nombres[n], precios[n]);
 
 
     } else {
@@ -40,8 +39,8 @@ function anadirProducto(){
 
 }
 
-
-function addRow(codigoBarra = "", cantidad = 1, nombre = "", precio = 0.00, editable = true) {
+//Funcion de añadir filas
+function addRow(codigoBarra = "", cantidad = 1, nombre = "", precio = 0.00) {
     const tableBody = document.querySelector('#productosTable tbody');
     const newRow = document.createElement('tr');
     const enviar= document.getElementById('enviar');
@@ -60,43 +59,42 @@ function addRow(codigoBarra = "", cantidad = 1, nombre = "", precio = 0.00, edit
         <td><span id="total" class="total" >${(cantidad * precio).toFixed(2)}</span></td>
     `;
 
+
     tableBody.appendChild(newRow);
 
-
     newRow.querySelector('.delete-row-btn').addEventListener('click', function() {
-        // Elimina la fila padre del botón
+        // Elimina la fila del botón
         this.closest('tr').remove();
         // Después de eliminar la fila, actualiza los totales
         updateTotalGlobal();
     });
 
+    updateTotal(newRow);
 
-    if (editable) {
-
+    // Añadir eventos a los inputs de cantidad para calcular automáticamente
+    newRow.querySelector('.cantidad').addEventListener('input', () => {
         updateTotal(newRow);
+    });
 
-        // Añadir eventos a los inputs de cantidad para calcular automáticamente
-        newRow.querySelector('.cantidad').addEventListener('input', () => {
-            updateTotal(newRow);
-        });
-    }
 }
 
 
-
+//Cada vez que se actualice el dinero entregado se modifica automaticamente el cambio
 document.getElementById('precioPagar').addEventListener('input', () => {
     actualizarCambio();
 });
 
+//Se asegura que la compra sea valida
 function validar(){
 
+    //Verifica que haya al menos 1 producto en la lista de la compra
     const total= document.getElementById('totalGlobal');
     if (Number(total.textContent)===0){
         alert("No hay ningún producto en la lista");
         return false;
     }
 
-
+    //Verifica que el dinero entregado no sea inferior al total que debe pagar
     const cambio = document.getElementById('cambio');
     if (Number(cambio.textContent)<0){
         alert("El dinero entregado es inferior al total a pagar");
@@ -105,6 +103,7 @@ function validar(){
     return true;
 }
 
+//Funcion que actualiza el cambio
 function actualizarCambio(){
     const cambio= document.getElementById('cambio');
     const totalGlobal= document.getElementById('totalGlobal');
@@ -112,7 +111,7 @@ function actualizarCambio(){
     cambio.textContent = (Number(precio.value) - Number(totalGlobal.textContent)).toFixed(2);
 }
 
-        // Añadir eventos a los inputs para calcular automáticamente
+// Añadir eventos a los inputs para calcular automáticamente
 document.querySelectorAll('.cantidad, .precio').forEach(input => {
     input.addEventListener('input', () => {
         const row = input.closest('tr');
@@ -125,6 +124,7 @@ document.querySelectorAll('tbody tr').forEach(row => {
     updateTotal(row);
 });
 
+//Muestra alerta antes de enviar el form
 document.addEventListener('DOMContentLoaded', () => {
     // Seleccionar todos los formularios de reserva
     const forms = document.querySelectorAll('.pagar-form');

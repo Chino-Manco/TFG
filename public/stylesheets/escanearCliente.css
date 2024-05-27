@@ -1,4 +1,3 @@
-/* Agrega este código a tu archivo CSS (escanearCliente.css) */
 
 .button-container {
     display: flex;
@@ -20,9 +19,9 @@
 .giant-button {
     width: 100%;
     height: 100%;
-    padding: 10px; /* Ajusta el padding según tu preferencia */
-    background-color: #3498db; /* Color de fondo del botón */
-    color: white; /* Color del texto */
+    padding: 10px; 
+    background-color: #3498db;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;

@@ -28,13 +28,14 @@ router.get('/signin', (req, res, next) => {
     res.redirect('/'); 
 });
 
+//Renderiza la pagina de validar junto con la lista de Users que no sean administrador
 router.get('/validar', async (req, res, next) => {
   if (!req.user)
     res.redirect('/');
   else {
     if (req.user.rol==="Administrador"){
 
-      const users= await user.find().sort({ email: 1});
+      const users= await user.find({ rol: { $ne: "Administrador" } }).sort({ email: 1});
       res.render('validar', {users});
 
     } else {
@@ -43,6 +44,7 @@ router.get('/validar', async (req, res, next) => {
   }
 });
 
+//Actualiza cada user con su nuevo rol
 router.post('/validar', async (req, res, next) => {
   if (!req.user)
     res.redirect('/');
@@ -78,6 +80,7 @@ router.post('/signin', passport.authenticate('local-signin', {
   failureFlash: true
 }));
 
+//Muestra la pagina del perfil del usuario con sus compras o ventas y los clientes ademas las reservas de pan
 router.get('/profile',isAuthenticated, async (req, res, next) => {
   if (req.user!=null){
     let reservas = [];
@@ -129,6 +132,7 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/');
 });
 
+//Ruta para actualizar los datos del usuario a excepcion del email y dni
 router.post('/editarUser', async (req, res) => {
   if (!req.user)
     res.redirect('/');
@@ -158,6 +162,7 @@ router.post('/editarUser', async (req, res) => {
   }
 });
 
+//Ruta para eliminar usuario
 router.post('/eliminarUser', isAuthenticated, async (req, res) => {
   if (!req.user)
     res.redirect('/');
@@ -167,7 +172,7 @@ router.post('/eliminarUser', isAuthenticated, async (req, res) => {
       const dni= req.user.dni;
 
 
-      //borrar QR
+      //Borra el QR del usuario primero antes de eliminar el user
       fs.unlink("public/qr/qrcode"+ dni +".png", async (err) => {});
 
 

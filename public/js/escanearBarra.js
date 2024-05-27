@@ -42,7 +42,7 @@ async function iniciarCamaraYEscaneo() {
 
 
 
-
+//Una vez obtenido el valor del código se detiene
 function detectedHandler(result) {
     if (result.codeResult && !cameraStopped) {
         codigoBarraInput.value = result.codeResult.code;

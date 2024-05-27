@@ -28,6 +28,7 @@ function moverCorreos(origenId, destinoId) {
     ordenarLista('empleados');
 }
 
+//Funcion para deseleccionar todos los correos seleccionados
 function deseleccionarTodos() {
     const todosLosCorreos = document.querySelectorAll('li');
     todosLosCorreos.forEach(correo => {
@@ -35,12 +36,15 @@ function deseleccionarTodos() {
     });
 }
 
+//Funcion para marcar y dejar seleccionado el correo
 document.addEventListener('click', function(event) {
     if (event.target.tagName.toLowerCase() === 'li') {
         event.target.classList.toggle('selected');
     }
 });
 
+
+//Funcion para enviar los correos de ambas listas en diferentes arrays
 function enviarFormulario() {
     const clientes = Array.from(document.getElementById('clientes').querySelectorAll('li')).map(li => li.dataset.email);
     const empleados = Array.from(document.getElementById('empleados').querySelectorAll('li')).map(li => li.dataset.email);
