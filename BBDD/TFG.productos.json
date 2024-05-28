@@ -1,0 +1,240 @@
+[{
+  "_id": {
+    "$oid": "663cf8d247c5fe48103fdd0a"
+  },
+  "codigoBarra": "8410128000400",
+  "stock": 54,
+  "nombre": "Agua Bezoya 1,5L",
+  "categoria": "BEBIDAS",
+  "peso": "1500",
+  "precio": 1,
+  "ingredientes": "Composición analítica: Manantial Bezoya: Composición química (mg/l): Residuo seco a 180ºC, 27; Bicarbonatos, <5; Cloruros, 0.84; Calcio, 2.86; Magnesio, 0.36; Sodio, 2.04; Sílice, 9.51. (C.N.TA. Mayo 2014)",
+  "valorNutricional": "Composición analítica: Manantial Bezoya: Composición química (mg/l): Residuo seco a 180ºC, 27; Bicarbonatos, <5; Cloruros, 0.84; Calcio, 2.86; Magnesio, 0.36; Sodio, 2.04; Sílice, 9.51. (C.N.TA. Mayo 2014)",
+  "imagen": "/uploads/agua.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66479d2b8306b63ac0fd1ca9"
+  },
+  "codigoBarra": "8410199023070",
+  "stock": 15,
+  "nombre": "Lay's Campesinas",
+  "categoria": "PATATAS FRITAS",
+  "peso": "150",
+  "precio": 2,
+  "ingredientes": "Patatas, aceites vegetales (girasol y colza en proporciones variables), aroma a vegetales y especias [azúcar, aromas, sal, cebolla en polvo, cloruro de potasio, pimentón en polvo, tomate en polvo, ajo en polvo, corrector de acidez (ácido cítrico), perejil, pimentón ahumado en polvo, aceite de girasol ahumado, colorante (extracto de pimentón) pimiento jalapeño en polvo], antioxidantes (extracto de romero, ácido ascórbico, extracto rico en tocoferoles, ácido cítrico)​",
+  "valorNutricional": "100 g 30 g** IR* 30g Valor energético 2137 kJ 512 kcal 641 kJ 154 kcal 8% Grasas 29 g 9 g 13% de las cuales saturadas 2,2 g 1,7 g 3% Hidratos de carbono 53 g 16 g de los cuales azúcares 3,1 g 0,9 g 1 % Fibra alimentaria 5,2 g 1,6 g Proteínas 6,0 g 1,8 g Sal 0,65 g 0,19 g 3%",
+  "imagen": "/uploads/Campesinas.png",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "664f904901a0a831ccd55dd9"
+  },
+  "codigoBarra": "8410128000400asd",
+  "stock": 7,
+  "nombre": "Pan",
+  "categoria": "PANADERIA",
+  "peso": "250",
+  "precio": 0.65,
+  "ingredientes": "Harina de trigo, agua, sal, levadura y enzimas.\r\nAlérgenos: Gluten\r\nTrazas: Puede-contener-trazas-de-frutos-secos-soja-y-sesamo",
+  "valorNutricional": "Tamaño de la Porción    100 g\r\n\r\nPor porción    % IR*\r\nEnergía    1247 kJ    15%\r\n            298 kcal\r\nGrasa    1,20 g    2%\r\nGrasa Saturada    0,200 g    1%\r\nGrasa Monoinsaturada    0,200 g\r\nGrasa Poliinsaturada    0,700 g\r\nCarbohidratos    58,00 g    22%\r\nAzúcar    2,70 g    3%\r\nFibra    2,9 g\r\nProteína    10,30 g    21%\r\nSal    4,75 g    79%\r\n",
+  "imagen": "/uploads/pan.png",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6650e30741e2fd06c0b42bee"
+  },
+  "codigoBarra": "5901234123457",
+  "stock": 1,
+  "nombre": "pipas G tijuana",
+  "categoria": "FRUTOS SECOS",
+  "peso": "50",
+  "precio": 0.5,
+  "ingredientes": "pipas",
+  "valorNutricional": "100 kcal",
+  "imagen": "/uploads/pipas.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665257259d39551450719a41"
+  },
+  "codigoBarra": "8410128160319",
+  "stock": 95,
+  "nombre": "Agua Bezoya 0,5L",
+  "categoria": "BEBIDAS",
+  "peso": "500",
+  "precio": 0.5,
+  "ingredientes": " Ingredientes: Composición analítica: Manantial Bezoya: Composición química (mg/l): Residuo seco a 180ºC, 27; Bicarbonatos, <5; Cloruros, 0.84; Calcio, 2.86; Magnesio, 0.36; Sodio, 2.04; Sílice, 9.51. (C.N.TA. Mayo 2014).",
+  "valorNutricional": "Valor Nutricional: Composición analítica: Manantial Bezoya: Composición química (mg/l): Residuo seco a 180ºC, 27; Bicarbonatos, <5; Cloruros, 0.84; Calcio, 2.86; Magnesio, 0.36; Sodio, 2.04; Sílice, 9.51. (C.N.TA. Mayo 2014).",
+  "imagen": "/uploads/bezoya_0.5.png",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665258879d39551450719a4b"
+  },
+  "codigoBarra": "8888002076009",
+  "stock": 81,
+  "nombre": "Lata Coca Cola",
+  "categoria": "BEBIDAS",
+  "peso": "330",
+  "precio": 1,
+  "ingredientes": "Agua carbonatada, color caramelo IV, café en polvo, acidulante (ácido fosfórico), saborizantes (saborizantes naturales, cafeína), edulcorantes (sucralosa, acesulfame k) , conservantes (benzoato de sodio, sorbato de potasio), antiespumante (polidimetilsiloxano).",
+  "valorNutricional": "Información nutricional    Como se vende\r\npor 100 g / 100 ml    Como se vende\r\npor porción (250 ml)    Comparado con: Bebidas de cola\r\n\r\nEnergía    190 kj (45 kcal)    475 kj (112 kcal)    +288 %\r\nGrasas    0 g    0 g    \r\nGrasas saturadas    0 g    0 g    \r\nHidratos de carbono    11,2 g    28 g    +293 %\r\nAzúcares    11,2 g    28 g    +299 %\r\nFibra alimentaria    0 g    0 g    \r\nProteínas    0 g    0 g    -100 %\r\nSal    0 g    0 g    -100 %\r\nAlcohol    0 % vol    0 % vol    \r\nFrutas, verduras, nueces y colza, aceites de nuez y oliva (estimación del análisis de la lista de ingredientes)    0 %    0 %\r\n",
+  "imagen": "/uploads/PH-NIDIA-DORANTES-2-scaled.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665259f19d39551450719a53"
+  },
+  "codigoBarra": "5449000011527",
+  "stock": 100,
+  "nombre": "Lata Fanta Naranja",
+  "categoria": "BEBIDAS",
+  "peso": "330",
+  "precio": 1,
+  "ingredientes": "Agua carbonatada, 8% zumo de naranja a partir de *concentrado, azúcar, acidulantes: ácido cítrico y ácido málico , estabilizantes: E-414, E-444 y E-445, edulcorantes: E-950, aspartamo y E-959, conservador E-202, corrector de acidez: citratos de sodio, aromas naturales de naranja y otros aromas naturales, antioxidante ácido ascórbico y colorante carotenos. Contiene una fuente de fenilalanina.",
+  "valorNutricional": "Ingesta de referencia: *IR = Ingesta de Referencia de un adulto medio (8400 kJ / 2000 kcal).\r\n\r\n100 Mililitros    250 Mililitros\r\nCantidad/Unidad    (VRN)    Cantidad/Unidad    (VRN)\r\n\r\nValor energético\r\n81 kJ    -    203 kJ    2 %\r\nValor energético\r\n19 kcal    -    48 kcal    2 %\r\nGrasas\r\n0 g    -    0 g    0 %\r\nDe los cuales\r\n- saturadas\r\n0 g    -    0 g    0 %\r\nHidratos de carbono\r\n4.5 g    -    11 g    4 %\r\nDe los cuales\r\n- Azúcares\r\n4.5 g    -    11 g    13 %\r\nProteínas\r\n0 g    -    0 g    0 %\r\nSal\r\n0.02 g    -    0.05 g    1 %",
+  "imagen": "/uploads/lata-fanta-naranja.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66525cbe9d39551450719a8d"
+  },
+  "codigoBarra": "8410199019752",
+  "stock": 20,
+  "nombre": "Vinagreta - Lay's",
+  "categoria": "PATATAS FRITAS",
+  "peso": "200",
+  "precio": 2.5,
+  "ingredientes": "patatas, aceites vegetales (maíz y girasol en proporciones variables), aroma a sal y vinagre [aromas, almidón de maíz, sal, acidulantes (ácido cítrico, ácido málico), cloruro potásico, extracto de levadura].",
+  "valorNutricional": "Información nutricional    Como se vende\r\npor 100 g / 100 ml    Comparado con: Chips fritos\r\nEnergía    2121 kJ (507 kcal)    -2 %\r\nGrasas    29,1 g    -2 %\r\nGrasas saturadas    3,6 g    -5 %\r\nHidratos de carbono    55,1 g    +2 %\r\nAzúcares    0,5 g    -69 %\r\nFibra alimentaria    ?\r\nProteínas    6,2 g    +2 %\r\nSal    0,94 g    -24 %\r\nFrutas, verduras, nueces y colza, aceites de nuez y oliva (estimación del análisis de la lista de ingredientes)    0 %\r\n",
+  "imagen": "/uploads/815YbGxmWBL.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66525d559d39551450719a95"
+  },
+  "codigoBarra": "8410199002259 ",
+  "stock": 20,
+  "nombre": "Ruffles Jamón",
+  "categoria": "PATATAS FRITAS",
+  "peso": "212",
+  "precio": 2,
+  "ingredientes": "Batatas, aceite de girasol, sospecha de aroma (sal, lactosa de leche), potenciadores del sabor (inosinato de glutamato monosódico y guanilato disódico), preparaciones de proteínas de soja hidrolizadas para sustancias aromatizantes.",
+  "valorNutricional": "Información nutricional    Como se vende\r\npor 100 g / 100 ml    Comparado con: Patatas-fritas-onduladas-sabor-jamon\r\nEnergía    2197 kJ (525 kcal)    -2 %\r\nGrasas    32,5 g    -3 %\r\nGrasas saturadas    3 g    -21 %\r\nHidratos de carbono    49,6 g    +1 %\r\nAzúcares    1,8 g    +82 %\r\nFibra alimentaria    ?\r\nProteínas    6,5 g    +2 %\r\nSal    1,7 g    +27 %\r\nFrutas, verduras, nueces y colza, aceites de nuez y oliva (estimación del análisis de la lista de ingredientes)    0 %",
+  "imagen": "/uploads/51niIeTdAuL._AC_.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66525dde9d39551450719a9d"
+  },
+  "codigoBarra": "8410199023155 ",
+  "stock": 25,
+  "nombre": "Ruffles York'eso",
+  "categoria": "PATATAS FRITAS",
+  "peso": "150",
+  "precio": 2,
+  "ingredientes": "Patatas, aceites vegetales (maíz, girasol), aroma a jamón y queso (suero de leche en polvo, sal, potenciadores del sabor (glutamato monosódico, guanilato disódico, inosinato disódico), azúcar, aromas (leche, soja), colorante (extracto de pimentón)).\r\nAlérgenos: Leche, Soja",
+  "valorNutricional": "Información nutricional    Como se vende\r\npor 100 g / 100 ml    Como se vende\r\npor porción (30g)    Comparado con: Chips de patatas fritas con sabores\r\nEnergía    2104 kJ (504 kcal)    631 kJ (151 kcal)    -3 %\r\nGrasas    28,4 g    8,52 g    -7 %\r\nGrasas saturadas    3,3 g    0,99 g    -4 %\r\nHidratos de carbono    54 g    16,2 g    +3 %\r\nAzúcares    3,2 g    0,96 g    +50 %\r\nFibra alimentaria    3,5 g    1,05 g    -12 %\r\nProteínas    6,2 g    1,86 g    -1 %\r\nSal    1,6 g    0,48 g    +10 %\r\nFrutas, verduras, nueces y colza, aceites de nuez y oliva (estimación del análisis de la lista de ingredientes)    0 %    0 %\r\n",
+  "imagen": "/uploads/front_es.35.400.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66525e719d39551450719aac"
+  },
+  "codigoBarra": "8413164003848",
+  "stock": 47,
+  "nombre": "Pipas G con sal",
+  "categoria": "FRUTOS SECOS",
+  "peso": "165",
+  "precio": 0.5,
+  "ingredientes": "Francés: Semillas de girasol (88%), sal, harina de arroz (1,5%) y fécula de patata.\r\nTrazas: Leche, Frutos de cáscara, Cacahuetes, Soja",
+  "valorNutricional": "Información nutricional    Como se vende\r\npor 100 g / 100 ml    Como se vende\r\npor porción (165g)    Comparado con: Frutos de cáscara\r\nEnergía    1100 kJ (263 kcal)    1820 kJ (434 kcal)    -56 %\r\nGrasas    22 g    36,3 g    -55 %\r\nGrasas saturadas    2,4 g    3,96 g    -61 %\r\nHidratos de carbono    1,4 g    2,31 g    -92 %\r\nAzúcares    0,8 g    1,32 g    -86 %\r\nFibra alimentaria    ?    ?    \r\nProteínas    13 g    21,4 g    -34 %\r\nSal    10 g    16,5 g    +1621 %\r\nVitamina E (a-tocoferol)    7,7 mg    12,7 mg    -29 %\r\nFrutas, verduras, nueces y colza, aceites de nuez y oliva (estimación del análisis de la lista de ingredientes)    0 %    0 %\r\n",
+  "imagen": "/uploads/front_es.40.400.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66525efa9d39551450719abb"
+  },
+  "codigoBarra": "8413164011874",
+  "stock": 50,
+  "nombre": "Pipas G Baconeras",
+  "categoria": "FRUTOS SECOS",
+  "peso": "165",
+  "precio": 0.5,
+  "ingredientes": "Semillas de girasol, sal, maltodextrina, aromas, potenciadores del sabor (glutamato de monosodio, guanilato disódico, inosinato disódico), azúcar, aromas de humo. Puede contener LECHE, CACAHUETE, SOJA, FRUTOS DE CÁSCARA, TRIGO.",
+  "valorNutricional": "Ingesta de referencia: *IR: Ingesta de referencia de un adulto medio (8 400 kJ/2 000 kcal).\r\n\r\n30 g    100 g\r\nDescripción de la ración    Tamaño de referencia por 30g    Tamaño de referencia por 100g\r\nCantidad/Unidad    (VRN)\r\nCantidad/Unidad    (VRN)\r\nValor energético    \r\n762 kJ    9 %\r\n1089 kJ    -\r\nValor energético    \r\n184 kcal    9 %\r\n263 kcal    -\r\nGrasas    \r\n15 g    22 %\r\n22 g    -\r\nDe los cuales    \r\n- saturadas    \r\n1.6 g    8 %\r\n2.4 g    -\r\nHidratos de carbono    \r\n1 g    1 %\r\n1.4 g    -\r\nDe los cuales    \r\n- Azúcares    \r\n0.5 g    1 %\r\n0.8 g    -\r\nFibra alimentaria    \r\n2.6 g    -\r\n3.8 g    -\r\nProteínas    \r\n9.3 g    19 %\r\n13 g    -\r\nSal    \r\n2.7 g    44 %\r\n3.8 g    -",
+  "imagen": "/uploads/00120975900638____7__1200x1200.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66525f619d39551450719aca"
+  },
+  "codigoBarra": "8413164011775",
+  "stock": 50,
+  "nombre": "Pipas G Aguasal",
+  "categoria": "FRUTOS SECOS",
+  "peso": "165",
+  "precio": 0.5,
+  "ingredientes": "Semillas de girasol, sal. Puede contener CACAHUETE, FRUTOS DE CÁSCARA, LECHE, SOJA.",
+  "valorNutricional": "Ingesta de referencia: *IR: Ingesta de referencia de un adulto medio (8 400 kJ/2 000 kcal).\r\n\r\n30 g    100 g\r\nDescripción de la ración    Tamaño de referencia por 30g    Tamaño de referencia por 100g\r\nCantidad/Unidad    (VRN)\r\nCantidad/Unidad    (VRN)\r\nValor energético    \r\n762 kJ    9 %\r\n1089 kJ    -\r\nValor energético    \r\n184 kcal    22 %\r\n263 kcal    -\r\nGrasas    \r\n15 g    8 %\r\n22 g    -\r\nDe los cuales    \r\n- saturadas    \r\n1.6 g    -\r\n2.4 g    -\r\nHidratos de carbono    \r\n1 g    1 %\r\n1.4 g    -\r\nDe los cuales    \r\n- Azúcares    \r\n0.5 g    1 %\r\n0.8 g    -\r\nFibra alimentaria    \r\n2.6 g    -\r\n3.8 g    -\r\nProteínas    \r\n9.3 g    19 %\r\n13 g    -\r\nSal    \r\n3.9 g    64 %\r\n0.34 g    -",
+  "imagen": "/uploads/00120975900646____7__1200x1200.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66525feb9d39551450719ad2"
+  },
+  "codigoBarra": "8412600100325",
+  "stock": 5,
+  "nombre": "Pan de molde sin corteza BIMBO",
+  "categoria": "PANADERIA",
+  "peso": "450",
+  "precio": 2.6,
+  "ingredientes": "Harina de trigo, agua, levadura, aceite vegetal (girasol), azúcar, sal, gluten de trigo, almidón de maíz, emulgentes (E-471, E-481, E-472e), conservadores (E-282, E-200), vinagre de vino, harina de haba, agente de tratamiento de la harina (E-300, E-341). Puede contener semillas de sésamo y/o soja.",
+  "valorNutricional": "100 g Descripción de la ración Valor medio en 100g Cantidad/Unidad (VRN) Valor energético 968 kJ - Valor energético 229 kcal - Grasas 2.6 g - De los cuales - saturadas 0.7 g - - monoinsaturadas 0.6 g - - poliinsaturadas 1.3 g - Hidratos de carbono 41 g - De los cuales - Azúcares 3.3 g - - Almidón 37 g - Fibra alimentaria 2.8 g - Proteínas 9.3 g - Sal 0.91 g -",
+  "imagen": "/uploads/716lpUzkOiL._AC_UF1000,1000_QL80_.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665260599d39551450719ada"
+  },
+  "codigoBarra": "8433329143257",
+  "stock": 10,
+  "nombre": "Colines",
+  "categoria": "PANADERIA",
+  "peso": "250",
+  "precio": 1,
+  "ingredientes": "Ingredientes: Harina de trigo, agua, levadura, sal y aceite de oliva. Puede contener sésamo, leche y sus derivados (incluida la lactosa), soja, sulfitos y mostaza.",
+  "valorNutricional": "Ingesta de referencia:\r\n* Ingesta de referencia de un adulto medio (8400 kJ/ 2000 kcal)\r\n\r\n                         30 g      100 g\r\nCantidad/Unidad     (VRN)        (VRN)\r\nValor energético    \r\n                              472/111 kJ/kcal    6 %\r\n                           1581/373 kJ/kcal    -\r\nGrasas    \r\n                                0,5 g              1 %\r\n                                1,8 g              -\r\nDe los cuales    \r\n- saturadas    \r\n                                0,2 g              1 %\r\n                                0,5 g              -\r\nHidratos de carbono    \r\n                              23 g                9 %\r\n                              76 g                -\r\nDe los cuales    \r\n- Azúcares    \r\n                                0,7 g              1 %\r\n                                2,2 g              -\r\nFibra alimentaria    \r\n                                1,0 g              -\r\n                                3,3 g              -\r\nProteínas    \r\n                                3,5 g              7 %\r\n                                12 g                -\r\nSal    \r\n                                0,57 g            10 %\r\n                                1,9 g              -\r\n",
+  "imagen": "/uploads/00120655302394____2__1200x1200.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665260b69d39551450719ae6"
+  },
+  "codigoBarra": "8410706000167",
+  "stock": 10,
+  "nombre": "Pan tostado",
+  "categoria": "PANADERIA",
+  "peso": "270",
+  "precio": 2.5,
+  "ingredientes": "Harina de TRIGO 82% - Harina integral de TRIGO - Aceite de girasol alto oleico 2,9% - Azúcar - sal - Levadura - Agente de tratamiento de la harina: ácido ascórbico. Este producto contiene trigo. Puede contener trazas de frutos de cáscara, granos de sésamo y soja.",
+  "valorNutricional": "Ingesta de referencia: Ingesta de referencia de un adulto medio (8400 kJ/2000 kcal)\r\n\r\n                         100 g\r\nCantidad/Unidad     (VRN)\r\nValor energético    \r\n                                1621 kJ         -\r\n                                383 kcal        -\r\nGrasas    \r\n                                4 g                 -\r\nDe los cuales    \r\n- saturadas    \r\n                                0.5 g              -\r\nHidratos de carbono    \r\n                              72 g               -\r\nDe los cuales    \r\n- Azúcares    \r\n                                4.5 g              -\r\nFibra alimentaria    \r\n                                5.6 g              -\r\nProteínas    \r\n                                12 g                -\r\nSal    \r\n                                1.2 g              -\r\n",
+  "imagen": "/uploads/00120656700083____6__1200x1200.jpg",
+  "__v": 0
+}]
