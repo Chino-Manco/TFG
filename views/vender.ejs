@@ -13,6 +13,7 @@
 
     <div class="content-container">
         <form class="pagar-form" action="/vender" method="post">
+            <!--Muestra cliente si el dni que se mando en escanearCliente era el correcto-->
             <% if (typeof cliente !== 'undefined') { %>
             <div class="cliente-info">
                 <strong>Nombre y Apellidos:</strong> <%= cliente.nombre %> <%= cliente.apellidos %><br>
@@ -21,6 +22,7 @@
             </div>
             <% } %>
 
+            <!--Contenedor con el escaneo de codigo de barra, los botones y el input para encontrar un producto registrado-->
             <div class="form-group">
                 <label for="codigoBarra" class="form-label">Código de Barra:</label>
                 <div style="display: flex; align-items: center;">
@@ -30,11 +32,11 @@
                     <button type="button" id="stopQRButton" class="btn btn-danger" style="margin-left: 10px;" disabled="true">Cancelar</button>
                 </div>
             </div>
-
             <div id="videoContainer" style="display: none;" class="form-group">
                 <video id="videoElement" width="300" height="200" autoplay></video>
             </div>
 
+            <!--Tabla con la lista de la compra que se ira añadiendo en tbody segun vaya encontrando productos-->
             <div class="table-container">
                 <table id="productosTable">
                     <thead>
@@ -51,6 +53,8 @@
                     </tbody>
                 </table>
                 <div class="total-global">
+                    <!--El total y el cambio que se actualizan de forma automatica y ademas los botones de cancelar compra y pagar 
+                        (no se permite hasta que haya almenos 1 producto y el dinero entregado sea igual o superior al total)-->
                     <div>
                         Total a pagar: <span id="totalGlobal">0.00</span>€
                         <input type="hidden" id="totalHidden" name="total">
@@ -69,6 +73,7 @@
             </div>
         </form>
 
+        <!--La lista de productos recibido desde back-end se guarda en hidden inputs para poder manejarlo con mayor facilidad con script de JS-->
         <input type="hidden" id="codigos" value="<%= productosV.map(producto => producto.codigoBarra).join(',-,') %>">
         <input type="hidden" id="nombres" value="<%= productosV.map(producto => producto.nombre).join(',-,') %>">
         <input type="hidden" id="precios" value="<%= productosV.map(producto => producto.precio).join(',-,') %>">

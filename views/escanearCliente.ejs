@@ -12,6 +12,7 @@
 <body class="escanearCliente">
     <form action="/escanearCliente" method="post">
         <div class="button-container">
+            <!--Boton gigante-->
             <div class="button-wrapper">
                 <span class="button-text">Si se deja el campo DNI vacio se cobrara sin los datos del cliente</span>
                 <button type="submit" class="giant-button" onclick="handleButtonClick('Button 1')">
@@ -19,9 +20,10 @@
                     <span class="button-text">Vender</span>
                 </button>
             </div>
+            <!--La parte de introducir dni y escanear-->
             <div class="button-wrapper">
                 <div class="mb-3">
-                    <label for="dni" class="form-label">Codigo QR o DNI:</label>
+                    <label for="dni" class="form-label">Codigo QR o DNI del cliente:</label>
                     <div class="mb-3" style="display: flex; align-items: center;">
                         <input id="codigoBarra" name="dni">
                         <button type="button" id="scanQRButton" class="btn btn-primary" style="margin-left: 10px;">

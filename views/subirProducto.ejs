@@ -25,6 +25,7 @@
                     <% } %>
 
                 <form action="/subirProducto" method="POST" enctype="multipart/form-data">
+                    <!--Contenedor de grabacion para escanear codigo de barra-->
                     <div class="mb-3">
                         <label for="codigoBarra" class="form-label">Codigo de Barra:</label>
                         <div class="mb-3" style="display: flex; align-items: center;">
@@ -44,7 +45,7 @@
                     </div>
 
 
-                    
+                    <!--Desplegable con las categorias-->
                     <div class="mb-3">
                         <label for="categoria">Categoria</label>
                         <select class="form-control" id="categoria" name="categoria" required onchange="toggleInput()">
@@ -56,6 +57,7 @@
                         </select>
                     </div>
                     
+                    <!--Input para la nueva categoria (solo aparece si se selecciona "nueva categoria" en la anterior opcion [manejado con script JS])-->
                     <div class="mb-3" id="inputContainer" style="display: none;">
                         <label for="nuevaCategoria">Nueva Categoría</label>
                         <input type="text" class="form-control" id="nuevaCategoria" name="nuevaCategoria" required>
@@ -87,6 +89,7 @@
                         <input type="number" rows="5" class="form-control" id="stock" min="0" name="stock" placeholder="stock" required>
                     </div>
 
+                    <!--Contenedor de subida de imagen-->
                     <div class="mb-3">
                         <input name="imagen" type="file" id="fileInput" accept="image/*" onchange="uploadAndDisplay(event)" required>
                         <div id="dropArea" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">

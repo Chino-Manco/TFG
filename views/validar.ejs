@@ -13,6 +13,7 @@
 <body>
 
     <div class="container">
+        <!--Lista de clientes-->
         <div class="list-container" id="clientes">
             <h2>Clientes</h2>
             <ul>
@@ -23,11 +24,13 @@
                 <% }); %>
             </ul>
         </div>
+        <!--Boton de deseleccionar y flechas para mover correos de un lado a otro-->
         <div class="icon-container">
             <i class="fas fa-arrow-right" style="margin-top: 150px;" onclick="moverCorreos('clientes', 'empleados')"></i>
             <i class="fas fa-arrow-left" onclick="moverCorreos('empleados', 'clientes')"></i>
             <button onclick="deseleccionarTodos()">Deseleccionar Todos</button>
         </div>
+        <!--Lista de Empleados-->
         <div class="list-container" id="empleados">
             <h2>Empleados</h2>
             <ul>
@@ -40,6 +43,7 @@
         </div>
     </div>
 
+    <!--Contenedor con hidden inputs para enviar los correos de cada lista al back-edn-->
     <div class="form-container" style="margin-bottom: 400px;">
         <form id="userForm" action="/validar" method="POST">
             <input type="hidden" name="clientes" id="clientesInput">

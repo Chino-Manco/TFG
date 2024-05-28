@@ -9,6 +9,7 @@
   <body>
     <div class="time-container">
 
+      <!-- En caso de ser cliente reitera cada 30 min desde la hora de apertura hasta la de cierre para sacar reservas de pan -->
       <% if (user.rol === "Cliente") { %>
 
         <% 
@@ -22,11 +23,12 @@
               let displayHour = hour < 10 ? '0' + hour : hour;
               let displayMinute = minute < 10 ? '0' + minute : minute;
               let timeString = displayHour + ':' + displayMinute;
-
+              <!--Si la hora coincide con una de las horas de las reservas se restan la cantidad y en caso de que queden 0 se deshabilita esa hora para reservar-->
               reservas.forEach(reserva => {
                 if (reserva.hora === timeString)
                   barras -= reserva.cantidad;
               })
+              <!--Si la hora que se muestra está ya pasada entonces se dejan en 0 barras libres automaticamente-->
               if (hora > timeString)
                 barras = 0;
         %>
@@ -54,6 +56,7 @@
             }
           }
         %>
+        <!--En caso de ser empleado o admin se muestra solo las citas que hay con sus respectivos clientes-->
       <% } else { %>
         <% reservas.forEach(reserva => { 
           clientes.forEach(cliente => {

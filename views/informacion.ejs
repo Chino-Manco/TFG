@@ -39,6 +39,7 @@
                     <!-- Campo de entrada oculto para enviar el valor al servidor -->
                     <input type="hidden"name="codigo" value="<%= producto.codigoBarra %>">
 
+                    <!-- Opciones de edicion para empleado y administrador -->
                     <% if (user) {%>
                         <div class="button-container">
                             <% if (user.rol==="Administrador") {%>
@@ -56,7 +57,7 @@
                 </div>
             </form>
 
-
+            <!-- Boton de eliminacion para administrador -->
             <% if (user && user.rol==="Administrador") {%>
                 <form action="/eliminarProducto" method="post" >
                     <input type="hidden" name="id" value="<%= producto._id %>">

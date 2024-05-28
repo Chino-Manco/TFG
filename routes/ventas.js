@@ -75,8 +75,20 @@ router.get('/ticket/:id', async (req, res, next) => {
         const id= req.params.id;
         const venta= await Venta.findById(id);
 
-        if (req.user._id.toString()===venta.cliente.toString() ||
-        req.user._id.toString()===venta.empleado.toString()){
+        let bool = false;
+
+        if (req.user.rol==="Cliente" ) {
+            if (req.user._id.toString()===venta.cliente.toString()){
+                bool=true;
+            }
+        } else if (req.user.rol==="Empleado"){
+            if (req.user._id.toString()===venta.empleado.toString()){
+                bool=true;
+            }
+        } else 
+            bool = true;
+
+        if (bool){
             const productos = [];
             for (const ids of venta.productos){
                 const producto= await Producto.findById(ids);
@@ -94,6 +106,7 @@ router.get('/ticket/:id', async (req, res, next) => {
     }
 });
 
+//Renderiza todas las ventas realizadas para que el administrador las vea
 router.get('/listaVentas', async (req, res, next) => {
     if (!req.user)
         res.redirect('/');
