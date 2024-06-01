@@ -14,14 +14,19 @@
             <h2>Ventas</h2>
             <div class="reserva-header">
                 <span>Fecha y Hora</span>
-                <span style="margin-left: -50px;">Precio Total de Compra</span>
+                <span>DNI de empleado</span>
+                <span style="margin-left: -50px;">Total</span>
             </div>
 
             <!-- Muestra todas las ventas con un enlace para visualizar detalles de las respectivas ventas-->
-            <% ventas.forEach( venta => { %>
+            <% let n=-1;
+             ventas.forEach( venta => { 
+                n++;
+                %>
                 <a href="/ticket/<%= venta._id %>">
                     <div class="reserva-item">
                         <span><%= new Date(venta.fechaHora).toLocaleString() %></span>
+                        <span><%= empleados[n].dni %></span>
                         <span><%= Number(venta.total).toFixed(2) %>€</span>
                     </div>
                 </a>

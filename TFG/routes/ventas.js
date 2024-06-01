@@ -75,6 +75,10 @@ router.get('/ticket/:id', async (req, res, next) => {
         const id= req.params.id;
         const venta= await Venta.findById(id);
 
+        let empleado= "";
+        if (req.user.rol==="Administrador")
+            empleado= await User.findById(venta.empleado)
+
         let bool = false;
 
         if (req.user.rol==="Cliente" ) {
@@ -97,9 +101,9 @@ router.get('/ticket/:id', async (req, res, next) => {
             
             if (venta.cliente!==null){
                 const cliente= await User.findById(venta.cliente);
-                res.render('venta', {venta, cliente, productos});
+                res.render('venta', {venta, cliente, productos, empleado});
             } else 
-                res.render('venta', {venta, productos});
+                res.render('venta', {venta, productos, empleado});
         } else {
             res.redirect('/');
         }
@@ -113,7 +117,12 @@ router.get('/listaVentas', async (req, res, next) => {
     else{
         if (req.user.rol==="Administrador"){
             const ventas= await Venta.find().sort({ fechaHora: -1 });
-            res.render('listaVentas', {ventas});
+            let empleados=[];
+            for (const venta of ventas){
+                const empleado= await User.findById(venta.empleado);
+                empleados.push(empleado);
+            }
+            res.render('listaVentas', {ventas, empleados});
         } else 
             res.redirect('/');
     }

@@ -38,12 +38,16 @@
         </form>
 
         <!-- Boton de eliminar pero no disponible para el administrador -->
-        <% if (user.rol!=="Administrador"){ %>
+
             <form action="/eliminarUser" method="post" onsubmit="return confirmarEnvio()">
                 <input type="hidden" name="userId" value="<%= user._id %>">
+                <% if (user.rol!=="Administrador"){ %>        
                 <button type="submit" id="eliminar-btn" class="btn btn-danger">Eliminar Ususario</button>
+                <% } else { %>
+                <button type="submit" id="eliminar-btn" class="btn btn-danger hidden">Eliminar Ususario</button>
+                    <% } %>
             </form>
-        <% } %>
+
 
 
         <!-- Muestra las compras o ventas realizadas -->
