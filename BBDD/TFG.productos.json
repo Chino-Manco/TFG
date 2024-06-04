@@ -3,7 +3,7 @@
     "$oid": "663cf8d247c5fe48103fdd0a"
   },
   "codigoBarra": "8410128000400",
-  "stock": 54,
+  "stock": 45,
   "nombre": "Agua Bezoya 1,5L",
   "categoria": "BEBIDAS",
   "peso": "1500",
@@ -56,21 +56,6 @@
   "ingredientes": "pipas",
   "valorNutricional": "100 kcal",
   "imagen": "/uploads/pipas.jpg",
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "665257259d39551450719a41"
-  },
-  "codigoBarra": "8410128160319",
-  "stock": 95,
-  "nombre": "Agua Bezoya 0,5L",
-  "categoria": "BEBIDAS",
-  "peso": "500",
-  "precio": 0.5,
-  "ingredientes": " Ingredientes: Composición analítica: Manantial Bezoya: Composición química (mg/l): Residuo seco a 180ºC, 27; Bicarbonatos, <5; Cloruros, 0.84; Calcio, 2.86; Magnesio, 0.36; Sodio, 2.04; Sílice, 9.51. (C.N.TA. Mayo 2014).",
-  "valorNutricional": "Valor Nutricional: Composición analítica: Manantial Bezoya: Composición química (mg/l): Residuo seco a 180ºC, 27; Bicarbonatos, <5; Cloruros, 0.84; Calcio, 2.86; Magnesio, 0.36; Sodio, 2.04; Sílice, 9.51. (C.N.TA. Mayo 2014).",
-  "imagen": "/uploads/bezoya_0.5.png",
   "__v": 0
 },
 {
@@ -213,7 +198,7 @@
     "$oid": "665260599d39551450719ada"
   },
   "codigoBarra": "8433329143257",
-  "stock": 10,
+  "stock": 5,
   "nombre": "Colines",
   "categoria": "PANADERIA",
   "peso": "250",
@@ -236,5 +221,20 @@
   "ingredientes": "Harina de TRIGO 82% - Harina integral de TRIGO - Aceite de girasol alto oleico 2,9% - Azúcar - sal - Levadura - Agente de tratamiento de la harina: ácido ascórbico. Este producto contiene trigo. Puede contener trazas de frutos de cáscara, granos de sésamo y soja.",
   "valorNutricional": "Ingesta de referencia: Ingesta de referencia de un adulto medio (8400 kJ/2000 kcal)\r\n\r\n                         100 g\r\nCantidad/Unidad     (VRN)\r\nValor energético    \r\n                                1621 kJ         -\r\n                                383 kcal        -\r\nGrasas    \r\n                                4 g                 -\r\nDe los cuales    \r\n- saturadas    \r\n                                0.5 g              -\r\nHidratos de carbono    \r\n                              72 g               -\r\nDe los cuales    \r\n- Azúcares    \r\n                                4.5 g              -\r\nFibra alimentaria    \r\n                                5.6 g              -\r\nProteínas    \r\n                                12 g                -\r\nSal    \r\n                                1.2 g              -\r\n",
   "imagen": "/uploads/00120656700083____6__1200x1200.jpg",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6658c04cb7ff8254748b7ff7"
+  },
+  "codigoBarra": "8410128160319",
+  "stock": 100,
+  "nombre": "Agua Bezoya 0,5L",
+  "categoria": "BEBIDAS",
+  "peso": "500",
+  "precio": 0.5,
+  "ingredientes": "Composición química (mg/l): Residuo seco a 180ºC, 27; Bicarbonatos, 17; Cloruros, 0.54; Calcio, 6.32; Magnesio, 0.83; Sodio, 1.21; Sílice, 9.78. (C.N.TA. Mayo 2014).",
+  "valorNutricional": "Composición química (mg/l): Residuo seco a 180ºC, 27; Bicarbonatos, 17; Cloruros, 0.54; Calcio, 6.32; Magnesio, 0.83; Sodio, 1.21; Sílice, 9.78. (C.N.TA. Mayo 2014).",
+  "imagen": "/uploads/00118630601500____9__1200x1200.jpg",
   "__v": 0
 }]

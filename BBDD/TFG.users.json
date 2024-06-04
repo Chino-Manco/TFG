@@ -8,7 +8,7 @@
   "__v": 0,
   "apellidos": "Wu Yin",
   "dni": "X5300451D",
-  "edad": 21,
+  "edad": 22,
   "nombre": "Zhenyu"
 },
 {
@@ -243,5 +243,18 @@
   "nombre": "Mario ",
   "apellidos": "Marugán",
   "dni": "123456789J",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665a2ac4cfc5cd40406c6294"
+  },
+  "edad": 21,
+  "email": "zhenyu050wuyin@gmail.com",
+  "password": "$2a$10$Dy4AoLDGbN5NOsygYlbl0unz/nC70D1Ee6JD/P8JudB3pEYhPyu16",
+  "rol": "Cliente",
+  "nombre": "Zhenyu",
+  "apellidos": "Wu",
+  "dni": "12345678J",
   "__v": 0
 }]
