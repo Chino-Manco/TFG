@@ -1,8 +1,7 @@
 module.exports = {
   mongodb: {
 
-    URI: 'mongodb://localhost:27017/TFG'
-    //URI: 'mongodb+srv://Pepe:1234@nodejs.fiuhrkr.mongodb.net/?retryWrites=true&w=majority&appName=NodeJs'
-    
+    //URI: 'mongodb://localhost:27017/TFG'
+    URI: '    mongodb+srv://zhenyu12wuyin:%23Cochino12@clustertfg.mzmqxpi.mongodb.net/TFG'
   }
 };
