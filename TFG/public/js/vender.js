@@ -26,21 +26,30 @@ const precios= document.getElementById('precios').value.split(",-,").map(Number)
 
 //Comprueba si el codigo de barra coincide con alguno de los productos registrados y en caso afirmativo llama a la funcion de añadir fila
 function anadirProducto(){
-    const cod= document.getElementById('codigoBarra');
-    if (codigos.includes(cod.value)){
-        let n=codigos.indexOf(cod.value);
+    const co= document.getElementById('codigoBarra');
+    const cod=co.value;
+    co.value="";
+    if (codigos.includes(cod)){
+        let n=codigos.indexOf(cod);
         addRow(codigos[n], 1, nombres[n], precios[n]);
 
 
     } else {
         alert("Codigo no registrado");
     }
-    cod.value="";
-
 }
 
 //Funcion de añadir filas
 function addRow(codigoBarra = "", cantidad = 1, nombre = "", precio = 0.00) {
+    const audio = new Audio('/audio/quizas.mp3');
+    audio.play();
+
+    // Detener la reproducción después de 400 ms
+    setTimeout(function() {
+        audio.pause();
+        audio.currentTime = 0;
+    }, 400);
+    
     const tableBody = document.querySelector('#productosTable tbody');
     const newRow = document.createElement('tr');
     const enviar= document.getElementById('enviar');
@@ -77,6 +86,7 @@ function addRow(codigoBarra = "", cantidad = 1, nombre = "", precio = 0.00) {
     });
 
 }
+
 
 
 //Cada vez que se actualice el dinero entregado se modifica automaticamente el cambio
