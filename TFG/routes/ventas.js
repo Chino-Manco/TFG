@@ -120,8 +120,10 @@ router.get('/listaVentas', async (req, res, next) => {
             let empleados=[];
             for (const venta of ventas){
                 const empleado= await User.findById(venta.empleado);
-                empleados.push(empleado);
+                if (!empleados.some(e => e._id.toString() === empleado._id.toString())) 
+                    empleados.push(empleado);
             }
+            console.log(empleados.length);
             res.render('listaVentas', {ventas, empleados});
         } else 
             res.redirect('/');

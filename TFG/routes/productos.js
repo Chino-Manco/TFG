@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
       cb(null, 'public/uploads'); // Ruta donde se almacenarán los archivos
     },
     filename: function (req, file, cb) {
-      cb(null, file.originalname); // Nombre de archivo original
+      cb(null, Date.now()+ path.extname(file.originalname)); // Nombre de archivo original
     }
 });
 const upload = multer({ storage: storage });
@@ -70,15 +70,20 @@ router.post('/escanearCliente', async (req, res, next) => {
 
 //Renderiza el catalogo con todos los productos
 router.get('/catalogo', async (req, res, next) => {
-    const productos = await Producto.find().sort({ categoria: 1, nombre: 1 });
+    const productos = await Producto.find().sort({ categoria: 1, stock: 1, nombre: 1 });
     res.render('catalogo', {productos});
 });
 
 //Renderiza el catalogo pero solo con los productos que coinciden con la busqueda
 router.get('/catalogo/:nombre', async (req, res, next) => {
     const nombre= req.params.nombre;
-    const productos = await Producto.find({nombre: new RegExp(nombre, 'i')}).sort({ categoria: 1, nombre: 1 });
-    res.render('catalogo', {productos});
+    const productos = await Producto.find({
+        $or: [
+            { nombre: new RegExp(nombre, 'i') },
+            { codigoBarra: new RegExp(nombre, 'i') }
+        ]
+    }).sort({ categoria: 1, stock: 1, nombre: 1 });
+        res.render('catalogo', {productos});
 });
 
 
@@ -119,12 +124,12 @@ router.post('/informacionEditada', upload.single('imagen'),  async (req, res, ne
                 modifyProduct.categoria=categoria.toUpperCase();
                 modifyProduct.peso=peso;
                 modifyProduct.precio=precio;
-                modifyProduct.ingredientes=ingredientes;
+                modifyProduct.ingredientes=ingredientes
                 modifyProduct.valorNutricional=nutricional;
         
                 //Elimina la antigua imagen del producto en caso de que se actualice tambien
                 if (req.file) {
-                    fs.unlink("public" +modifyProduct.imagen, async (err) => {
+                    fs.unlink("public"+modifyProduct.imagen, async (err) => {
                         if (err) {
                             console.error('Error al eliminar la foto:', err);
                         }

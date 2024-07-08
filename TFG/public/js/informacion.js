@@ -34,7 +34,7 @@ function habilitarEdicion() {
     precioElemento.innerHTML = '<input type="text" id="precio-input" name="precio" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Por favor, introduce solo números enteros o con 2 decimales (por ejemplo, 10 o 10.50)" value="' + precioElemento.innerText + '">';
     codigoElemto.innerHTML = '<input type="text" id="codigo-input" value="' + codigoElemto.innerText + '" disabled>'
     categoriaElemento.innerHTML = '<input type="text" id="categoria-input" name="categoria" value="' + categoriaElemento.innerText + '">';
-    pesoElemento.innerHTML = '<input type="number" id="peso-input" name="peso" value="' + pesoElemento.innerText + '">';
+    pesoElemento.innerHTML = '<input type="text" id="peso-input" name="peso" value="' + pesoElemento.innerText + '">';
     ingredientesElemento.innerHTML = '<textarea id="ingredientes-input" name="ingredientes" rows="5" style="width: 100%;">' + ingredientesElemento.innerText +'</textarea>';
     nutricionalElemento.innerHTML = '<textarea id="nutricional-input" name="nutricional" rows="5" style="width: 100%;">'+ nutricionalElemento.innerText +'</textarea>';
     stockElemento.innerHTML = '<input type="number" id="stock-input" min="0" name="stock" value="' + stockElemento.innerText + '" >';

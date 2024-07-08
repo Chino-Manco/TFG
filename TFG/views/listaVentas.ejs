@@ -26,7 +26,6 @@
                 <a href="/ticket/<%= venta._id %>">
                     <div class="reserva-item">
                         <span><%= new Date(venta.fechaHora).toLocaleString() %></span>
-                        <span><%= empleados[n].dni %></span>
                         <span><%= Number(venta.total).toFixed(2) %>€</span>
                     </div>
                 </a>

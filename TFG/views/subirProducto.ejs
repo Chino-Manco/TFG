@@ -32,7 +32,8 @@
                             <input id="codigoBarra" name="codigoBarra" required>
                             <button type="button" id="scanQRButton" class="btn btn-primary" style="margin-left: 10px;">Escanear QR</button>
                             <button type="button" id="stopQRButton" class="btn btn-danger" style="margin-left: 10px;" disabled="true">Cancelar</button>
-                        </div>                    
+                        </div>   
+                        <button type="submit" class="btn btn-primary">Registrar Producto</button>                 
                     </div>
                     <div id="videoContainer" style="display: none;" class="mb-3">
                         <video id="videoElement" width="300" height="200" autoplay></video>
@@ -63,30 +64,14 @@
                         <input type="text" class="form-control" id="nuevaCategoria" name="nuevaCategoria" required>
                     </div>
                     
-
-                    <div class="mb-3">
-                    <label for="peso" class="form-label">Peso Neto (gramos o mililitros)</label>
-                    <input type="text" class="form-control" id="peso" name="peso" placeholder="Peso Neto" required pattern="[0-9]+" title="Por favor, introduce solo números enteros (por ejemplo, 10 o 2000)">
-                    </div>
-
                     <div class="mb-3">
                         <label for="precio" class="form-label">Precio (euros)</label>
-                        <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Por favor, introduce solo números enteros o con 2 decimales (por ejemplo, 10 o 10.50)">
-                    </div>                
+                        <input type="number" step="0.01" class="form-control" id="precio" name="precio" placeholder="Precio" required>
+                    </div>       
 
                     <div class="mb-3">
-                        <label for="ingredientes" class="form-label">Ingredientes</label>
-                        <textarea type="text" rows="5" class="form-control" id="ingredientes" name="ingredientes" placeholder="Ingredientes" required></textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="valorNutricional" class="form-label">Valor Nutricional</label>
-                        <textarea type="text" rows="5" class="form-control" id="valorNutricional" name="valorNutricional" placeholder="Valor Nutricional" required></textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="stock" class="form-label">Unidades</label>
-                        <input type="number" rows="5" class="form-control" id="stock" min="0" name="stock" placeholder="stock" required>
+                        <label for="stock" class="form-label">Stock</label>
+                        <input type="number" rows="5" step="1" class="form-control" id="stock" min="0" name="stock" placeholder="stock" required>
                     </div>
 
                     <!--Contenedor de subida de imagen-->
@@ -97,6 +82,23 @@
                         </div>
                         <div id="imageContainer" ></div>
                     </div>
+
+                    <div class="mb-3">
+                    <label for="peso" class="form-label">Peso Neto (gramos o mililitros)</label>
+                    <input type="text" class="form-control" id="peso" name="peso" placeholder="Peso Neto" value="0">
+                    </div>         
+
+                    <div class="mb-3">
+                        <label for="ingredientes" class="form-label">Ingredientes</label>
+                        <input type="text" class="form-control" id="ingredientes" name="ingredientes" placeholder="Ingredientes" value="0"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="valorNutricional" class="form-label">Valor Nutricional</label>
+                        <input type="text" class="form-control" id="valorNutricional" name="valorNutricional" placeholder="Valor Nutricional" value="0"></textarea>
+                    </div>
+
+
 
                                 
                     <button type="submit" class="btn btn-primary btn-block">Registrar Producto</button>
