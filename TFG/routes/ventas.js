@@ -62,7 +62,7 @@ router.post('/vender', async (req, res, next) => {
 
             await venta.save();
 
-            res.redirect('/catalogo');
+            res.redirect('/vender');
         }
     }
 });
