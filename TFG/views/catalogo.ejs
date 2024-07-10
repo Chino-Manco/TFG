@@ -10,6 +10,7 @@
 </head>
 <body>
     <div class="container">
+        <%= productos.length %> productos en total
         <% let categoriaActual = null; %>
         <% productos.forEach(producto => { %>
             <% if (producto.categoria !== categoriaActual) { %>
@@ -23,7 +24,14 @@
                     <div class="img-container">
                         <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>">
                     </div>
-                    <p>Precio: <%= producto.precio.toFixed(2) %> €</p>
+                    <div class="row justify-content-between" style="margin: 0 10px;">
+                        <div class="col-auto">
+                            <p><%= producto.precio.toFixed(2) %> €</p>
+                        </div>
+                        <div class="col-auto">
+                            <p><%= producto.stock %></p>
+                        </div>
+                    </div>                                     
                 </div>
             </a>
         <% }); %>

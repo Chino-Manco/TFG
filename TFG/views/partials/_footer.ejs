@@ -2,6 +2,35 @@
 <html lang="es">
 <head>
     <link rel="stylesheet" href="/stylesheets/footer.css">
+    <style>
+        /* Estilos para el botón de desplazamiento hacia arriba */
+        #scrollTopBtn {
+            display: none; /* Se oculta inicialmente */
+            position: fixed; /* Posición fija en la pantalla */
+            bottom: 50px; /* A 20px del fondo de la pantalla */
+            right: 30px; /* A 30px del borde derecho de la pantalla */
+            z-index: 99; /* Coloca el botón por encima de otros elementos */
+            font-size: 18px; /* Tamaño de la fuente */
+            border: none; /* Sin borde */
+            outline: none; /* Sin contorno */
+            background-color: rgba(0, 0, 255, 0.5); /* Azul medio transparente */
+            color: white; /* Color del texto blanco */
+            cursor: pointer; /* Cambia el cursor a un puntero */
+            padding: 15px; /* Espaciado interno */
+            transition: background-color 0.3s; /* Transición suave para el cambio de color */
+            width: 50px; /* Anchura del botón */
+            height: 50px; /* Altura del botón */
+            text-align: center; /* Alinear texto al centro */
+            line-height: 20px; /* Altura de línea para centrar verticalmente el texto */
+            border-radius: 10px; /* Bordes redondeados */
+        }
+
+        #scrollTopBtn:hover {
+            background-color: rgba(0, 0, 255, 0.7); /* Azul menos transparente al pasar el cursor */
+        }
+
+
+    </style>
 </head>
 <body>
 
@@ -9,6 +38,30 @@
     <footer>
         <p>&copy; 2024 Tienda Alimentación. </p>
     </footer>
+
+        <!-- Contenido de tu página -->
+
+    <!-- Botón para deslizar hacia arriba -->
+    <button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // Mostrar el botón cuando se desplace 20px hacia abajo desde la parte superior de la página
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            const scrollTopBtn = document.getElementById("scrollTopBtn");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollTopBtn.style.display = "block";
+            } else {
+                scrollTopBtn.style.display = "none";
+            }
+        }
+
+        // Deslizar hacia arriba de la página cuando se pulsa el botón
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 
     <!-- Scripts de Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
