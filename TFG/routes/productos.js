@@ -72,6 +72,21 @@ router.get('/restock', async (req, res, next) => {
     res.render('restock');
 });
 
+router.post('/restock', async (req, res, next) => {
+
+    const codigoBarra= req.body.codigo;
+    const producto= await Producto.findOne({ codigoBarra: codigoBarra });
+    if (producto){
+        producto.stock += parseInt(req.body.stock, 10);
+        await producto.save();
+        const correct= "Stock guardado con éxito"
+        res.render('restock', {correct});
+    } else {
+        const error="Código no registrado"
+        res.render('restock', {error});
+    }
+});
+
 
 //Renderiza el catalogo con todos los productos
 router.get('/catalogo', async (req, res, next) => {
