@@ -33,7 +33,11 @@
             <!--Carga un busquedor para el catálogo-->
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                     <form id="busquedaForm" action="/catalogo" method="GET" class="form-inline my-2 my-lg-0" style="margin-right: 50px;">
-                        <input id="busquedaInput" class="form-control mr-sm-2" type="text" name="terminoBusqueda" placeholder="Buscar..." style="flex-grow: 1;">
+                        <% if (typeof nombreBuscado === 'undefined' || nombreBuscado === null) { %>
+                            <input id="busquedaInput" class="form-control mr-sm-2" type="text" name="terminoBusqueda" placeholder="Buscar..." style="flex-grow: 1;">
+                        <% } else { %>
+                            <input id="busquedaInput" class="form-control mr-sm-2" type="text" name="terminoBusqueda" placeholder="Buscar..." style="flex-grow: 1;" value="<%= nombreBuscado %>">
+                        <% } %>
                         <button type="submit" class="btn btn-primary my-2 my-sm-0">
                             <i class="bi bi-search"></i>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -76,6 +80,10 @@
                     <!-- Opciones de navegación para Administradores -->
                     <li class="nav-item">
                         <a class="nav-link" href="/profile">Perfil</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/restock">Restock</a>
                     </li>
 
                     <li class="nav-item">

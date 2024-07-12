@@ -68,6 +68,11 @@ router.post('/escanearCliente', async (req, res, next) => {
 });
 
 
+router.get('/restock', async (req, res, next) => {
+    res.render('restock');
+});
+
+
 //Renderiza el catalogo con todos los productos
 router.get('/catalogo', async (req, res, next) => {
     const productos = await Producto.find().sort({ categoria: 1, stock: 1, nombre: 1 });
@@ -76,14 +81,15 @@ router.get('/catalogo', async (req, res, next) => {
 
 //Renderiza el catalogo pero solo con los productos que coinciden con la busqueda
 router.get('/catalogo/:nombre', async (req, res, next) => {
-    const nombre= req.params.nombre;
+    const nombreBuscado= req.params.nombre;
     const productos = await Producto.find({
         $or: [
-            { nombre: new RegExp(nombre, 'i') },
-            { codigoBarra: new RegExp(nombre, 'i') }
+            { categoria: new RegExp(nombreBuscado, 'i') },
+            { nombre: new RegExp(nombreBuscado, 'i') },
+            { codigoBarra: new RegExp(nombreBuscado, 'i') }
         ]
     }).sort({ categoria: 1, stock: 1, nombre: 1 });
-        res.render('catalogo', {productos});
+        res.render('catalogo', {productos, nombreBuscado});
 });
 
 

@@ -19,7 +19,7 @@
                 <% categoriaActual = producto.categoria; %>
             <% } %>
             <a href="/informacion/<%= producto.codigoBarra %>">
-                <div class="producto">
+                <div class="producto" title="<%= producto.nombre %>">
                     <h3><%= producto.nombre %></h3>
                     <div class="img-container">
                         <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>">
