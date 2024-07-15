@@ -83,3 +83,14 @@ img{
 .botones button {
     margin: 0 10px;
 }
+
+.botones img {
+    max-width: 20px; /* Establece el ancho máximo de los iconos */
+    max-height: 20px; /* Establece la altura máxima de los iconos */
+    display: block; /* Para asegurar que la imagen no afecte al layout de la página */
+    margin: auto; /* Centra la imagen dentro del botón */
+}
+
+.hidden {
+    display: none; /* Ocultar elementos */
+}

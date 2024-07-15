@@ -13,18 +13,63 @@
         function anadirProducto() {
             alert('Producto añadido');
         }
-
+    
         // Añadir un event listener al input para detectar la tecla Enter
         document.addEventListener('DOMContentLoaded', (event) => {
-            const codigoBarraInput = document.getElementById('codigoBarra');
-            codigoBarraInput.addEventListener('keypress', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();  // Prevenir el comportamiento por defecto del Enter
-                    anadirProducto();  // Llamar a la función para confirmar el producto
+        const codigoBarraInput = document.getElementById('codigoBarra');
+        const precioPagar = document.getElementById('precioPagar');
+        const cantidadInputs = document.querySelectorAll('.cantidad');
+
+        codigoBarraInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();  // Prevenir el comportamiento por defecto del Enter
+                anadirProducto();  // Llamar a la función para confirmar el producto
+            } else if (event.key === 'Tab') {
+                event.preventDefault();  // Prevenir el comportamiento por defecto del Tab
+                precioPagar.focus();  // Enfocar el elemento con id 'precioPagar'
+            } else if (event.key === '1' && event.ctrlKey) {
+                event.preventDefault();  
+                let Button = document.getElementById('pan');
+                Button.click();
+            } else if (event.key === '2' && event.ctrlKey) {
+                event.preventDefault();  
+                let Button = document.getElementById('bolsa');
+                Button.click();
+            } else if (event.key === '3' && event.ctrlKey) {
+                event.preventDefault();  
+                let Button = document.getElementById('chuches');
+                Button.click();
+            }  else if (event.key === '4' && event.ctrlKey) {
+                event.preventDefault();  
+                let Button = document.getElementById('1€');
+                Button.click();
+            }
+        });
+
+        precioPagar.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                let Button = document.getElementById('pagarButton');
+                Button.click();
+            } else if (event.key === 'Tab') {
+                event.preventDefault();
+                codigoBarraInput.focus();
+            }
+        });
+
+        cantidadInputs.forEach(input => {
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Tab') {
+                    event.preventDefault();
+                    codigoBarraInput.focus();
                 }
             });
         });
+        
+    });
+
+
     </script>
+    
 </head>
 <body>
 
@@ -44,10 +89,38 @@
             <div class="form-group">
                 <label for="codigoBarra" class="form-label">Código de Barra:</label>
                 <div style="display: flex; align-items: center;">
-                    <input id="codigoBarra" name="codigoBarra">
-                    <button type="button" id="confirmarProductoButton" class="btn btn-primary" style="margin-left: 10px;" onclick="anadirProducto()">Confirmar Producto</button>
-                    <button type="button" id="scanQRButton" class="btn btn-primary" style="margin-left: 10px;">Escanear código</button>
-                    <button type="button" id="stopQRButton" class="btn btn-danger" style="margin-left: 10px;" disabled="true">Cancelar</button>
+                    <input id="codigoBarra" name="codigoBarra" autofocus>
+                    <button type="button" id="confirmarProductoButton" class="btn btn-primary hidden" style="margin-left: 10px;" onclick="anadirProducto()">Confirmar Producto</button>
+                    <button type="button" id="scanQRButton" class="btn btn-primary hidden" style="margin-left: 10px;">Escanear código</button>
+                    <button type="button" id="pan" class="btn btn-info" style="margin-left: 10px;" onclick="anadirRapido('00000031')">
+                        <img src="/icons/pan.png" alt="Icon pan">
+                    </button>
+
+                    <button type="button" id="bolsa" class="btn btn-info" style="margin-left: 10px;" onclick="anadirRapido('8436547173020')">
+                        <img src="/icons/bolsa.png" alt="Icon bolsa">
+                    </button>
+
+                    <button type="button" id="chuches" class="btn btn-info" style="margin-left: 10px;" onclick="anadirRapido('00000062')">
+                        <img src="/icons/dulce.png" alt="Icon chuche">
+                    </button>
+
+                    <button type="button" id="1€" class="btn btn-info" style="margin-left: 10px;" onclick="anadirRapido('00000093')">
+                        <p>1€</p>
+                    </button>
+
+                    <button type="button" id="2€" class="btn btn-info" style="margin-left: 10px;" onclick="anadirRapido('00000109')">
+                        <p>2€</p>
+                    </button>
+
+                    <button type="button" id="pizza" class="btn btn-info" style="margin-left: 10px;" onclick="anadirRapido('00000086')">
+                        <img src="/icons/pizza.png" alt="Icon pizza">
+                    </button>
+
+                    <button type="button" id="sandwich" class="btn btn-info" style="margin-left: 10px;" onclick="anadirRapido('00000116')">
+                        <img src="/icons/sandwich.png" alt="Icon sandwich">
+                    </button>
+
+                    <button type="button" id="stopQRButton" class="btn btn-danger hidden" style="margin-left: 10px;" disabled="true">Cancelar</button>
                 </div>
             </div>
             <div id="videoContainer" style="display: none;" class="form-group">
@@ -78,7 +151,7 @@
                         <input type="hidden" id="totalHidden" name="total">
                     </div>
                     <div>
-                        Entregar<input type="number" id="precioPagar" name="precio" min="0" placeholder="0.00" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Por favor, introduce solo números enteros o con 2 decimales (por ejemplo, 10 o 10.50)" required>€
+                        Entregar<input type="number" id="precioPagar" name="precio" min="0" placeholder="0.00" step="0.01" >€
                     </div>
                     <div>
                         Cambio: <span id="cambio">0.00</span>€
@@ -86,7 +159,8 @@
                 </div>
                 <div class="botones">
                     <button type="button" class="btn btn-warning" onclick="window.location.href='/escanearCliente'">Cancelar compra</button>
-                    <button type="submit" class="btn btn-success" onclick="return validar()">Pagar</button>
+                    <button type="submit" id="pagarRapido" class="btn btn-primary" >Pagar Rápido</button>
+                    <button type="submit" id="pagarButton" class="btn btn-success" onclick="return validar()">Pagar</button>
                 </div>
             </div>
         </form>

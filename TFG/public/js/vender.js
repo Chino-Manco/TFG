@@ -23,6 +23,14 @@ const codigos= document.getElementById('codigos').value.split(",-,");
 const nombres= document.getElementById('nombres').value.split(",-,");
 const precios= document.getElementById('precios').value.split(",-,").map(Number);
 
+function anadirRapido(codigo){
+    const codi = document.getElementById('codigoBarra');
+    codi.value = codigo;
+    if (codigo !== '00000062'){
+        codi.focus();
+    }
+    anadirProducto();
+}
 
 //Comprueba si el codigo de barra coincide con alguno de los productos registrados y en caso afirmativo llama a la funcion de añadir fila
 function anadirProducto(){
@@ -39,7 +47,8 @@ function anadirProducto(){
     }
 }
 
-//Funcion de añadir filas
+
+// Funcion de añadir filas
 function addRow(codigoBarra = "", cantidad = 1, nombre = "", precio = 0.00) {
     const audio = new Audio('/audio/quizas.mp3');
     audio.play();
@@ -51,41 +60,70 @@ function addRow(codigoBarra = "", cantidad = 1, nombre = "", precio = 0.00) {
     }, 400);
     
     const tableBody = document.querySelector('#productosTable tbody');
-    const newRow = document.createElement('tr');
-    const enviar= document.getElementById('enviar');
-
-    newRow.innerHTML = `
-        <td>
-            <button class="delete-row-btn btn btn-danger">
-            <img src="/icons/trash.png">
-            </button>
-            <input type="hidden" name="codigo[]" value="${codigoBarra}">
-            <span class="codigo-barra">${codigoBarra}</span>
-        </td>
-        <td><input id="cantidad" name="cantidad[]" type="number" min="1" class="cantidad" value="${cantidad}"></td>
-        <td><span class="nombre">${nombre}</span></td>
-        <td><span id="precio" class="precio" >${precio.toFixed(2)}</span></td>
-        <td><span id="total" class="total" >${(cantidad * precio).toFixed(2)}</span></td>
-    `;
-
-
-    tableBody.appendChild(newRow);
-
-    newRow.querySelector('.delete-row-btn').addEventListener('click', function() {
-        // Elimina la fila del botón
-        this.closest('tr').remove();
-        // Después de eliminar la fila, actualiza los totales
-        updateTotalGlobal();
+    const rows = tableBody.querySelectorAll('tr'); // Obtener todas las filas existentes
+    
+    // Verificar si ya existe una fila con el mismo codigoBarra
+    let existingRow = null;
+    rows.forEach(row => {
+        const codigoBarraSpan = row.querySelector('.codigo-barra');
+        if (codigoBarraSpan && codigoBarraSpan.textContent === codigoBarra &&
+             codigoBarraSpan.textContent !== '00000062') {
+            existingRow = row;
+        }
     });
 
-    updateTotal(newRow);
+    if (existingRow) {
+        // Si ya existe una fila con el mismo codigoBarra, incrementar la cantidad
+        const cantidadInput = existingRow.querySelector('.cantidad');
+        if (cantidadInput) {
+            const cantidadActual = parseInt(cantidadInput.value) || 0;
+            cantidadInput.value = cantidadActual + cantidad;
+            updateTotal(existingRow); // Actualizar el total para la fila existente
+        }
+    } else {
+        // Si no existe una fila con el mismo codigoBarra, añadir una nueva fila
+        const newRow = document.createElement('tr');
 
-    // Añadir eventos a los inputs de cantidad para calcular automáticamente
-    newRow.querySelector('.cantidad').addEventListener('input', () => {
+        newRow.innerHTML = `
+            <td>
+                <button class="delete-row-btn btn btn-danger">
+                    <img src="/icons/trash.png">
+                </button>
+                <input type="hidden" name="codigo[]" value="${codigoBarra}">
+                <span class="codigo-barra">${codigoBarra}</span>
+            </td>
+            <td><input name="cantidad[]" type="number" min="1" class="cantidad" value="${codigoBarra === '00000062' ? '' : cantidad}"></td>
+            <td><span class="nombre">${nombre}</span></td>
+            <td><span id="precio" class="precio">${precio.toFixed(2)}</span></td>
+            <td><span id="total" class="total">${(cantidad * precio).toFixed(2)}</span></td>
+        `;
+        
+        tableBody.insertBefore(newRow, tableBody.firstChild); // Añadir la nueva fila arriba del todo
+
+        newRow.querySelector('.delete-row-btn').addEventListener('click', function() {
+            // Elimina la fila del botón
+            this.closest('tr').remove();
+            // Después de eliminar la fila, actualiza los totales
+            updateTotalGlobal();
+        });
+
         updateTotal(newRow);
-    });
 
+        // Si el código de barras es '00000062', enfocar automáticamente en la cantidad y dejarla vacía
+        if (codigoBarra === '00000062') {
+            const cantidadInput = newRow.querySelector('.cantidad');
+            if (cantidadInput) {
+                cantidadInput.focus();
+            }
+        }
+        // Añadir eventos a los inputs de cantidad para calcular automáticamente
+        newRow.querySelector('.cantidad').addEventListener('input', () => {
+            updateTotal(newRow);
+        });
+    }
 }
+
+
 
 
 

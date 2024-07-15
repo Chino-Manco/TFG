@@ -22,8 +22,6 @@ const upload = multer({ storage: storage });
 
 
 
-
-
 router.get('/', (req, res, next) => {
     res.redirect('/catalogo');
 });
@@ -89,23 +87,75 @@ router.post('/restock', async (req, res, next) => {
 
 
 //Renderiza el catalogo con todos los productos
+// Ruta para el catálogo con paginación
 router.get('/catalogo', async (req, res, next) => {
-    const productos = await Producto.find().sort({ categoria: 1, stock: 1, nombre: 1 });
-    res.render('catalogo', {productos});
+    const page = parseInt(req.query.page) || 1; // Página actual, por defecto 1
+    const pageSize = 20; // Tamaño de la página, ajusta según sea necesario
+
+    const totalProductos = await Producto.countDocuments(); // Total de productos
+    const totalPages = Math.ceil(totalProductos / pageSize); // Total de páginas
+
+    const productos = await Producto.find()
+        .sort({ categoria: 1, nombre: 1 })
+        .skip((page - 1) * pageSize) // Saltar los productos de las páginas anteriores
+        .limit(pageSize); // Limitar el número de productos por página
+
+    res.render('catalogo', {
+        productos,
+        currentPage: page,
+        totalPages
+    });
 });
 
-//Renderiza el catalogo pero solo con los productos que coinciden con la busqueda
-router.get('/catalogo/:nombre', async (req, res, next) => {
-    const nombreBuscado= req.params.nombre;
-    const productos = await Producto.find({
-        $or: [
-            { categoria: new RegExp(nombreBuscado, 'i') },
-            { nombre: new RegExp(nombreBuscado, 'i') },
-            { codigoBarra: new RegExp(nombreBuscado, 'i') }
-        ]
-    }).sort({ categoria: 1, stock: 1, nombre: 1 });
-        res.render('catalogo', {productos, nombreBuscado});
+
+// Función para normalizar y eliminar diacríticos
+function normalizeString(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+router.get('/catalogo/:nombre/:page?', async (req, res, next) => {
+    const nombreBuscado = req.params.nombre;
+    const pageSize = 20; // Número de productos por página
+    const currentPage = parseInt(req.params.page) || 1;
+    const skip = (currentPage - 1) * pageSize;
+
+    try {
+        // Encuentra todos los productos
+        const allProductos = await Producto.find();
+
+        // Normaliza el nombre y la categoría de cada producto
+        const productosNormalizados = allProductos.map(producto => {
+            return {
+                ...producto.toObject(), // Convertir el documento Mongoose a objeto para manipulación
+                nombreNormalizado: normalizeString(producto.nombre),
+                categoriaNormalizada: normalizeString(producto.categoria)
+            };
+        });
+
+        // Normaliza el nombre buscado
+        const normalizedNombreBuscado = normalizeString(nombreBuscado);
+
+        // Filtra los productos normalizados que coinciden con el nombre buscado
+        const productosFiltrados = productosNormalizados.filter(producto => {
+            return (
+                producto.categoriaNormalizada.includes(normalizedNombreBuscado) ||
+                producto.nombreNormalizado.includes(normalizedNombreBuscado) ||
+                producto.codigoBarra.includes(normalizedNombreBuscado) // Asumiendo que el campo código de barras es una cadena
+            );
+        });
+
+        const totalProductos = productosFiltrados.length;
+        const totalPages = Math.ceil(totalProductos / pageSize);
+        const productosPaginados = productosFiltrados.slice(skip, skip + pageSize);
+
+        res.render('catalogo', { productos: productosPaginados, nombreBuscado, currentPage, totalPages });
+    } catch (error) {
+        console.error('Error al buscar y normalizar productos:', error);
+        res.status(500).send('Error en el servidor al buscar productos');
+    }
 });
+
+
 
 
 //Renderiza la pagina de informacion con los detalles del producto seleccionado

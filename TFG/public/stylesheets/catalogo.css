@@ -1,5 +1,5 @@
 body {
-    margin: 0;
+    margin: 0 0 50px 0;
     font-family: Arial, sans-serif;
 }
 
@@ -25,7 +25,8 @@ h3 {
     overflow: hidden;           /* Oculta el contenido que sobrepasa el ancho del contenedor */
     text-overflow: ellipsis;    /* Añade puntos suspensivos (...) al final del texto que se trunca */
 }
-h2{
+
+h2 {
     font-weight: bold;
 }
 
@@ -52,4 +53,29 @@ h2{
         width: 100%;
         margin-right: 0;
     }
+}
+
+.pagination {
+    clear: both; /* Asegurar que la paginación no flote al lado de los productos */
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Centrar la paginación horizontalmente */
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten en varias líneas si es necesario */
+}
+
+.pagination .page-item {
+    margin: 0 5px; /* Añadir margen entre los elementos de la paginación */
+}
+
+.pagination .page-link {
+    color: #007bff; /* Color del texto del enlace */
+    border: 1px solid #dee2e6; /* Borde del enlace */
+    border-radius: 0.25rem; /* Bordes redondeados */
+    padding: 0.5rem 0.75rem; /* Relleno */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff; /* Color de fondo del enlace activo */
+    color: white; /* Color del texto del enlace activo */
+    border-color: #007bff; /* Color del borde del enlace activo */
 }
